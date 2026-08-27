@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ExecutiveCard } from "@/components/features/executive-card";
+import { EmptyState } from "@/components/ui/empty-state";
 import { Icon } from "@/components/ui/icon";
 import type { ExecutivePanel } from "@/types/content";
 import { cn } from "@/lib/utils";
@@ -11,7 +12,7 @@ export function ExecutiveDirectory({ panels }: { panels: readonly ExecutivePanel
   const panel = panels.find((item) => item.session === selectedSession) ?? panels[0];
 
   if (!panel) {
-    return null;
+    return <EmptyState title="Executive panel not published" description="The panel directory will appear here after the club confirms a session." icon="users" />;
   }
 
   return (

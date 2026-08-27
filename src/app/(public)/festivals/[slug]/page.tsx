@@ -163,7 +163,7 @@ export default async function FestivalDetailPage({
                   </p>
                   <dl className="mt-6 grid gap-3 border-t border-slate-100 pt-5 text-sm">
                     <div>
-                      <dt className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
                         Eligibility
                       </dt>
                       <dd className="mt-1 font-semibold leading-5 text-slate-700">
@@ -172,7 +172,7 @@ export default async function FestivalDetailPage({
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <dt className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                        <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
                           Entry
                         </dt>
                         <dd className="mt-1 font-semibold text-slate-700">
@@ -180,7 +180,7 @@ export default async function FestivalDetailPage({
                         </dd>
                       </div>
                       <div>
-                        <dt className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                        <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
                           Fee
                         </dt>
                         <dd className="mt-1 font-semibold text-slate-700">
@@ -380,7 +380,7 @@ export default async function FestivalDetailPage({
                 >
                   <Image
                     src={image.src}
-                    alt={image.alt}
+                    alt=""
                     fill
                     sizes={
                       index === 0

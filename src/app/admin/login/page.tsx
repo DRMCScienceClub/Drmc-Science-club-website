@@ -46,9 +46,9 @@ export default function AdminLoginPage() {
             <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-teal-300">
               Future content operations
             </p>
-            <h1 className="mt-5 max-w-lg font-display text-4xl font-extrabold leading-[1.08] tracking-[-0.04em] xl:text-5xl">
+            <p className="mt-5 max-w-lg font-display text-4xl font-extrabold leading-[1.08] tracking-[-0.04em] xl:text-5xl">
               Steward the club&apos;s public record with care.
-            </h1>
+            </p>
             <p className="mt-6 max-w-lg text-base leading-8 text-slate-300">
               This proposed workspace will help authorised club administrators
               review festival details, publish activity stories, maintain annual
@@ -93,12 +93,12 @@ export default function AdminLoginPage() {
 
           <div className="mx-auto w-full max-w-md">
             <p className="eyebrow">Restricted area</p>
-            <h2
+            <h1
               id="login-heading"
               className="mt-3 font-display text-3xl font-extrabold tracking-[-0.035em] text-navy-950 sm:text-4xl"
             >
               Administrator sign-in
-            </h2>
+            </h1>
             <p className="mt-3 text-sm leading-7 text-slate-600 sm:text-base">
               A static preview of the private access point planned for authorised
               club administrators.
@@ -155,7 +155,7 @@ export default function AdminLoginPage() {
                     >
                       Password
                     </label>
-                    <span className="text-xs font-bold text-slate-400">
+                    <span className="text-xs font-bold text-slate-500">
                       Recovery unavailable
                     </span>
                   </div>

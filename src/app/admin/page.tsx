@@ -182,8 +182,9 @@ export default function AdminDashboardPage() {
                     <dt className="text-sm font-bold text-slate-500">
                       {kpi.label}
                     </dt>
-                    <dd className="mt-2 font-display text-3xl font-extrabold tracking-[-0.04em] text-navy-950">
-                      {kpi.value}
+                    <dd>
+                      <span className="mt-2 block font-display text-3xl font-extrabold tracking-[-0.04em] text-navy-950">{kpi.value}</span>
+                      <span className="mt-3 block text-xs font-semibold leading-5 text-slate-500">{kpi.detail}</span>
                     </dd>
                   </div>
                   <span
@@ -192,9 +193,6 @@ export default function AdminDashboardPage() {
                     <Icon name={kpi.icon} />
                   </span>
                 </div>
-                <p className="mt-3 text-xs font-semibold leading-5 text-slate-500">
-                  {kpi.detail}
-                </p>
               </div>
             ))}
           </dl>
@@ -344,7 +342,7 @@ export default function AdminDashboardPage() {
                 Planned publishing tools, disabled during Phase 1.
               </p>
             </div>
-            <span className="hidden text-xs font-bold text-slate-400 sm:block">
+            <span className="hidden text-xs font-bold text-slate-500 sm:block">
               Supabase + role access planned
             </span>
           </div>

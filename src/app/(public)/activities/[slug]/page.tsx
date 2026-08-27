@@ -269,7 +269,7 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
                     <div className="relative aspect-[3/2] overflow-hidden bg-navy-900">
                       <Image
                         src={image.src}
-                        alt={image.alt}
+                        alt=""
                         fill
                         sizes="(min-width: 768px) 50vw, 100vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"

@@ -13,7 +13,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <ScheduledNotificationBar notices={notices} initialNoticeId={initialNotice?.id ?? ""} />
       <SiteHeader />
-      <div id="main-content" className="flex-1">{children}</div>
+      <div id="main-content" tabIndex={-1} className="flex-1">{children}</div>
       <SiteFooter />
     </div>
   );

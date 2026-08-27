@@ -60,8 +60,8 @@ export default function HomePage() {
             </div>
             <div className="mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/10 pt-7 text-sm text-slate-300">
               <span><strong className="mr-2 text-xl font-extrabold text-white">{siteConfig.established}</strong>Established</span>
-              <span><strong className="mr-2 text-xl font-extrabold text-white">12th</strong>Festival edition</span>
-              <span><strong className="mr-2 text-xl font-extrabold text-white">14</strong>Magazine volumes</span>
+              <span><strong className="mr-2 text-xl font-extrabold text-white">{festival?.edition.split(" ")[0] ?? "—"}</strong>Festival edition</span>
+              <span><strong className="mr-2 text-xl font-extrabold text-white">{magazine?.volume.replace("Volume ", "") ?? "—"}</strong>Magazine volume</span>
             </div>
           </div>
 
@@ -152,7 +152,7 @@ export default function HomePage() {
                 <SectionHeading eyebrow="Current executive panel" title="Student-led, faculty-guided." description={panel.summary} />
                 <div className="mt-7 flex items-center gap-3">
                   <span className="rounded-xl bg-science-600 px-4 py-2 text-sm font-extrabold text-white">Session {panel.session}</span>
-                  <span className="text-sm font-semibold text-slate-500">5 working departments</span>
+                  <span className="text-sm font-semibold text-slate-500">{panel.departments.length} working departments</span>
                 </div>
                 <ButtonLink href="/executives" variant="outline" className="mt-7">Meet the full panel</ButtonLink>
               </div>
