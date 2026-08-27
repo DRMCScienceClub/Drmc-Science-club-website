@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Innovation Frontier science festival illustration</title>
+  <desc id="desc">A circuit-board landscape with a glowing processor, molecule structure, and institutional festival typography.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07172d"/><stop offset=".52" stop-color="#102f56"/><stop offset="1" stop-color="#07515b"/></linearGradient>
+    <linearGradient id="chip" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#246fb8"/><stop offset="1" stop-color="#1cc7b8"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#4ee4d7" stop-opacity=".3"/><stop offset="1" stop-color="#4ee4d7" stop-opacity="0"/></radialGradient>
+    <pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.5" fill="#b2d6ec" fill-opacity=".18"/></pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#dots)"/>
+  <circle cx="1190" cy="433" r="440" fill="url(#glow)"/>
+  <g fill="none" stroke="#73e8df" stroke-width="3" stroke-opacity=".48">
+    <path d="M726 167h178l58 58h117"/><circle cx="1087" cy="225" r="9" fill="#73e8df"/>
+    <path d="M705 718h215l68-68h104"/><circle cx="1101" cy="650" r="9" fill="#73e8df"/>
+    <path d="M1255 134v103l79 79h154"/><circle cx="1492" cy="316" r="9" fill="#73e8df"/>
+    <path d="M1294 724v-78l75-75h166"/><circle cx="1539" cy="571" r="9" fill="#73e8df"/>
+  </g>
+  <g transform="translate(1144 441)">
+    <rect x="-221" y="-221" width="442" height="442" rx="62" fill="#071c36" stroke="#62e8dd" stroke-width="4" transform="rotate(8)"/>
+    <rect x="-164" y="-164" width="328" height="328" rx="38" fill="url(#chip)" stroke="#c8faf5" stroke-opacity=".55" stroke-width="3" transform="rotate(8)"/>
+    <path d="M-84 5 0-75 85 5 0 85Z" fill="#082849" fill-opacity=".75" stroke="#bff8f3" stroke-width="3"/>
+    <circle r="30" fill="#55e3d8"/>
+    <g stroke="#82f0e7" stroke-width="10" stroke-linecap="round">
+      <path d="M-186-258v-41M-89-247v-57M9-231v-62M109-220v-60M197-198v-55"/>
+      <path d="M-186 258v41M-89 247v57M9 231v62M109 220v60M197 198v55"/>
+      <path d="M-258-186h-41M-247-89h-57M-231 9h-62M-220 109h-60M-198 197h-55"/>
+      <path d="M258-186h41M247-89h57M231 9h62M220 109h60M198 197h55"/>
+    </g>
+  </g>
+  <g transform="translate(1050 146)" stroke="#b5f7f2" stroke-width="3" fill="#2b8ec2">
+    <path d="m0 0 74-39 69 45 1 83-76 38L0 82Z" fill="none" stroke-opacity=".55"/>
+    <circle r="17"/><circle cx="74" cy="-39" r="17" fill="#44d7cd"/><circle cx="143" cy="6" r="17"/><circle cx="144" cy="89" r="17" fill="#44d7cd"/><circle cx="68" cy="127" r="17"/><circle cy="82" r="17" fill="#44d7cd"/>
+  </g>
+  <g transform="translate(111 143)">
+    <text fill="#9eeae4" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="4">DRMC SCIENCE FESTIVAL • 2025</text>
+    <path d="M0 32h503" stroke="#41dace" stroke-width="3"/>
+    <text y="154" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800">INNOVATION</text>
+    <text y="234" fill="#50dfd4" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800">FRONTIER</text>
+    <text y="292" fill="#bdd7e8" font-family="Arial, Helvetica, sans-serif" font-size="22" letter-spacing="3">IDEAS INTO IMPACT</text>
+    <g transform="translate(0 367)">
+      <rect width="390" height="118" rx="24" fill="#071b34" fill-opacity=".68" stroke="#7cded8" stroke-opacity=".4"/>
+      <text x="30" y="45" fill="#7da9c4" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="2">ANNUAL CELEBRATION OF</text>
+      <text x="30" y="80" fill="#edfaff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Science, Technology &amp; Curiosity</text>
+    </g>
+  </g>
+  <path d="M0 821c301-73 573-72 822-13s487 57 778-27v119H0Z" fill="#041325" fill-opacity=".72"/>
+</svg>

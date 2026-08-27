@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" role="img" aria-labelledby="title desc">
+  <title id="title">Slate executive portrait placeholder</title>
+  <desc id="desc">An illustrated adviser portrait in formal attire against a slate blue circuit background.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a1729"/><stop offset="1" stop-color="#34566d"/></linearGradient><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="#e4f3f6" stroke-opacity=".07"/></pattern></defs>
+  <rect width="600" height="600" fill="url(#bg)"/><rect width="600" height="600" fill="url(#grid)"/>
+  <circle cx="300" cy="256" r="182" fill="#8ecbd6" fill-opacity=".09" stroke="#b5e7e9" stroke-opacity=".22" stroke-width="3"/>
+  <path d="M116 600q12-141 83-186 39-25 101-25t101 25q71 45 83 186Z" fill="#142b3e"/>
+  <path d="m219 423 81 96 81-96-42-29h-78Z" fill="#edf5f5"/>
+  <path d="m280 475 20 44 20-44-20-23Z" fill="#438aa2"/><path d="m300 519-25 81h50Z" fill="#285970"/>
+  <path d="M203 222q0-106 97-106t97 106v74q0 116-97 116t-97-116Z" fill="#9d6a4d"/>
+  <path d="M202 239q-8-94 48-128 84-49 139 52l12 66-31-43q-72 30-154 8Z" fill="#303136"/>
+  <path d="M229 272q29-14 57 0M314 272q29-14 57 0" fill="none" stroke="#4d312a" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="260" cy="287" r="6" fill="#182228"/><circle cx="342" cy="287" r="6" fill="#182228"/>
+  <path d="M274 344q26 17 52 0" fill="none" stroke="#72453b" stroke-width="6" stroke-linecap="round"/>
+  <path d="M260 367q40 25 80 0" fill="none" stroke="#4f342f" stroke-width="8" stroke-linecap="round"/>
+  <g fill="none" stroke="#92d3d8" stroke-opacity=".46" stroke-width="3"><path d="M93 162h78v-54h57"/><circle cx="93" cy="162" r="8" fill="#92d3d8"/><path d="M507 473h-78v57h-57"/><circle cx="507" cy="473" r="8" fill="#92d3d8"/></g>
+</svg>

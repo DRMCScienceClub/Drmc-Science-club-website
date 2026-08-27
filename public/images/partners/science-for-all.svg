@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="160" viewBox="0 0 420 160" role="img" aria-labelledby="title desc">
+  <title id="title">Science for All placeholder partner logo</title>
+  <desc id="desc">A fictional community partner mark with connected people surrounding a science spark.</desc>
+  <g transform="translate(21 20)">
+    <circle cx="59" cy="60" r="25" fill="#0d4966"/>
+    <path d="m59 42 5 12 13 2-10 8 4 13-12-7-12 7 4-13-10-8 13-2Z" fill="#55ded3"/>
+    <g fill="#338bae"><circle cx="59" cy="7" r="11"/><circle cx="109" cy="42" r="11"/><circle cx="90" cy="102" r="11"/><circle cx="28" cy="102" r="11"/><circle cx="9" cy="42" r="11"/></g>
+    <path d="M59 19 99 47M100 54 87 91M78 100H40M31 91 18 54M19 34 49 14" fill="none" stroke="#47cfc5" stroke-width="4"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif"><text x="151" y="70" fill="#0d2941" font-size="33" font-weight="800">SCIENCE</text><text x="153" y="103" fill="#238f9b" font-size="18" font-weight="700" letter-spacing="4">FOR ALL</text></g>
+</svg>

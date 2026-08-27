@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Robotics workshop illustration</title>
+  <desc id="desc">Students build a friendly wheeled robot on a circuit-covered workshop table.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07182d"/><stop offset="1" stop-color="#0d4960"/></linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e7f7fb"/><stop offset="1" stop-color="#85bed5"/></linearGradient>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M42 0H0V42" fill="none" stroke="#b8d5e7" stroke-opacity=".08"/></pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#grid)"/>
+  <circle cx="940" cy="222" r="185" fill="#38d5c7" fill-opacity=".08"/>
+  <g transform="translate(833 137)" stroke="#53dbd0" stroke-width="3" fill="none" stroke-opacity=".44">
+    <path d="M0 63h107V0h91M56 141h153v86h99M0 270h110v-55h71"/>
+    <circle cx="198" r="8" fill="#53dbd0"/><circle cx="308" cy="227" r="8" fill="#53dbd0"/><circle cx="181" cy="215" r="8" fill="#53dbd0"/>
+  </g>
+  <g transform="translate(314 229)">
+    <ellipse cx="285" cy="415" rx="280" ry="37" fill="#02111f" fill-opacity=".55"/>
+    <g transform="translate(125 38)">
+      <rect x="67" y="0" width="184" height="136" rx="30" fill="url(#panel)" stroke="#c7f4f1" stroke-width="5"/>
+      <rect x="94" y="30" width="130" height="64" rx="18" fill="#082843"/>
+      <circle cx="130" cy="61" r="11" fill="#43e1d4"/><circle cx="188" cy="61" r="11" fill="#60a5fa"/>
+      <path d="M137 101q22 18 44 0" fill="none" stroke="#467c9f" stroke-width="5" stroke-linecap="round"/>
+      <path d="M159 0v-31" stroke="#8eeae4" stroke-width="6"/><circle cx="159" cy="-40" r="12" fill="#42d8ce" stroke="#d9fffc" stroke-width="4"/>
+      <path d="M70 115 7 169M248 115l65 54" stroke="#a9d2e3" stroke-width="22" stroke-linecap="round"/>
+      <circle cx="5" cy="171" r="24" fill="#42cfc5"/><circle cx="315" cy="171" r="24" fill="#42cfc5"/>
+      <rect x="46" y="141" width="227" height="174" rx="35" fill="url(#panel)" stroke="#d1f5f2" stroke-width="5"/>
+      <rect x="83" y="174" width="153" height="81" rx="16" fill="#0d3855"/>
+      <path d="M106 216h27l13-22 22 48 17-26h31" fill="none" stroke="#51e3d7" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M98 315v45M220 315v45" stroke="#b2d5e4" stroke-width="28"/>
+      <circle cx="98" cy="371" r="39" fill="#071d33" stroke="#53dcd1" stroke-width="9"/><circle cx="220" cy="371" r="39" fill="#071d33" stroke="#53dcd1" stroke-width="9"/>
+    </g>
+  </g>
+  <g transform="translate(0 607)">
+    <path d="M0 39h1200v154H0Z" fill="#061525"/>
+    <path d="M94 39h927" stroke="#3fcfc5" stroke-width="5"/>
+    <g fill="none" stroke="#4ccfc7" stroke-width="3" stroke-opacity=".55"><path d="M172 91h121v51h96"/><path d="M773 76v65h101v31"/><circle cx="389" cy="142" r="7" fill="#4ccfc7"/><circle cx="874" cy="172" r="7" fill="#4ccfc7"/></g>
+  </g>
+  <g transform="translate(84 82)" font-family="Arial, Helvetica, sans-serif">
+    <rect width="194" height="38" rx="19" fill="#164866"/><text x="21" y="25" fill="#a9f5ee" font-size="15" font-weight="700" letter-spacing="2">HANDS-ON LEARNING</text>
+    <text y="105" fill="#f2fbff" font-size="52" font-weight="800">Robotics Workshop</text>
+    <text y="145" fill="#aacbde" font-size="20">Design • Build • Program</text>
+  </g>
+</svg>

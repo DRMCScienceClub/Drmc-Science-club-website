@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Anuron 2025 magazine cover</title>
+  <desc id="desc">A teal annual science magazine cover featuring DNA, cells, and leaf forms for a living systems theme.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#061a2f"/><stop offset=".54" stop-color="#075263"/><stop offset="1" stop-color="#08735e"/></linearGradient>
+    <linearGradient id="dna" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b7fff7"/><stop offset="1" stop-color="#52a8ed"/></linearGradient>
+    <pattern id="cells" width="130" height="112" patternUnits="userSpaceOnUse"><path d="m32 2 65 0 32 54-32 54H32L0 56Z" fill="none" stroke="#bcf2ed" stroke-opacity=".07"/></pattern>
+  </defs>
+  <rect width="900" height="1200" fill="url(#bg)"/>
+  <rect width="900" height="1200" fill="url(#cells)"/>
+  <circle cx="679" cy="730" r="398" fill="#47d9ba" fill-opacity=".07"/>
+  <g transform="translate(565 547) rotate(14)" fill="none" stroke-linecap="round">
+    <path d="M-163-351c294 125-226 522 104 702" stroke="url(#dna)" stroke-width="16"/>
+    <path d="M98-351c-294 125 226 522-104 702" stroke="url(#dna)" stroke-width="16"/>
+    <g stroke="#86e9df" stroke-width="8" opacity=".8"><path d="m-115-313 163 3"/><path d="m-170-228 266 12"/><path d="m-169-135 230 14"/><path d="m-113-47 84 6"/><path d="m-58 41 83 8"/><path d="M-91 125 137 145"/><path d="m-122 212 262 26"/><path d="m-63 303 164 18"/></g>
+  </g>
+  <g fill="none" stroke="#aef6ee" stroke-opacity=".38">
+    <circle cx="159" cy="619" r="108" stroke-width="4"/><circle cx="159" cy="619" r="56" stroke-width="3"/><circle cx="142" cy="598" r="17" fill="#68dccc" fill-opacity=".4"/>
+    <circle cx="731" cy="312" r="72" stroke-width="3"/><circle cx="747" cy="329" r="22" fill="#68dccc" fill-opacity=".4"/>
+  </g>
+  <path d="M0 1030c247-115 454-86 900-286v456H0Z" fill="#031927" fill-opacity=".76"/>
+  <g transform="translate(67 76)" font-family="Arial, Helvetica, sans-serif">
+    <text fill="#add2dc" font-size="15" font-weight="700" letter-spacing="3">THE ANNUAL SCIENCE MAGAZINE OF DRMC</text><path d="M0 35h766" stroke="#6adfcf" stroke-width="3"/>
+    <text y="171" fill="#f3ffff" font-size="112" font-weight="800" letter-spacing="3">ANURON</text>
+    <text x="663" y="82" fill="#7aeadc" font-size="28" font-weight="700">2025</text>
+    <text y="225" fill="#8cf1e5" font-size="22" letter-spacing="7">LIVING SYSTEMS</text>
+  </g>
+  <g transform="translate(68 1018)" font-family="Arial, Helvetica, sans-serif"><text fill="#81b1bb" font-size="14" font-weight="700" letter-spacing="3">SCIENCE IN EVERY CELL</text><text y="48" fill="#ecfffc" font-size="21" font-weight="700">Genetics • Ecology • Public Health</text><text y="82" fill="#b8d8da" font-size="18">Student research and stories from the field</text></g>
+  <path d="M70 1148h164" stroke="#61decf" stroke-width="5"/>
+</svg>

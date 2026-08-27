@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Science festival award ceremony illustration</title>
+  <desc id="desc">A trophy and medal are presented to student winners on a formal festival stage.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06152b"/><stop offset="1" stop-color="#0d5660"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0a3"/><stop offset=".48" stop-color="#e0b447"/><stop offset="1" stop-color="#a76b15"/></linearGradient><pattern id="dots" width="44" height="44" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.8" fill="#d4eeee" fill-opacity=".12"/></pattern></defs>
+  <rect width="1200" height="800" fill="url(#bg)"/><rect width="1200" height="800" fill="url(#dots)"/>
+  <g transform="translate(445 74)">
+    <path d="M88 0h134v74q0 105-67 139Q88 179 88 74Z" fill="url(#gold)" stroke="#ffefab" stroke-width="6"/>
+    <path d="M88 34H17q0 119 99 123M222 34h71q0 119-99 123" fill="none" stroke="#e3b649" stroke-width="22"/>
+    <path d="M155 211v72M94 303h122M71 341h168" stroke="#e0ae3f" stroke-width="24"/>
+    <path d="m155 46 14 29 32 4-23 23 5 32-28-15-29 15 6-32-24-23 33-4Z" fill="#fff1aa"/>
+  </g>
+  <g transform="translate(212 386)"><circle cx="111" cy="47" r="48" fill="#142a3c"/><path d="M42 244V112q69-47 138 0v132Z" fill="#102c43"/><path d="M67 116 14 193M155 116l93 32" stroke="#102c43" stroke-width="28" stroke-linecap="round"/><path d="M72 245 42 370M151 245l42 125" stroke="#102c43" stroke-width="28" stroke-linecap="round"/></g>
+  <g transform="translate(726 386)"><circle cx="111" cy="47" r="48" fill="#142a3c"/><path d="M42 244V112q69-47 138 0v132Z" fill="#102c43"/><path d="m67 116-90 39M155 116l56 79" stroke="#102c43" stroke-width="28" stroke-linecap="round"/><path d="M72 245 42 370M151 245l42 125" stroke="#102c43" stroke-width="28" stroke-linecap="round"/></g>
+  <g transform="translate(469 481)"><path d="m0 0 85 65" stroke="#122a3e" stroke-width="25" stroke-linecap="round"/><path d="m233 8-86 57" stroke="#122a3e" stroke-width="25" stroke-linecap="round"/><circle cx="116" cy="84" r="47" fill="url(#gold)" stroke="#ffefa8" stroke-width="6"/><path d="M88 44 72 5l34-13 12 42M144 44l16-39 34 13-49 49" fill="#2d78b6"/></g>
+  <path d="M0 717h1200v83H0Z" fill="#03111f"/><path d="M78 717h1044" stroke="#48d3c8" stroke-width="5"/>
+  <text x="80" y="105" fill="#9dece5" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="4">CELEBRATING CURIOSITY</text><text x="80" y="167" fill="#f4fbff" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="800">Festival Awards</text>
+</svg>

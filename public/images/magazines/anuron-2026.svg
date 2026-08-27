@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Anuron 2026 magazine cover</title>
+  <desc id="desc">A premium navy annual science magazine cover featuring an orbital atom and scientific grid.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#040f24"/><stop offset=".57" stop-color="#092e54"/><stop offset="1" stop-color="#07606b"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="#49ded3" stop-opacity=".32"/><stop offset="1" stop-color="#49ded3" stop-opacity="0"/></radialGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#71eee5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient>
+    <pattern id="grid" width="45" height="45" patternUnits="userSpaceOnUse"><path d="M45 0H0V45" fill="none" stroke="#b6d8e7" stroke-opacity=".08"/><circle r="2" fill="#a7e7ee" fill-opacity=".15"/></pattern>
+  </defs>
+  <rect width="900" height="1200" fill="url(#bg)"/>
+  <rect width="900" height="1200" fill="url(#grid)"/>
+  <circle cx="612" cy="639" r="455" fill="url(#halo)"/>
+  <path d="M0 1015 900 687v513H0Z" fill="#041326" fill-opacity=".76"/>
+  <g transform="translate(576 627)" fill="none" stroke-linecap="round">
+    <ellipse rx="323" ry="110" transform="rotate(-17)" stroke="#5be1d7" stroke-width="5"/>
+    <ellipse rx="323" ry="110" transform="rotate(43)" stroke="#4a9eea" stroke-width="5"/>
+    <ellipse rx="323" ry="110" transform="rotate(103)" stroke="#b3f4ef" stroke-width="3" stroke-opacity=".7"/>
+    <circle r="78" fill="#127aae" stroke="#b8f8f2" stroke-width="6"/>
+    <circle r="43" fill="#53e0d5" fill-opacity=".24"/>
+    <circle cx="-286" cy="-83" r="19" fill="#51dfd4" stroke="#e7fffd" stroke-width="5"/>
+    <circle cx="224" cy="-187" r="18" fill="#65aef2" stroke="#e9f5ff" stroke-width="5"/>
+    <circle cx="156" cy="246" r="17" fill="#7eebe4" stroke="#efffff" stroke-width="5"/>
+  </g>
+  <g transform="translate(67 76)" font-family="Arial, Helvetica, sans-serif">
+    <text fill="#a8c9dc" font-size="15" font-weight="700" letter-spacing="3">THE ANNUAL SCIENCE MAGAZINE OF DRMC</text>
+    <path d="M0 35h766" stroke="#5bddd4" stroke-width="3"/>
+    <text y="171" fill="#f4fcff" font-size="112" font-weight="800" letter-spacing="3">ANURON</text>
+    <text x="663" y="82" fill="#78e7df" font-size="28" font-weight="700">2026</text>
+    <text y="225" fill="#80e9e2" font-size="22" letter-spacing="7">THE QUANTUM EDITION</text>
+  </g>
+  <g transform="translate(69 1023)" font-family="Arial, Helvetica, sans-serif">
+    <text fill="#7facc5" font-size="14" font-weight="700" letter-spacing="3">FEATURED INSIDE</text>
+    <text y="47" fill="#edfaff" font-size="20" font-weight="700">Quantum Computing • Young Innovators</text>
+    <text y="79" fill="#b4d2df" font-size="18">Astronomy • Biology • Climate Science</text>
+  </g>
+  <rect x="67" y="1147" width="161" height="4" fill="url(#ink)"/>
+</svg>

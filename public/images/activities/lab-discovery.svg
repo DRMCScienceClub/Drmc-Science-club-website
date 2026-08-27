@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Laboratory discovery illustration</title>
+  <desc id="desc">Colorful laboratory glassware, a microscope, and molecular notes on a science lab bench.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07182d"/><stop offset="1" stop-color="#0c5362"/></linearGradient>
+    <linearGradient id="liquid" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#5eead4"/><stop offset="1" stop-color="#0f9aaf"/></linearGradient>
+    <pattern id="hex" width="92" height="80" patternUnits="userSpaceOnUse"><path d="m23 2 46 0 23 38-23 38H23L0 40Z" fill="none" stroke="#afdbe4" stroke-opacity=".07"/></pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#hex)"/>
+  <g transform="translate(814 126)" fill="none" stroke="#80e7df" stroke-width="3" stroke-opacity=".43"><path d="m0 60 66-38 67 38v76l-67 38-66-38Z"/><circle cx="0" cy="60" r="10" fill="#80e7df"/><circle cx="66" cy="22" r="10" fill="#80e7df"/><circle cx="133" cy="60" r="10" fill="#80e7df"/><circle cx="133" cy="136" r="10" fill="#80e7df"/><circle cx="66" cy="174" r="10" fill="#80e7df"/><circle cy="136" r="10" fill="#80e7df"/></g>
+  <g transform="translate(128 255)">
+    <path d="M0 390h944v107H0Z" fill="#051728"/><path d="M0 390h944" stroke="#69e3db" stroke-width="6"/>
+    <g transform="translate(68 71)">
+      <path d="M62 0v151L0 284q-13 32 23 32h196q36 0 23-32l-62-133V0" fill="#d9eef3" fill-opacity=".22" stroke="#ccecf0" stroke-width="7"/>
+      <path d="M25 244h193l24 53q7 19-19 19H20q-27 0-18-19Z" fill="url(#liquid)"/>
+      <path d="M62 52h118" stroke="#75c2ce" stroke-width="6"/>
+      <g fill="#b5fff7"><circle cx="76" cy="278" r="9"/><circle cx="125" cy="264" r="13"/><circle cx="172" cy="289" r="7"/></g>
+    </g>
+    <g transform="translate(394 37)">
+      <path d="M59 0v214l-54 93q-16 28 17 28h177q33 0 17-28l-54-93V0" fill="#d9eef3" fill-opacity=".2" stroke="#ccecf0" stroke-width="7"/>
+      <path d="M24 275h174l18 32q16 28-17 28H22q-33 0-17-28Z" fill="#4a8ee4"/>
+      <path d="M59 52h103" stroke="#75c2ce" stroke-width="6"/>
+      <g fill="#c8e1ff"><circle cx="73" cy="300" r="8"/><circle cx="121" cy="289" r="12"/><circle cx="170" cy="310" r="7"/></g>
+    </g>
+    <g transform="translate(676 50)" fill="none" stroke-linejoin="round">
+      <path d="m106 0 89 35-20 52-92-35Z" fill="#bed9e3" stroke="#e0f2f5" stroke-width="6"/>
+      <path d="M105 17 52 147" stroke="#b9d8df" stroke-width="28"/>
+      <path d="m40 133 65 27-38 90H14Z" fill="#96c3d0" stroke="#d9eff3" stroke-width="7"/>
+      <path d="M151 79v104q0 64-70 64" stroke="#b9d8df" stroke-width="22"/>
+      <path d="M0 262h191l53 70H-34Z" fill="#224d67" stroke="#8edbd8" stroke-width="7"/>
+      <circle cx="141" cy="228" r="22" fill="#43d6cb" stroke="#c4f7f2" stroke-width="5"/>
+    </g>
+  </g>
+  <g transform="translate(75 77)" font-family="Arial, Helvetica, sans-serif"><text fill="#81e9e1" font-size="16" font-weight="700" letter-spacing="4">EXPERIMENTAL SCIENCE</text><text y="75" fill="#f5fcff" font-size="54" font-weight="800">Lab Discovery Day</text><text y="117" fill="#b6d5e4" font-size="20">Observe carefully. Test boldly.</text></g>
+</svg>

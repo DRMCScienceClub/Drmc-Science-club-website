@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" role="img" aria-labelledby="title desc">
+  <title id="title">Navy executive portrait placeholder</title>
+  <desc id="desc">An illustrated student portrait in formal club attire against a navy scientific background.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07182e"/><stop offset="1" stop-color="#12486b"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#d8f1f5" stroke-opacity=".08"/></pattern></defs>
+  <rect width="600" height="600" fill="url(#bg)"/><rect width="600" height="600" fill="url(#grid)"/>
+  <circle cx="300" cy="266" r="183" fill="#62dcd2" fill-opacity=".1" stroke="#77e3dc" stroke-opacity=".25" stroke-width="3"/>
+  <path d="M131 600q5-142 80-191 37-24 89-24t89 24q75 49 80 191Z" fill="#0a213a"/>
+  <path d="m230 422 70 98 70-98-31-25h-78Z" fill="#f2f8f8"/>
+  <path d="m282 475 18 45 18-45-18-22Z" fill="#25b9b1"/>
+  <path d="m300 520-25 80h50Z" fill="#16827f"/>
+  <path d="M208 222q0-99 92-99t92 99v75q0 113-92 113t-92-113Z" fill="#c98f68"/>
+  <path d="M205 242q-11-123 93-137 103 4 101 131l-32-50q-74 35-148 15Z" fill="#071421"/>
+  <path d="M232 272q28-14 54 0M314 272q28-14 54 0" fill="none" stroke="#482e26" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="262" cy="286" r="6" fill="#112230"/><circle cx="340" cy="286" r="6" fill="#112230"/>
+  <path d="M278 341q23 16 46 0" fill="none" stroke="#8c4f43" stroke-width="6" stroke-linecap="round"/>
+  <path d="M145 523h77v77M455 523h-77v77" fill="none" stroke="#42d6cc" stroke-opacity=".55" stroke-width="3"/>
+  <circle cx="145" cy="523" r="8" fill="#42d6cc"/><circle cx="455" cy="523" r="8" fill="#42d6cc"/>
+</svg>

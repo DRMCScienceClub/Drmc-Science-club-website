@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="160" viewBox="0 0 420 160" role="img" aria-labelledby="title desc">
+  <title id="title">Stellar Labs placeholder partner logo</title>
+  <desc id="desc">A fictional partner mark with an orbital star in science blue and teal.</desc>
+  <g transform="translate(19 20)">
+    <circle cx="61" cy="60" r="35" fill="#0c4162"/>
+    <path d="m61 30 8 20 22 2-17 14 6 22-19-12-19 12 6-22-17-14 22-2Z" fill="#4ddbd0"/>
+    <ellipse cx="61" cy="60" rx="58" ry="22" fill="none" stroke="#3b82c4" stroke-width="5" transform="rotate(-20 61 60)"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif"><text x="151" y="74" fill="#0d2941" font-size="37" font-weight="800">STELLAR</text><text x="153" y="105" fill="#238f9b" font-size="19" font-weight="700" letter-spacing="7">LABS</text></g>
+</svg>

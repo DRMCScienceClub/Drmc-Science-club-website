@@ -1,26 +1,185 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy-950: #061425;
+  --color-navy-900: #0a2038;
+  --color-navy-800: #12314f;
+  --color-navy-700: #1a456b;
+  --color-science-50: #eff8ff;
+  --color-science-100: #dcefff;
+  --color-science-200: #b8dfff;
+  --color-science-300: #84c8ff;
+  --color-science-400: #49a7ff;
+  --color-science-500: #2387f2;
+  --color-science-600: #1468d8;
+  --color-science-700: #1254af;
+  --color-teal-50: #eefcf9;
+  --color-teal-100: #d4f7ef;
+  --color-teal-200: #a9eee0;
+  --color-teal-300: #70decf;
+  --color-teal-400: #35c4b5;
+  --color-teal-500: #19a69a;
+  --color-teal-600: #10867e;
+  --color-teal-700: #106b66;
+  --color-cream-50: #fbfcfa;
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --shadow-soft: 0 18px 55px -28px rgba(6, 20, 37, 0.28);
+  --shadow-card: 0 14px 38px -24px rgba(6, 20, 37, 0.25);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --font-body: "Inter", "Segoe UI", Arial, sans-serif;
+  --font-display: "Aptos Display", "Segoe UI", Arial, sans-serif;
+  --page-bg: #f7fafc;
+  --page-ink: #0a2038;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background: var(--page-bg);
+  color: var(--page-ink);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #b8dfff;
+  color: #061425;
+}
+
+a,
+button,
+input,
+select,
+textarea,
+summary {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid #49a7ff;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  transform: translateY(-180%);
+  border-radius: 0.65rem;
+  background: #ffffff;
+  padding: 0.75rem 1rem;
+  color: #061425;
+  font-weight: 700;
+  box-shadow: 0 12px 30px rgba(6, 20, 37, 0.25);
+  transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.science-grid {
+  background-image:
+    linear-gradient(rgba(35, 135, 242, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(35, 135, 242, 0.055) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.science-grid-dark {
+  background-image:
+    linear-gradient(rgba(132, 200, 255, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(132, 200, 255, 0.075) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+
+.dot-field {
+  background-image: radial-gradient(circle, rgba(35, 135, 242, 0.16) 1px, transparent 1.2px);
+  background-size: 20px 20px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #1468d8;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  width: 1.6rem;
+  height: 2px;
+  border-radius: 999px;
+  background: #19a69a;
+  content: "";
+}
+
+.rich-text h2 {
+  margin-top: 2.25rem;
+  color: #061425;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.rich-text p {
+  margin-top: 1rem;
+  color: #52657a;
+  font-size: 1.025rem;
+  line-height: 1.8;
+}
+
+.rich-text ul {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.6rem;
+  color: #52657a;
+}
+
+.rich-text li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.rich-text li::before {
+  position: absolute;
+  left: 0;
+  top: 0.68rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #19a69a;
+  content: "";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

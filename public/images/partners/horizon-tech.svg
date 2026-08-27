@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="160" viewBox="0 0 420 160" role="img" aria-labelledby="title desc">
+  <title id="title">Horizon Tech placeholder partner logo</title>
+  <desc id="desc">A fictional technology partner mark with a rising digital horizon.</desc>
+  <g transform="translate(22 27)">
+    <path d="M0 74h112" stroke="#0c3655" stroke-width="7" stroke-linecap="round"/>
+    <path d="M21 74a35 35 0 0 1 70 0" fill="#43d4c9"/>
+    <path d="M20 43h19V24h19V8h19V25h19v18h17" fill="none" stroke="#287eae" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M56 42v32" stroke="#eafffd" stroke-width="4" opacity=".7"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif"><text x="158" y="72" fill="#0d2941" font-size="34" font-weight="800">HORIZON</text><text x="160" y="103" fill="#277f9e" font-size="18" font-weight="700" letter-spacing="6">TECH</text></g>
+</svg>

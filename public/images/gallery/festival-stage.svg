@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Science festival opening stage illustration</title>
+  <desc id="desc">An institutional auditorium stage with a science festival screen, spotlights, and audience silhouettes.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#061226"/><stop offset="1" stop-color="#0b4d60"/></linearGradient><radialGradient id="light" cx="50%" cy="0" r="70%"><stop stop-color="#8df0e7" stop-opacity=".28"/><stop offset="1" stop-color="#8df0e7" stop-opacity="0"/></radialGradient></defs>
+  <rect width="1200" height="800" fill="url(#bg)"/><path d="M120 0 389 605H166L0 229V0ZM1080 0 811 605h223l166-376V0Z" fill="url(#light)"/>
+  <rect x="148" y="105" width="904" height="455" rx="12" fill="#061a2f" stroke="#3dcfc5" stroke-opacity=".55" stroke-width="5"/>
+  <rect x="190" y="144" width="820" height="349" rx="7" fill="#0b2e52"/>
+  <g transform="translate(600 319)" fill="none"><ellipse rx="148" ry="48" transform="rotate(-18)" stroke="#54ded4" stroke-width="4"/><ellipse rx="148" ry="48" transform="rotate(43)" stroke="#5ea8ec" stroke-width="4"/><ellipse rx="148" ry="48" transform="rotate(103)" stroke="#b8f7f2" stroke-opacity=".65" stroke-width="3"/><circle r="35" fill="#3bd5c9"/><circle cx="-131" cy="-39" r="10" fill="#dffffc"/><circle cx="102" cy="-89" r="10" fill="#dceeff"/></g>
+  <text x="600" y="199" fill="#f4fcff" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="800" text-anchor="middle" letter-spacing="4">DRMC SCIENCE FESTIVAL</text>
+  <text x="600" y="465" fill="#9eece6" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" text-anchor="middle" letter-spacing="5">OPENING CEREMONY</text>
+  <path d="M83 560h1034v85H83Z" fill="#071727"/><path d="M83 560h1034" stroke="#54dcd2" stroke-width="5"/>
+  <g fill="#020b14"><circle cx="81" cy="700" r="52"/><circle cx="195" cy="685" r="58"/><circle cx="329" cy="710" r="52"/><circle cx="460" cy="682" r="62"/><circle cx="603" cy="704" r="56"/><circle cx="737" cy="681" r="63"/><circle cx="881" cy="705" r="54"/><circle cx="1010" cy="684" r="59"/><circle cx="1131" cy="710" r="52"/><path d="M0 800v-58q105-93 212 0 112-101 222 0 116-104 231 0 107-102 221 0 113-100 225 0 45-35 89-13v71Z"/></g>
+</svg>

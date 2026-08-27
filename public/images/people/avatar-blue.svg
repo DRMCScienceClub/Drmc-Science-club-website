@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" role="img" aria-labelledby="title desc">
+  <title id="title">Blue executive portrait placeholder</title>
+  <desc id="desc">An illustrated student portrait with glasses and formal club attire against a science-blue background.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071a34"/><stop offset="1" stop-color="#1764a0"/></linearGradient><pattern id="dots" width="42" height="42" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2" fill="#d6effa" fill-opacity=".12"/></pattern></defs>
+  <rect width="600" height="600" fill="url(#bg)"/><rect width="600" height="600" fill="url(#dots)"/>
+  <circle cx="300" cy="257" r="185" fill="#60a5fa" fill-opacity=".12" stroke="#93c5fd" stroke-opacity=".28" stroke-width="3"/>
+  <path d="M121 600q8-141 80-187 39-25 99-25t99 25q72 46 80 187Z" fill="#0b2946"/>
+  <path d="m224 424 76 93 76-93-38-28h-76Z" fill="#f2f7f8"/>
+  <path d="m281 476 19 41 19-41-19-22Z" fill="#4b95e5"/><path d="m300 517-24 83h48Z" fill="#2566a5"/>
+  <path d="M207 224q0-104 93-104t93 104v71q0 115-93 115t-93-115Z" fill="#b87955"/>
+  <path d="M204 240q-12-102 45-137 30-19 66-12 64 12 82 99l-22 42-14-55q-73 35-148 14Z" fill="#101a23"/>
+  <g fill="none" stroke="#10273b" stroke-width="8"><rect x="221" y="263" width="68" height="49" rx="19"/><rect x="311" y="263" width="68" height="49" rx="19"/><path d="M289 280h22"/></g>
+  <circle cx="257" cy="287" r="6" fill="#12202c"/><circle cx="343" cy="287" r="6" fill="#12202c"/>
+  <path d="M277 345q23 16 46 0" fill="none" stroke="#7c4137" stroke-width="6" stroke-linecap="round"/>
+  <g fill="none" stroke="#78b7f0" stroke-opacity=".55" stroke-width="3"><circle cx="105" cy="174" r="8" fill="#78b7f0"/><path d="M113 174h64v-48h47"/><circle cx="496" cy="454" r="8" fill="#78b7f0"/><path d="M488 454h-59v61h-47"/></g>
+</svg>

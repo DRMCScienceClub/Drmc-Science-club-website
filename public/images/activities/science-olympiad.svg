@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Science olympiad illustration</title>
+  <desc id="desc">A medal, answer sheet, equations, and podium represent a student science competition.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06182d"/><stop offset=".58" stop-color="#123e68"/><stop offset="1" stop-color="#08706e"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0a8"/><stop offset=".5" stop-color="#e3b956"/><stop offset="1" stop-color="#a77519"/></linearGradient>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="#b6d9e9" stroke-opacity=".07"/></pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#grid)"/>
+  <g fill="#d9f5f6" font-family="Georgia, serif" font-style="italic" opacity=".2"><text x="66" y="401" font-size="37">E = mc²</text><text x="905" y="130" font-size="31">F = ma</text><text x="866" y="689" font-size="36">λ = h / p</text><text x="127" y="689" font-size="31">H₂O</text></g>
+  <g transform="translate(754 161) rotate(7)">
+    <rect width="300" height="394" rx="26" fill="#e9f7f9" stroke="#9ed2dd" stroke-width="6"/>
+    <rect x="83" y="-16" width="134" height="48" rx="18" fill="#163d5d" stroke="#66ddd4" stroke-width="4"/>
+    <g fill="none" stroke="#3b7693" stroke-width="5"><path d="M49 81h202M49 133h202M49 185h202M49 237h202M49 289h151"/></g>
+    <g fill="#2dcfc2"><circle cx="68" cy="107" r="11"/><circle cx="136" cy="159" r="11"/><circle cx="212" cy="211" r="11"/><circle cx="96" cy="263" r="11"/></g>
+    <path d="m216 325 23 23 51-62" fill="none" stroke="#13a593" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(429 176)">
+    <path d="m57 0 70 122-62 37L0 43Z" fill="#2875aa" stroke="#9fdcf0" stroke-width="4"/>
+    <path d="m145 0-70 122 62 37 65-116Z" fill="#174d83" stroke="#9fdcf0" stroke-width="4"/>
+    <circle cx="101" cy="198" r="90" fill="url(#gold)" stroke="#fff0a6" stroke-width="8"/>
+    <circle cx="101" cy="198" r="64" fill="none" stroke="#a47316" stroke-width="4"/>
+    <path d="m101 147 15 31 34 5-25 24 6 35-30-16-31 16 6-35-25-24 35-5Z" fill="#fff1ae" stroke="#a87517" stroke-width="3"/>
+  </g>
+  <g transform="translate(287 570)">
+    <rect x="0" y="84" width="207" height="146" fill="#0a2e4a"/><rect x="207" y="23" width="207" height="207" fill="#0b3d59"/><rect x="414" y="112" width="207" height="118" fill="#092840"/>
+    <text x="287" y="121" fill="#bdf6ef" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="800">1</text><text x="80" y="169" fill="#9dc9dc" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="700">2</text><text x="494" y="178" fill="#9dc9dc" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="700">3</text>
+  </g>
+  <g transform="translate(72 74)" font-family="Arial, Helvetica, sans-serif">
+    <rect width="177" height="37" rx="18" fill="#0c5262"/><text x="22" y="24" fill="#b9f8f2" font-size="14" font-weight="700" letter-spacing="2">KNOWLEDGE IN ACTION</text>
+    <text y="109" fill="#f7fcff" font-size="52" font-weight="800">Science Olympiad</text>
+    <text y="151" fill="#bad5e5" font-size="20">Challenge ideas. Celebrate curiosity.</text>
+  </g>
+</svg>

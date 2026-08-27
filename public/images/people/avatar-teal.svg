@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" role="img" aria-labelledby="title desc">
+  <title id="title">Teal executive portrait placeholder</title>
+  <desc id="desc">An illustrated student portrait in formal attire against a teal orbital background.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#061a2b"/><stop offset="1" stop-color="#08766d"/></linearGradient></defs>
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <g transform="translate(300 253)" fill="none" stroke="#91f1e8" stroke-opacity=".17"><ellipse rx="255" ry="91" transform="rotate(-22)"/><ellipse rx="255" ry="91" transform="rotate(43)"/><ellipse rx="255" ry="91" transform="rotate(102)"/></g>
+  <circle cx="300" cy="256" r="180" fill="#4fdbc9" fill-opacity=".1"/>
+  <path d="M125 600q7-139 81-187 38-24 94-24t94 24q74 48 81 187Z" fill="#082b3c"/>
+  <path d="m226 425 74 96 74-96-35-29h-78Z" fill="#f1f9f8"/>
+  <path d="m281 479 19 42 19-42-19-23Z" fill="#2fc9b8"/><path d="m300 521-25 79h50Z" fill="#138378"/>
+  <path d="M207 224q0-105 93-105t93 105v70q0 115-93 115t-93-115Z" fill="#d29a73"/>
+  <path d="M205 240q-7-110 76-139 70 4 104 70l13 62-33-43q-62 29-145 5Z" fill="#19191d"/>
+  <path d="M230 270q28-14 55 0M315 270q28-14 55 0" fill="none" stroke="#55362d" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="259" cy="286" r="6" fill="#1c292b"/><circle cx="342" cy="286" r="6" fill="#1c292b"/>
+  <path d="M277 344q23 17 46 0" fill="none" stroke="#94594c" stroke-width="6" stroke-linecap="round"/>
+  <g fill="none" stroke="#69e5d9" stroke-opacity=".5" stroke-width="3"><path d="M92 465h74v57h52"/><circle cx="92" cy="465" r="8" fill="#69e5d9"/><path d="M507 145h-69v-47h-52"/><circle cx="507" cy="145" r="8" fill="#69e5d9"/></g>
+</svg>
