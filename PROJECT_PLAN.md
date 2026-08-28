@@ -13,7 +13,7 @@ Only approved administrators will eventually sign in. Public member accounts are
 - Keep content readable on small screens first, then take advantage of wider layouts.
 - Treat accessibility, performance, metadata, and security as core requirements.
 - Keep content models independent from page components so mock records can later be replaced by Supabase or another CMS.
-- Reserve the brand mark behind a replaceable logo component until approved artwork is supplied.
+- Keep the supplied brand mark behind a replaceable logo component so approved variants or usage guidance can be adopted without changing page layouts.
 
 ## Route map
 
@@ -44,7 +44,8 @@ Only approved administrators will eventually sign in. Public member accounts are
 - Site-wide design tokens for color, spacing, type, radius, elevation, borders, focus, and reduced motion.
 - Scheduled notification bar, responsive header/navigation, footer, content container, section heading, badges, buttons, cards, and intentional empty/error treatments.
 - Subtle scientific grid, orbital, and circuit-inspired decoration that does not compete with content.
-- Placeholder club logo isolated in a brand component for a later asset swap.
+- Supplied club mark isolated in a shared brand component for a controlled future asset swap.
+- Poster-backed carnival archive for the 8th–16th editions, with provenance-aware copy and honest empty states for records not supplied.
 - Shared default metadata plus route-specific titles and descriptions.
 
 ### Home page
@@ -101,7 +102,7 @@ src/
 │   ├── layout.tsx
 │   └── not-found.tsx
 ├── components/
-│   ├── brand/             # Club logo placeholder and identity visuals
+│   ├── brand/             # Replaceable club mark and identity visuals
 │   ├── features/          # Festival, magazine, activity, executive, and home sections
 │   ├── layout/            # Announcement bar, header, navigation, shell, and footer
 │   └── ui/                # Buttons, cards, badges, headings, states, and primitives
@@ -118,6 +119,7 @@ Phase 1 uses read-only TypeScript collections under `src/data`. Stable `id`, `sl
 ### Festival
 
 - Identity: title, slug, year, theme, summary, hero image.
+- Provenance: prototype or poster-backed archive record, used to control labels, image fitting, and missing-data copy.
 - Logistics: dates, venue, status, registration state/deadline/link.
 - Program: segments and ordered schedule entries.
 - Outcomes: result groups and winners.
@@ -199,7 +201,7 @@ The future data layer should preserve these view-facing contracts. Components sh
 
 ## Decisions required before Phase 2
 
-- Confirm the official club name treatment, logo files, colors, typography, and asset usage rules.
+- Confirm the official club name treatment, supplied-logo status, colors, typography, and asset usage rules.
 - Confirm the production domain and the authoritative DRMC/club address, phone, email, and social accounts.
 - Approve the festival, magazine, activity, and executive taxonomies and archival policy.
 - Identify administrator roles, approvers, account provisioning owner, and emergency recovery contact.

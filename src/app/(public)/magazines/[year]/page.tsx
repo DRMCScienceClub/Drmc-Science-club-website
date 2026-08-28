@@ -15,6 +15,8 @@ type MagazinePageProps = {
   params: Promise<{ year: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return magazineYears.map((year) => ({ year: String(year) }));
 }
@@ -341,7 +343,7 @@ function MagazineHero({ issue }: { issue: MagazineIssue }) {
               aria-hidden="true"
               className="absolute -inset-5 rotate-3 rounded-[2rem] border border-science-300/15 bg-science-500/5"
             />
-            <div className="relative aspect-[5/7] overflow-hidden rounded-2xl border border-white/10 bg-navy-900 shadow-2xl shadow-black/40">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 bg-navy-900 shadow-2xl shadow-black/40">
               <Image
                 src={issue.coverImage.src}
                 alt={issue.coverImage.alt}

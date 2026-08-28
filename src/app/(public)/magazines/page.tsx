@@ -213,7 +213,7 @@ function FeaturedIssue({ issue }: { issue: MagazineIssue }) {
               aria-hidden="true"
               className="absolute left-1/2 top-1/2 aspect-square w-[58%] -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-full border border-teal-300/20"
             />
-            <div className="relative aspect-[5/7] w-full max-w-[290px] -rotate-2 overflow-hidden rounded-2xl border border-white/10 bg-navy-900 shadow-2xl shadow-black/40 transition-transform duration-500 hover:rotate-0">
+            <div className="relative aspect-[3/4] w-full max-w-[290px] -rotate-2 overflow-hidden rounded-2xl border border-white/10 bg-navy-900 shadow-2xl shadow-black/40 transition-transform duration-500 hover:rotate-0">
               <Image
                 src={issue.coverImage.src}
                 alt={issue.coverImage.alt}

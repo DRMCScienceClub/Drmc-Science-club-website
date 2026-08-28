@@ -240,7 +240,7 @@ export const executivePanels: readonly ExecutivePanel[] = [
     isCurrent: false,
     title: "Executive Panel 2025–26",
     summary:
-      "The panel behind Innovation Frontier 2025 expanded the club's research mentoring and restarted regular campus skywatch sessions.",
+      "This prototype panel record demonstrates how an archived committee can document research mentoring, programme coordination and regular campus skywatch sessions.",
     moderator: member(
       "moderator-2025",
       "Md. Rezaul Karim",
@@ -392,7 +392,7 @@ export const executivePanels: readonly ExecutivePanel[] = [
     isCurrent: false,
     title: "Executive Panel 2024–25",
     summary:
-      "The tenth-festival panel delivered Cosmic Inquiry 2024 and assembled the club's first consolidated digital activity archive.",
+      "This prototype panel record demonstrates how a past committee can preserve its programme work and contribution to the club's digital activity archive.",
     moderator: member(
       "moderator-2024",
       "Shahidul Alam",

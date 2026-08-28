@@ -79,18 +79,24 @@ src/
 │   └── ui/                # Reusable interface primitives
 ├── data/                  # Single source of truth for Phase 1 mock content
 └── types/                 # Shared domain and component types
-public/                    # Static placeholder and brand-ready assets
+public/                    # Supplied archive artwork and prototype visual assets
 ```
 
 Page files should compose shared components and read from `src/data`; they should not carry duplicated festival, magazine, activity, or executive content. This makes the later move from in-memory data to a repository or CMS layer straightforward.
+
+## Supplied archive assets
+
+The shared `LogoMark` now uses the supplied DRMC Science Club artwork at `public/images/brand/drmc-science-club-logo.jpeg`. Nine supplied carnival posters are normalized under `public/images/festivals/archive/` and power poster-backed records for the 8th through 16th editions (2015–2025, with no invented entries for years absent from the supplied set).
+
+Festival records carry a provenance state. Poster-backed entries publish only details visible in the supplied artwork—edition, title, dates, theme, selected listed segments, and the displayed title sponsor—while unavailable schedules, results, rules, venue records, and resources use explicit empty states. The 2026 record remains visibly labelled as Phase 1 prototype content.
 
 ## Prototype boundaries
 
 - Festival registration, contact, membership, download, and online-reading actions are demonstrations unless explicitly linked to a public resource.
 - No Supabase project, database schema, storage bucket, server action, email delivery, or persistent form submission is connected.
 - No real authentication, session, authorization, or administrator credentials exist. There is intentionally no public member-login flow.
-- Names, dates, statistics, results, partner marks, documents, and visual assets are sample content and must be reviewed by the club before launch.
-- The placeholder logo component is designed to be replaced once an approved official logo file and usage guidance are available.
+- Except for facts transcribed from the supplied archive posters, names, dates, statistics, results, partner marks, documents, and visual assets are sample content and must be reviewed by the club before launch.
+- The supplied club mark is isolated behind a reusable logo component. Confirm ownership, official status, clear-space guidance, and permitted variants before production use.
 
 ## Accessibility and responsive behavior
 

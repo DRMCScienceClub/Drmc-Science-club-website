@@ -20,6 +20,15 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "DRMC Science Club" }],
   creator: "DRMC Science Club",
+  icons: {
+    apple: [
+      {
+        url: "/images/brand/drmc-science-club-logo.jpeg",
+        sizes: "812x802",
+        type: "image/jpeg",
+      },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "en_BD",

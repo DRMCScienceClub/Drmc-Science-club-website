@@ -24,6 +24,8 @@ type FestivalPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return festivalSlugs.map((slug) => ({ slug }));
 }
@@ -87,6 +89,11 @@ export default async function FestivalDetailPage({
 
   const otherEditions = festivals
     .filter((edition) => edition.slug !== festival.slug)
+    .toSorted(
+      (a, b) =>
+        Math.abs(a.year - festival.year) - Math.abs(b.year - festival.year) ||
+        b.year - a.year,
+    )
     .slice(0, 2);
 
   return (
@@ -99,7 +106,9 @@ export default async function FestivalDetailPage({
           <article>
             <span className="eyebrow">About this edition</span>
             <h2 className="mt-4 text-balance font-display text-3xl font-extrabold tracking-[-0.035em] text-navy-950 sm:text-4xl">
-              One theme, many ways to investigate it.
+              {festival.recordStatus === "poster-verified"
+                ? "A preserved record of this edition."
+                : "One theme, many ways to investigate it."}
             </h2>
             <div className="rich-text mt-5">
               {festival.description.map((paragraph) => (
@@ -137,8 +146,16 @@ export default async function FestivalDetailPage({
         <Container>
           <SectionHeading
             eyebrow="Festival segments"
-            title="Choose the format that fits your question."
-            description="Each segment tests a different scientific habit—from sustained investigation to fast reasoning and collaborative engineering."
+            title={
+              festival.recordStatus === "poster-verified"
+                ? "Programme categories preserved from the poster."
+                : "Choose the format that fits your question."
+            }
+            description={
+              festival.recordStatus === "poster-verified"
+                ? "Names are transcribed from the supplied artwork; detailed rules and eligibility have not yet been digitised."
+                : "Each segment tests a different scientific habit—from sustained investigation to fast reasoning and collaborative engineering."
+            }
           />
           {festival.segments.length > 0 ? (
             <ol className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -159,44 +176,62 @@ export default async function FestivalDetailPage({
                     {segment.title}
                   </h3>
                   <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
-                    {segment.summary}
+                    {segment.summary ?? "Listed on the supplied archive poster."}
                   </p>
-                  <dl className="mt-6 grid gap-3 border-t border-slate-100 pt-5 text-sm">
-                    <div>
-                      <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                        Eligibility
-                      </dt>
-                      <dd className="mt-1 font-semibold leading-5 text-slate-700">
-                        {segment.eligibility}
-                      </dd>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                          Entry
-                        </dt>
-                        <dd className="mt-1 font-semibold text-slate-700">
-                          {segment.teamSize}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                          Fee
-                        </dt>
-                        <dd className="mt-1 font-semibold text-slate-700">
-                          {segment.fee}
-                        </dd>
-                      </div>
-                    </div>
-                  </dl>
+                  {(segment.eligibility || segment.teamSize || segment.fee) && (
+                    <dl className="mt-6 grid gap-3 border-t border-slate-100 pt-5 text-sm">
+                      {segment.eligibility && (
+                        <div>
+                          <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                            Eligibility
+                          </dt>
+                          <dd className="mt-1 font-semibold leading-5 text-slate-700">
+                            {segment.eligibility}
+                          </dd>
+                        </div>
+                      )}
+                      {(segment.teamSize || segment.fee) && (
+                        <div className="grid grid-cols-2 gap-3">
+                          {segment.teamSize && (
+                            <div>
+                              <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                                Entry
+                              </dt>
+                              <dd className="mt-1 font-semibold text-slate-700">
+                                {segment.teamSize}
+                              </dd>
+                            </div>
+                          )}
+                          {segment.fee && (
+                            <div>
+                              <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                                Fee
+                              </dt>
+                              <dd className="mt-1 font-semibold text-slate-700">
+                                {segment.fee}
+                              </dd>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </dl>
+                  )}
                 </li>
               ))}
             </ol>
           ) : (
             <div className="mt-10">
               <EmptyState
-                title="Segment details are being finalised"
-                description="Competition categories and eligibility will be published after approval."
+                title={
+                  festival.recordStatus === "poster-verified"
+                    ? "Segment list not yet digitised"
+                    : "Segment details are being finalised"
+                }
+                description={
+                  festival.recordStatus === "poster-verified"
+                    ? "The supplied artwork does not provide a readable programme list for this archive record."
+                    : "Competition categories and eligibility will be published after approval."
+                }
               />
             </div>
           )}
@@ -208,8 +243,16 @@ export default async function FestivalDetailPage({
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
             <SectionHeading
               eyebrow="Festival schedule"
-              title="A clear path through two full days."
-              description="Times in this Phase 1 prototype are shown in Bangladesh Standard Time and remain subject to official confirmation."
+              title={
+                festival.recordStatus === "poster-verified"
+                  ? "Detailed timetable not yet digitised."
+                  : "A clear path through two full days."
+              }
+              description={
+                festival.recordStatus === "poster-verified"
+                  ? "The poster verifies the festival dates, but not a session-by-session schedule."
+                  : "Times in this Phase 1 prototype are shown in Bangladesh Standard Time and remain subject to official confirmation."
+              }
             />
             {festival.schedule.length > 0 ? (
               <div className="grid gap-6">
@@ -268,8 +311,16 @@ export default async function FestivalDetailPage({
               </div>
             ) : (
               <EmptyState
-                title="Schedule publication pending"
-                description="The full programme will appear here when festival timings are confirmed."
+                title={
+                  festival.recordStatus === "poster-verified"
+                    ? "Archive schedule unavailable"
+                    : "Schedule publication pending"
+                }
+                description={
+                  festival.recordStatus === "poster-verified"
+                    ? "A verified day-by-day programme was not supplied with this poster."
+                    : "The full programme will appear here when festival timings are confirmed."
+                }
                 icon="calendar"
               />
             )}
@@ -287,7 +338,9 @@ export default async function FestivalDetailPage({
             title={
               festival.results.length > 0
                 ? "Celebrating thoughtful work and strong execution."
-                : "Results will follow the final round."
+                : festival.recordStatus === "poster-verified"
+                  ? "Results not yet digitised."
+                  : "Results will follow the final round."
             }
             description={festival.resultsNote}
           />
@@ -329,10 +382,18 @@ export default async function FestivalDetailPage({
               <div className="h-1.5 bg-gradient-to-r from-science-500 via-teal-400 to-science-300" />
               <div className="px-6 py-4 text-center sm:px-10 sm:py-6">
                 <EmptyState
-                  title="Results pending"
+                  title={
+                    festival.recordStatus === "poster-verified"
+                      ? "Archive results unavailable"
+                      : "Results pending"
+                  }
                   description={festival.resultsNote}
                   icon="trophy"
-                  action={{ label: "Review the schedule", href: "#schedule" }}
+                  action={
+                    festival.recordStatus === "prototype"
+                      ? { label: "Review the schedule", href: "#schedule" }
+                      : undefined
+                  }
                 />
               </div>
             </div>
@@ -345,7 +406,11 @@ export default async function FestivalDetailPage({
           <SectionHeading
             eyebrow="Sponsors & partners"
             title="Made possible through shared investment in science."
-            description="Phase 1 uses clearly fictional partner marks to demonstrate how approved acknowledgements will appear on the live site."
+            description={
+              festival.recordStatus === "poster-verified"
+                ? "The title sponsor shown below is transcribed from the supplied poster; a complete structured acknowledgement record is still being prepared."
+                : "Phase 1 uses clearly fictional partner marks to demonstrate how approved acknowledgements will appear on the live site."
+            }
           />
           <div className="mt-10 grid gap-10 lg:grid-cols-2">
             <OrganizationGroup
@@ -368,7 +433,11 @@ export default async function FestivalDetailPage({
           <SectionHeading
             eyebrow="Festival gallery"
             title="A closer look at the work behind the programme."
-            description="Illustrated placeholders establish the future gallery rhythm while real, consent-cleared event photography is being prepared."
+            description={
+              festival.recordStatus === "poster-verified"
+                ? "The supplied poster anchors this archive entry while approved event photography is catalogued."
+                : "Illustrated placeholders establish the future gallery rhythm while real, consent-cleared event photography is being prepared."
+            }
             inverse
           />
           {festival.gallery.length > 0 ? (
@@ -387,13 +456,19 @@ export default async function FestivalDetailPage({
                         ? "(min-width: 1024px) 66vw, 100vw"
                         : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     }
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                    className={
+                      festival.recordStatus === "poster-verified"
+                        ? "object-contain"
+                        : "object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                    }
                   />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/90 to-transparent px-5 pb-5 pt-16">
-                    <figcaption className="text-xs font-semibold leading-5 text-slate-200">
+                  {festival.recordStatus === "poster-verified" ? (
+                    <figcaption className="sr-only">{image.alt}</figcaption>
+                  ) : (
+                    <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/90 to-transparent px-5 pb-5 pt-16 text-xs font-semibold leading-5 text-slate-200">
                       {image.alt}
                     </figcaption>
-                  </div>
+                  )}
                 </figure>
               ))}
             </div>
@@ -417,8 +492,9 @@ export default async function FestivalDetailPage({
                 Keep the rules close at hand.
               </h2>
               <p className="mt-4 leading-7 text-slate-600">
-                Brochure and rulebook destinations are Phase 1 demonstration
-                links. Official, approved PDFs will replace them before launch.
+                {festival.recordStatus === "poster-verified"
+                  ? "A verified brochure or rulebook was not supplied with this archive record. Approved historical files can be attached here later."
+                  : "Brochure and rulebook destinations are Phase 1 demonstration links. Official, approved PDFs will replace them before launch."}
               </p>
             </div>
             <div className="grid gap-4 border-t border-slate-200 bg-white p-7 sm:grid-cols-2 sm:p-10 lg:border-l lg:border-t-0">
@@ -439,8 +515,16 @@ export default async function FestivalDetailPage({
               {!festival.brochure && !festival.rulebook && (
                 <div className="sm:col-span-2">
                   <EmptyState
-                    title="Resources are being prepared"
-                    description="Approved festival documents will be published here."
+                    title={
+                      festival.recordStatus === "poster-verified"
+                        ? "Archive documents unavailable"
+                        : "Resources are being prepared"
+                    }
+                    description={
+                      festival.recordStatus === "poster-verified"
+                        ? "No verified brochure or rulebook accompanied the supplied poster."
+                        : "Approved festival documents will be published here."
+                    }
                     icon="book"
                   />
                 </div>
@@ -484,6 +568,8 @@ export default async function FestivalDetailPage({
 }
 
 function FestivalHero({ festival }: { festival: Festival }) {
+  const isArchivePoster = festival.recordStatus === "poster-verified";
+
   return (
     <section className="science-grid-dark relative overflow-hidden bg-navy-950 text-white">
       <div
@@ -574,21 +660,34 @@ function FestivalHero({ festival }: { festival: Festival }) {
               aria-hidden="true"
               className="absolute -inset-4 rotate-2 rounded-[2.25rem] border border-science-300/15 bg-white/[0.025]"
             />
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-white/10 bg-navy-900 shadow-2xl shadow-black/30">
+            <div
+              className={`relative overflow-hidden rounded-[2rem] border border-white/10 bg-navy-900 shadow-2xl shadow-black/30 ${isArchivePoster ? "" : "aspect-[4/3]"}`}
+              style={
+                isArchivePoster
+                  ? {
+                      aspectRatio: `${festival.coverImage.width} / ${festival.coverImage.height}`,
+                    }
+                  : undefined
+              }
+            >
               <Image
                 src={festival.coverImage.src}
                 alt={festival.coverImage.alt}
                 fill
                 preload
                 sizes="(min-width: 1024px) 48vw, 100vw"
-                className="object-cover"
+                className={isArchivePoster ? "object-contain" : "object-cover"}
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/90 to-transparent p-6 pt-20">
-                <figcaption className="text-xs font-semibold uppercase tracking-[0.12em] text-science-100">
-                  Official artwork placeholder · Phase 1
-                </figcaption>
-              </div>
             </div>
+            {isArchivePoster ? (
+              <figcaption className="mt-4 text-center text-xs font-semibold uppercase tracking-[0.12em] text-science-100">
+                Supplied festival poster · poster-backed archive
+              </figcaption>
+            ) : (
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/90 to-transparent p-6 pt-20 text-xs font-semibold uppercase tracking-[0.12em] text-science-100">
+                Concept artwork · Phase 1 prototype
+              </figcaption>
+            )}
           </figure>
         </div>
       </Container>
@@ -685,9 +784,11 @@ function RegistrationPanel({ festival }: { festival: Festival }) {
             Prototype registration link
           </ButtonLink>
         )}
-        <p className="mt-4 text-xs leading-5 text-slate-400">
-          Phase 1 demonstration only—no submission or payment is processed.
-        </p>
+        {festival.recordStatus === "prototype" && (
+          <p className="mt-4 text-xs leading-5 text-slate-400">
+            Phase 1 demonstration only—no submission or payment is processed.
+          </p>
+        )}
       </div>
     </aside>
   );

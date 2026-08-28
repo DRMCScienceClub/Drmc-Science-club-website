@@ -1,10 +1,6 @@
 const prototypeDocuments = {
   "quantum-horizon-2026-brochure.pdf": "Quantum Horizon 2026 - Festival Brochure",
   "quantum-horizon-2026-rulebook.pdf": "Quantum Horizon 2026 - Segment Rulebook",
-  "innovation-frontier-2025-brochure.pdf": "Innovation Frontier 2025 - Festival Brochure",
-  "innovation-frontier-2025-rulebook.pdf": "Innovation Frontier 2025 - Segment Rulebook",
-  "cosmic-inquiry-2024-brochure.pdf": "Cosmic Inquiry 2024 - Festival Brochure",
-  "cosmic-inquiry-2024-rulebook.pdf": "Cosmic Inquiry 2024 - Segment Rulebook",
   "anuron-2026.pdf": "Anuron 2026 - Signals of Tomorrow",
   "anuron-2025.pdf": "Anuron 2025 - Living Systems",
   "anuron-2024.pdf": "Anuron 2024 - The Measure of Wonder",

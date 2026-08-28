@@ -21,8 +21,8 @@ export const magazines: readonly MagazineIssue[] = [
     coverImage: {
       src: "/images/magazines/anuron-2026.svg",
       alt: "Abstract blue and teal cover for Anuron 2026, Signals of Tomorrow",
-      width: 800,
-      height: 1120,
+      width: 900,
+      height: 1200,
     },
     featured: true,
     readOnline: {
@@ -48,14 +48,14 @@ export const magazines: readonly MagazineIssue[] = [
     highlights: [
       "Photo essay: microscopic structures in familiar leaves",
       "Feature: what makes an urban wetland resilient?",
-      "Student project notes from Innovation Frontier 2025",
+      "Student project notes on adaptable urban systems",
       "Science-book recommendations from the editorial board",
     ],
     coverImage: {
       src: "/images/magazines/anuron-2025.svg",
       alt: "Layered organic forms on the cover of Anuron 2025, Living Systems",
-      width: 800,
-      height: 1120,
+      width: 900,
+      height: 1200,
     },
     featured: false,
     readOnline: {
@@ -77,9 +77,9 @@ export const magazines: readonly MagazineIssue[] = [
     publishedAt: "2024-03-26",
     pages: 84,
     description:
-      "A tenth-festival commemorative issue about measuring the seemingly immeasurable—from the distance to a star to the uncertainty in a classroom experiment.",
+      "An annual issue about measuring the seemingly immeasurable—from the distance to a star to the uncertainty in a classroom experiment.",
     highlights: [
-      "A decade of DRMC festival ideas in photographs",
+      "A visual archive of student science ideas",
       "Practical guide: keeping an observation notebook",
       "How astronomers estimate distances across the universe",
       "Shortlisted entries from the student science-writing contest",
@@ -87,8 +87,8 @@ export const magazines: readonly MagazineIssue[] = [
     coverImage: {
       src: "/images/magazines/anuron-2024.svg",
       alt: "Orbital line art on the cover of Anuron 2024, The Measure of Wonder",
-      width: 800,
-      height: 1120,
+      width: 900,
+      height: 1200,
     },
     featured: false,
     readOnline: {

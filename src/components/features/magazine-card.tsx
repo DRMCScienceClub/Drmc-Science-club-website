@@ -6,7 +6,7 @@ import type { MagazineIssue } from "@/types/content";
 export function MagazineCard({ issue }: { issue: MagazineIssue }) {
   return (
     <article className="group grid grid-cols-[8rem_1fr] gap-5 rounded-3xl border border-slate-200 bg-white p-4 shadow-card sm:grid-cols-[10rem_1fr] sm:gap-6">
-      <Link href={`/magazines/${issue.year}`} className="relative aspect-[5/7] overflow-hidden rounded-2xl bg-navy-900 shadow-lg">
+      <Link href={`/magazines/${issue.year}`} className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-navy-900 shadow-lg">
         <Image src={issue.coverImage.src} alt={issue.coverImage.alt} fill sizes="160px" className="object-cover transition-transform duration-500 group-hover:scale-[1.025]" />
       </Link>
       <div className="flex min-w-0 flex-col justify-center py-2">

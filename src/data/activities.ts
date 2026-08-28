@@ -76,10 +76,6 @@ export const activities: readonly Activity[] = [
         "/images/activities/climate-forum.svg",
         "Climate forum discussion and city data graphics",
       ),
-      activityImage(
-        "/images/festivals/innovation-frontier-2025.svg",
-        "Innovation Frontier resilience theme visual",
-      ),
     ],
     tags: ["Climate", "Dhaka", "Data literacy"],
     organizers: ["Earth & Environmental Science Department"],
@@ -117,10 +113,6 @@ export const activities: readonly Activity[] = [
         "/images/activities/astronomy-night.svg",
         "DRMC students gathered around a telescope",
       ),
-      activityImage(
-        "/images/festivals/cosmic-inquiry-2024.svg",
-        "Cosmic Inquiry astronomy archive visual",
-      ),
     ],
     tags: ["Astronomy", "Observation", "Field notes"],
     organizers: ["Astronomy & Space Science Department"],
@@ -129,7 +121,6 @@ export const activities: readonly Activity[] = [
       "Observed the lunar surface through two telescopes",
       "Completed a structured sky-observation log",
     ],
-    relatedFestivalSlug: "cosmic-inquiry-2024",
   },
   {
     slug: "inter-house-science-olympiad-2026",

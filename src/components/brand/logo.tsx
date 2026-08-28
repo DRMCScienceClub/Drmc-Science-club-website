@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -10,21 +11,21 @@ type LogoProps = {
 
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <svg
+    <span
       aria-hidden="true"
-      className={cn("size-11 shrink-0", className)}
-      viewBox="0 0 64 64"
-      fill="none"
+      className={cn(
+        "relative size-11 shrink-0 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-navy-900/10",
+        className,
+      )}
     >
-      <rect width="64" height="64" rx="18" fill="#0A2038" />
-      <circle cx="32" cy="32" r="5" fill="#70DECF" />
-      <ellipse cx="32" cy="32" rx="22" ry="9" stroke="#84C8FF" strokeWidth="2.4" />
-      <ellipse cx="32" cy="32" rx="22" ry="9" stroke="#35C4B5" strokeWidth="2.4" transform="rotate(60 32 32)" />
-      <ellipse cx="32" cy="32" rx="22" ry="9" stroke="#49A7FF" strokeWidth="2.4" transform="rotate(120 32 32)" />
-      <circle cx="12" cy="32" r="2.6" fill="white" />
-      <circle cx="43" cy="14" r="2.6" fill="white" />
-      <circle cx="44" cy="48" r="2.6" fill="white" />
-    </svg>
+      <Image
+        src="/images/brand/drmc-science-club-logo.jpeg"
+        alt=""
+        fill
+        sizes="112px"
+        className="object-contain"
+      />
+    </span>
   );
 }
 

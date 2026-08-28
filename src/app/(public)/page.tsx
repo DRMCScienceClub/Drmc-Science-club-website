@@ -122,7 +122,7 @@ export default function HomePage() {
           <Container className="grid items-center gap-12 lg:grid-cols-[.82fr_1.18fr] lg:gap-20">
             <div className="relative mx-auto w-full max-w-[340px]">
               <div aria-hidden="true" className="absolute -inset-5 rotate-3 rounded-[2rem] border border-science-300/20 bg-science-500/5" />
-              <div className="relative aspect-[5/7] overflow-hidden rounded-2xl shadow-2xl shadow-black/30">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-2xl shadow-black/30">
                 <Image src={magazine.coverImage.src} alt={magazine.coverImage.alt} fill sizes="(min-width: 1024px) 340px, 80vw" className="object-cover" />
               </div>
               <span className="absolute -bottom-4 -right-4 rounded-xl bg-teal-400 px-4 py-3 text-xs font-black uppercase tracking-wider text-navy-950 shadow-xl">{magazine.pages} pages</span>

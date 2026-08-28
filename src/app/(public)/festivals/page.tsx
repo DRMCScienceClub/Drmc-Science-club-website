@@ -36,7 +36,7 @@ export default function FestivalsPage() {
   return (
     <main>
       <PageHero
-        eyebrow="National science festival"
+        eyebrow="National science festivals & carnivals"
         title="Ideas become experiments—and experiments become shared progress."
         description="Our flagship programme welcomes student scientists from across Bangladesh for project displays, olympiads, engineering challenges, and conversations grounded in evidence."
         icon="rocket"
@@ -99,7 +99,7 @@ export default function FestivalsPage() {
             <SectionHeading
               eyebrow="Festival archive"
               title="Every edition leaves a useful record."
-              description="Revisit festival themes, programmes, prototype results, partner acknowledgements, and visual highlights from past years."
+              description="Revisit poster-backed themes, programme categories, available records, and visual highlights from past years."
             />
             <dl className="grid grid-cols-2 gap-3 sm:min-w-72">
               <div className="rounded-2xl border border-slate-200 bg-white px-5 py-4">

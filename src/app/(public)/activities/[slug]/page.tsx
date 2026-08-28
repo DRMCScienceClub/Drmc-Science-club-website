@@ -19,6 +19,8 @@ type ActivityPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return activitySlugs.map((slug) => ({ slug }));
 }

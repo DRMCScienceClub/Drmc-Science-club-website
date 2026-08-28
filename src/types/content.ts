@@ -73,10 +73,10 @@ export interface FestivalSegment {
   slug: string;
   title: string;
   category: string;
-  summary: string;
-  eligibility: string;
-  teamSize: string;
-  fee: string;
+  summary?: string;
+  eligibility?: string;
+  teamSize?: string;
+  fee?: string;
 }
 
 export interface FestivalScheduleItem {
@@ -122,6 +122,7 @@ export interface Festival {
   venue: string;
   venueAddress: string;
   status: FestivalStatus;
+  recordStatus: "prototype" | "poster-verified";
   featured: boolean;
   coverImage: ContentImage;
   registration: FestivalRegistration;
