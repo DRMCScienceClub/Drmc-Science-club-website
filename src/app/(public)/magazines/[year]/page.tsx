@@ -40,7 +40,7 @@ export async function generateMetadata({
     description: issue.description,
     keywords: [
       issue.title,
-      "Anuron magazine",
+      "Aurora magazine",
       "DRMC Science Club magazine",
       "student science writing Bangladesh",
     ],

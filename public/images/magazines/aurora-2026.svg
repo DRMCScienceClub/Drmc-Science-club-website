@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
-  <title id="title">Anuron 2026 magazine cover</title>
+  <title id="title">Aurora 2026 magazine cover</title>
   <desc id="desc">A premium navy annual science magazine cover featuring an orbital atom and scientific grid.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#040f24"/><stop offset=".57" stop-color="#092e54"/><stop offset="1" stop-color="#07606b"/></linearGradient>
@@ -24,7 +24,7 @@
   <g transform="translate(67 76)" font-family="Arial, Helvetica, sans-serif">
     <text fill="#a8c9dc" font-size="15" font-weight="700" letter-spacing="3">THE ANNUAL SCIENCE MAGAZINE OF DRMC</text>
     <path d="M0 35h766" stroke="#5bddd4" stroke-width="3"/>
-    <text y="171" fill="#f4fcff" font-size="112" font-weight="800" letter-spacing="3">ANURON</text>
+    <text y="171" fill="#f4fcff" font-size="112" font-weight="800" letter-spacing="3">AURORA</text>
     <text x="663" y="82" fill="#78e7df" font-size="28" font-weight="700">2026</text>
     <text y="225" fill="#80e9e2" font-size="22" letter-spacing="7">THE QUANTUM EDITION</text>
   </g>

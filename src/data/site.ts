@@ -57,7 +57,7 @@ export const exploreNavigation: readonly NavigationItem[] = [
   {
     label: "Annual Magazine",
     href: "/magazines",
-    description: "Read the Anuron archive",
+    description: "Read the Aurora archive",
   },
 ];
 

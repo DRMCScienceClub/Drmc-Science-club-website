@@ -13,11 +13,11 @@ type ButtonLinkProps = {
 };
 
 const variants = {
-  primary: "bg-science-600 text-white shadow-lg shadow-science-700/15 hover:bg-science-700",
-  secondary: "bg-teal-500 text-navy-950 shadow-lg shadow-teal-700/10 hover:bg-teal-400",
-  outline: "border border-slate-300 bg-white text-navy-900 hover:border-science-300 hover:bg-science-50",
-  ghost: "text-science-700 hover:bg-science-50",
-  light: "bg-white text-navy-950 shadow-lg shadow-black/10 hover:bg-science-50",
+  primary: "bg-navy-950 text-white shadow-lg shadow-black/15 hover:bg-teal-700",
+  secondary: "bg-gold-300 text-navy-950 shadow-lg shadow-gold-500/10 hover:bg-gold-200",
+  outline: "border border-slate-300 bg-paper-50 text-navy-900 hover:border-teal-300 hover:bg-teal-50",
+  ghost: "text-teal-700 hover:bg-teal-50",
+  light: "bg-paper-50 text-navy-950 shadow-lg shadow-black/10 hover:bg-gold-50",
 };
 
 export function ButtonLink({

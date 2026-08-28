@@ -128,6 +128,7 @@ Phase 1 uses read-only TypeScript collections under `src/data`. Stable `id`, `sl
 
 ### Magazine
 
+- Publication identity: **Aurora**, the annual science magazine of DRMC Science Club.
 - Year/issue identity, title, description, cover image, publication date.
 - Online-reader and PDF links with availability states.
 

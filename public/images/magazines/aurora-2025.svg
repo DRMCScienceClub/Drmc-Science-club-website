@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
-  <title id="title">Anuron 2025 magazine cover</title>
+  <title id="title">Aurora 2025 magazine cover</title>
   <desc id="desc">A teal annual science magazine cover featuring DNA, cells, and leaf forms for a living systems theme.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#061a2f"/><stop offset=".54" stop-color="#075263"/><stop offset="1" stop-color="#08735e"/></linearGradient>
@@ -21,7 +21,7 @@
   <path d="M0 1030c247-115 454-86 900-286v456H0Z" fill="#031927" fill-opacity=".76"/>
   <g transform="translate(67 76)" font-family="Arial, Helvetica, sans-serif">
     <text fill="#add2dc" font-size="15" font-weight="700" letter-spacing="3">THE ANNUAL SCIENCE MAGAZINE OF DRMC</text><path d="M0 35h766" stroke="#6adfcf" stroke-width="3"/>
-    <text y="171" fill="#f3ffff" font-size="112" font-weight="800" letter-spacing="3">ANURON</text>
+    <text y="171" fill="#f3ffff" font-size="112" font-weight="800" letter-spacing="3">AURORA</text>
     <text x="663" y="82" fill="#7aeadc" font-size="28" font-weight="700">2025</text>
     <text y="225" fill="#8cf1e5" font-size="22" letter-spacing="7">LIVING SYSTEMS</text>
   </g>

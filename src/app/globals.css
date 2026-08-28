@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-navy-950: #061425;
-  --color-navy-900: #0a2038;
-  --color-navy-800: #12314f;
-  --color-navy-700: #1a456b;
+  --color-navy-950: #090b0f;
+  --color-navy-900: #11161c;
+  --color-navy-800: #1b232b;
+  --color-navy-700: #293440;
   --color-science-50: #eff8ff;
   --color-science-100: #dcefff;
   --color-science-200: #b8dfff;
@@ -21,18 +21,28 @@
   --color-teal-500: #19a69a;
   --color-teal-600: #10867e;
   --color-teal-700: #106b66;
-  --color-cream-50: #fbfcfa;
+  --color-gold-50: #fffaf0;
+  --color-gold-100: #f9ecc8;
+  --color-gold-200: #f1d995;
+  --color-gold-300: #e5bf62;
+  --color-gold-400: #d2a03d;
+  --color-gold-500: #b97d23;
+  --color-gold-600: #95621e;
+  --color-paper-50: #fffdf8;
+  --color-paper-100: #f7f2e8;
+  --color-paper-200: #ebe2d4;
+  --color-cream-50: #fffdf8;
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
-  --shadow-soft: 0 18px 55px -28px rgba(6, 20, 37, 0.28);
-  --shadow-card: 0 14px 38px -24px rgba(6, 20, 37, 0.25);
+  --shadow-soft: 0 20px 60px -30px rgba(9, 11, 15, 0.3);
+  --shadow-card: 0 16px 42px -26px rgba(9, 11, 15, 0.24);
 }
 
 :root {
   --font-body: "Inter", "Segoe UI", Arial, sans-serif;
   --font-display: "Aptos Display", "Segoe UI", Arial, sans-serif;
-  --page-bg: #f7fafc;
-  --page-ink: #0a2038;
+  --page-bg: #f7f2e8;
+  --page-ink: #11161c;
   color-scheme: light;
 }
 
@@ -50,8 +60,8 @@ body {
 }
 
 ::selection {
-  background: #b8dfff;
-  color: #061425;
+  background: #f1d995;
+  color: #090b0f;
 }
 
 a,
@@ -90,21 +100,45 @@ summary {
 
 .science-grid {
   background-image:
-    linear-gradient(rgba(35, 135, 242, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(35, 135, 242, 0.055) 1px, transparent 1px);
+    linear-gradient(rgba(17, 22, 28, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 22, 28, 0.045) 1px, transparent 1px);
   background-size: 34px 34px;
 }
 
 .science-grid-dark {
   background-image:
-    linear-gradient(rgba(132, 200, 255, 0.075) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(132, 200, 255, 0.075) 1px, transparent 1px);
+    linear-gradient(rgba(255, 253, 248, 0.052) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 253, 248, 0.052) 1px, transparent 1px);
   background-size: 38px 38px;
 }
 
 .dot-field {
-  background-image: radial-gradient(circle, rgba(35, 135, 242, 0.16) 1px, transparent 1.2px);
+  background-image: radial-gradient(circle, rgba(17, 22, 28, 0.14) 1px, transparent 1.2px);
   background-size: 20px 20px;
+}
+
+.dark-canvas {
+  background-color: #090b0f;
+  background-image:
+    radial-gradient(circle at 18% 8%, rgba(25, 166, 154, 0.16), transparent 27%),
+    radial-gradient(circle at 82% 14%, rgba(210, 160, 61, 0.14), transparent 25%),
+    radial-gradient(circle at 72% 82%, rgba(116, 103, 183, 0.12), transparent 27%),
+    linear-gradient(rgba(255, 253, 248, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 253, 248, 0.045) 1px, transparent 1px);
+  background-size: auto, auto, auto, 42px 42px, 42px 42px;
+}
+
+.glass-panel {
+  border: 1px solid rgba(255, 253, 248, 0.12);
+  background: rgba(255, 253, 248, 0.055);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+}
+
+.accent-text {
+  background-image: linear-gradient(100deg, #a9eee0 8%, #f1d995 52%, #c7bdf3 95%);
+  background-clip: text;
+  color: transparent;
 }
 
 .text-balance {
@@ -115,7 +149,7 @@ summary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: #1468d8;
+  color: #106b66;
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -127,7 +161,7 @@ summary {
   width: 1.6rem;
   height: 2px;
   border-radius: 999px;
-  background: #19a69a;
+  background: #d2a03d;
   content: "";
 }
 

@@ -14,10 +14,10 @@ import type { MagazineIssue } from "@/types/content";
 export const metadata: Metadata = {
   title: "Annual Science Magazine",
   description:
-    "Browse annual issues of Anuron, the DRMC Science Club magazine, with student research, explainers, interviews, science writing, and illustration.",
+    "Browse annual issues of Aurora, the DRMC Science Club magazine, with student research, explainers, interviews, science writing, and illustration.",
   alternates: { canonical: "/magazines" },
   openGraph: {
-    title: "Anuron · The Annual Magazine of DRMC Science Club",
+    title: "Aurora · The Annual Magazine of DRMC Science Club",
     description:
       "Read the latest issue and explore an archive of student-led science communication from DRMC.",
     url: "/magazines",
@@ -36,7 +36,7 @@ export default function MagazinesPage() {
       <PageHero
         eyebrow="Annual publication"
         title="Science, written with clarity and curiosity."
-        description="Anuron brings together student research, accessible explainers, interviews, field notes, original illustration, and science writing in Bangla and English."
+        description="Aurora brings together student research, accessible explainers, interviews, field notes, original illustration, and science writing in Bangla and English."
         icon="book"
       >
         <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">

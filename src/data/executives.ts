@@ -478,7 +478,7 @@ export const executivePanels: readonly ExecutivePanel[] = [
       ),
       department(
         "Publications & Communications",
-        "Anuron and the tenth-edition visual archive.",
+        "Aurora and the tenth-edition visual archive.",
         [
           member(
             "publication-secretary-2024",

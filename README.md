@@ -86,7 +86,7 @@ Page files should compose shared components and read from `src/data`; they shoul
 
 ## Supplied archive assets
 
-The shared `LogoMark` now uses the supplied DRMC Science Club artwork at `public/images/brand/drmc-science-club-logo.jpeg`. Nine supplied carnival posters are normalized under `public/images/festivals/archive/` and power poster-backed records for the 8th through 16th editions (2015–2025, with no invented entries for years absent from the supplied set).
+The shared `LogoMark` uses the supplied transparent DRMC Science Club artwork at `public/images/brand/drmc-science-club-logo.png`. A favicon-legible brand submark and square app icons are derived from the same supplied artwork. Nine supplied carnival posters are normalized under `public/images/festivals/archive/` and power poster-backed records for the 8th through 16th editions (2015–2025, with no invented entries for years absent from the supplied set).
 
 Festival records carry a provenance state. Poster-backed entries publish only details visible in the supplied artwork—edition, title, dates, theme, selected listed segments, and the displayed title sponsor—while unavailable schedules, results, rules, venue records, and resources use explicit empty states. The 2026 record remains visibly labelled as Phase 1 prototype content.
 

@@ -9,20 +9,28 @@ type LogoProps = {
   className?: string;
 };
 
-export function LogoMark({ className }: { className?: string }) {
+export function LogoMark({
+  className,
+  prominent = false,
+}: {
+  className?: string;
+  prominent?: boolean;
+}) {
   return (
     <span
       aria-hidden="true"
       className={cn(
-        "relative size-11 shrink-0 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-navy-900/10",
+        "relative block shrink-0",
+        prominent ? "h-28 w-40 sm:h-32 sm:w-48" : "h-11 w-[4.5rem]",
         className,
       )}
     >
       <Image
-        src="/images/brand/drmc-science-club-logo.jpeg"
+        src="/images/brand/drmc-science-club-logo.png"
         alt=""
         fill
-        sizes="112px"
+        preload={prominent}
+        sizes={prominent ? "192px" : "72px"}
         className="object-contain"
       />
     </span>
@@ -36,11 +44,11 @@ export function Logo({ compact = false, href = "/", inverse = false, className }
       aria-label="DRMC Science Club home"
       className={cn("group inline-flex items-center gap-3 rounded-sm", className)}
     >
-      <LogoMark className="transition-transform duration-300 group-hover:rotate-6" />
+      <LogoMark className="transition-transform duration-300 group-hover:scale-[1.03]" />
       {!compact && (
         <span className="leading-none">
           <span className={cn("block font-display text-[0.96rem] font-extrabold tracking-[-0.02em] sm:text-base", inverse ? "text-white" : "text-navy-950")}>DRMC Science Club</span>
-          <span className={cn("mt-1 block text-[0.62rem] font-bold uppercase tracking-[0.18em]", inverse ? "text-science-200" : "text-slate-500")}>Explore · Experiment · Excel</span>
+          <span className={cn("mt-1 block text-[0.62rem] font-bold uppercase tracking-[0.18em]", inverse ? "text-teal-200" : "text-teal-700")}>Explore · Experiment · Excel</span>
         </span>
       )}
     </Link>
