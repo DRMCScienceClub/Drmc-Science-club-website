@@ -15,7 +15,7 @@ export function FestivalCard({
   const isArchivePoster = festival.recordStatus === "poster-verified";
 
   return (
-    <article className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-card">
+    <article data-reveal="up" className="surface-card group overflow-hidden rounded-3xl border border-surface-border shadow-card">
       <Link
         href={`/festivals/${festival.slug}`}
         className={cn(

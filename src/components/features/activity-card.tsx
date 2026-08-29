@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export function ActivityCard({ activity, featured = false }: { activity: Activity; featured?: boolean }) {
   return (
-    <article className={cn("group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-card", featured && "lg:grid lg:grid-cols-[1.15fr_1fr]")}>
+    <article data-reveal="up" className={cn("surface-card group overflow-hidden rounded-3xl border border-surface-border shadow-card", featured && "lg:grid lg:grid-cols-[1.15fr_1fr]")}>
       <Link href={`/activities/${activity.slug}`} className={cn("relative block overflow-hidden bg-navy-900", featured ? "min-h-64 lg:min-h-full" : "aspect-[16/10]")} aria-label={`View ${activity.title}`}>
         <Image src={activity.image.src} alt={activity.image.alt} fill sizes={featured ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"} className="object-cover transition-transform duration-500 group-hover:scale-[1.025]" />
         <div className="absolute left-4 top-4"><StatusBadge tone={activity.status === "upcoming" ? "teal" : "slate"}>{activity.status}</StatusBadge></div>

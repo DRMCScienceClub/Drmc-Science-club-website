@@ -8,6 +8,9 @@ import { Icon } from "@/components/ui/icon";
 import { primaryNavigation } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
+const standardNavigation = primaryNavigation.filter((item) => !item.highlighted);
+const highlightedNavigation = primaryNavigation.find((item) => item.highlighted);
+
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -17,12 +20,12 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-paper-200/90 bg-paper-50/95 backdrop-blur-xl">
+    <header className="site-header-enter sticky top-0 z-50 border-b border-paper-200/90 bg-paper-50/95 backdrop-blur-xl">
       <div className="mx-auto flex min-h-[76px] w-full max-w-[1320px] items-center justify-between gap-5 px-5 sm:px-7 lg:px-10">
         <Logo />
 
         <nav aria-label="Primary navigation" className="hidden items-center gap-0.5 xl:flex">
-          {primaryNavigation.map((item) => (
+          {standardNavigation.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -37,10 +40,12 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Link href="/join" className="ml-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-teal-700 px-4 py-2 text-sm font-extrabold text-white shadow-lg shadow-teal-700/15 transition-colors hover:bg-navy-950">
-            Join the club
-            <Icon name="arrow-right" className="size-4" />
-          </Link>
+          {highlightedNavigation && (
+            <Link href={highlightedNavigation.href} className="ml-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-teal-700 px-4 py-2 text-sm font-extrabold text-white shadow-lg shadow-teal-700/15 transition-colors hover:bg-navy-950">
+              {highlightedNavigation.label}
+              <Icon name="arrow-right" className="size-4" />
+            </Link>
+          )}
         </nav>
 
         <button
@@ -55,9 +60,9 @@ export function SiteHeader() {
         </button>
       </div>
 
-      <div id="mobile-navigation" hidden={!open} className="border-t border-paper-200 bg-paper-50 xl:hidden">
+      <div id="mobile-navigation" hidden={!open} className="mobile-menu-enter border-t border-paper-200 bg-paper-50 xl:hidden">
         <nav aria-label="Mobile navigation" className="mx-auto grid max-w-[1240px] gap-1 px-5 py-5 sm:px-7 lg:px-10">
-          {primaryNavigation.map((item) => (
+          {standardNavigation.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -72,10 +77,12 @@ export function SiteHeader() {
               <Icon name="chevron-right" className="size-4" />
             </Link>
           ))}
-          <Link href="/join" onClick={() => setOpen(false)} className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-teal-700 px-5 py-3 text-base font-extrabold text-white">
-            Join the Club
-            <Icon name="arrow-right" className="size-4" />
-          </Link>
+          {highlightedNavigation && (
+            <Link href={highlightedNavigation.href} onClick={() => setOpen(false)} className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-teal-700 px-5 py-3 text-base font-extrabold text-white">
+              {highlightedNavigation.label}
+              <Icon name="arrow-right" className="size-4" />
+            </Link>
+          )}
         </nav>
       </div>
     </header>

@@ -16,6 +16,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import {
   getCurrentExecutivePanel,
   getCurrentOrUpcomingFestival,
+  getExecutiveMemberCount,
   getFestivalArchive,
   getFeaturedMagazine,
   getLatestActivities,
@@ -37,30 +38,36 @@ export default function HomePage() {
   const magazine = getFeaturedMagazine();
   const panel = getCurrentExecutivePanel();
   const panelMembers = panel?.departments.flatMap((department) => department.members).slice(0, 3) ?? [];
+  const panelMemberCount = panel ? getExecutiveMemberCount(panel) : 0;
 
   return (
     <main>
-      <section className="dark-canvas relative overflow-hidden">
+      <section className="home-hero-motion dark-canvas relative overflow-hidden">
         <HeroBackdrop />
         <Container className="relative flex min-h-[720px] flex-col items-center justify-center py-20 text-center sm:py-24 lg:py-28">
-          <div className="glass-panel flex min-h-36 min-w-48 items-center justify-center rounded-[2rem] px-5 py-3 shadow-2xl shadow-black/20">
+          <div data-reveal="scale" className="glass-panel flex min-h-36 min-w-48 items-center justify-center rounded-[2rem] px-5 py-3 shadow-2xl shadow-black/20">
             <LogoMark prominent />
           </div>
-          <div className="mt-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-gold-100 backdrop-blur-md">
+          <div data-reveal="from-top" data-reveal-delay="1" className="mt-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-gold-100 backdrop-blur-md">
             <span className="size-1.5 rounded-full bg-gold-300 shadow-[0_0_14px_rgba(229,191,98,.65)]" />
             The science community of DRMC
           </div>
-          <h1 className="mt-7 max-w-5xl text-balance font-display text-5xl font-black leading-[1.01] tracking-[-0.06em] text-white sm:text-6xl lg:text-7xl xl:text-[5.4rem]">
-            Ask better questions. <span className="accent-text">Build what&apos;s next.</span>
+          <h1 className="hero-title-stage mt-7 max-w-5xl text-balance font-display text-5xl font-black leading-[1.01] tracking-[-0.06em] text-white sm:text-6xl lg:text-7xl xl:text-[5.4rem]">
+            <span className="block overflow-hidden pb-2">
+              <span data-reveal="hero-title" data-reveal-delay="2" className="block">Ask better questions.</span>
+            </span>
+            <span className="block overflow-hidden pb-2">
+              <span data-reveal="hero-title" data-reveal-delay="3" className="accent-text block">Build what&apos;s next.</span>
+            </span>
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+          <p data-reveal="up" data-reveal-delay="4" className="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
             We bring young scientists together to experiment, engineer, observe, and share ideas that matter—from our campus to communities across Bangladesh.
           </p>
-          <div className="mt-9 flex w-full max-w-md flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
+          <div data-reveal="scale" data-reveal-delay="5" className="mt-9 flex w-full max-w-md flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
             <ButtonLink href="/join" variant="secondary">Join the Club</ButtonLink>
             <ButtonLink href="/activities" variant="light">Explore our work</ButtonLink>
           </div>
-          <dl className="glass-panel mt-11 grid w-full max-w-3xl overflow-hidden rounded-2xl text-left sm:grid-cols-3">
+          <dl data-reveal="up" data-reveal-delay="6" className="glass-panel mt-11 grid w-full max-w-3xl overflow-hidden rounded-2xl text-left sm:grid-cols-3">
             <div className="border-b border-white/10 px-6 py-5 sm:border-b-0 sm:border-r"><dt className="text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-slate-400">Established</dt><dd className="mt-1 font-display text-2xl font-black text-white">{siteConfig.established}</dd></div>
             <div className="border-b border-white/10 px-6 py-5 sm:border-b-0 sm:border-r"><dt className="text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-slate-400">Festival edition</dt><dd className="mt-1 font-display text-2xl font-black text-teal-200">{festival?.edition.split(" ")[0] ?? "—"}</dd></div>
             <div className="px-6 py-5"><dt className="text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-slate-400">Aurora volume</dt><dd className="mt-1 font-display text-2xl font-black text-gold-200">{magazine?.volume.replace("Volume ", "") ?? "—"}</dd></div>
@@ -87,7 +94,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <section className="science-grid border-y border-paper-200 bg-white py-20 sm:py-24">
+      <section className="site-surface science-grid border-y border-paper-200 py-20 sm:py-24">
         <Container>
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <SectionHeading eyebrow="Latest activities" title="Science is something we do." description="Workshops, observations, challenges, and conversations designed for active learning." />
@@ -119,14 +126,14 @@ export default function HomePage() {
       {magazine && (
         <section className="dark-canvas relative overflow-hidden py-20 text-white sm:py-24">
           <Container className="grid items-center gap-12 lg:grid-cols-[.82fr_1.18fr] lg:gap-20">
-            <div className="relative mx-auto w-full max-w-[340px]">
+            <div data-reveal="from-left" className="relative mx-auto w-full max-w-[340px]">
               <div aria-hidden="true" className="absolute -inset-5 rotate-3 rounded-[2rem] border border-gold-300/25 bg-gold-300/5" />
               <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-2xl shadow-black/30">
                 <Image src={magazine.coverImage.src} alt={magazine.coverImage.alt} fill sizes="(min-width: 1024px) 340px, 80vw" className="object-cover" />
               </div>
               <span className="absolute -bottom-4 -right-4 rounded-xl bg-gold-300 px-4 py-3 text-xs font-black uppercase tracking-wider text-navy-950 shadow-xl">{magazine.pages} pages</span>
             </div>
-            <div>
+            <div data-reveal="from-right" data-reveal-delay="1">
               <span className="eyebrow !text-teal-200 before:!bg-gold-300">Annual science magazine</span>
               <p className="mt-5 text-sm font-bold uppercase tracking-[0.12em] text-teal-300">{magazine.volume} · {magazine.year}</p>
               <h2 className="mt-2 text-balance font-display text-4xl font-extrabold tracking-[-0.04em] sm:text-5xl">{magazine.title}: <span className="accent-text">{magazine.subtitle}</span></h2>
@@ -151,12 +158,12 @@ export default function HomePage() {
                 <SectionHeading eyebrow="Current executive panel" title="Student-led, faculty-guided." description={panel.summary} />
                 <div className="mt-7 flex items-center gap-3">
                   <span className="rounded-xl bg-teal-700 px-4 py-2 text-sm font-extrabold text-white">Session {panel.session}</span>
-                  <span className="text-sm font-semibold text-slate-500">{panel.departments.length} working departments</span>
+                  <span className="text-sm font-semibold text-slate-500">{panelMemberCount} student officers</span>
                 </div>
                 <ButtonLink href="/executives" variant="outline" className="mt-7">Meet the full panel</ButtonLink>
               </div>
-              <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-soft sm:p-7">
-                <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.13em] text-slate-500">Faculty leadership</p>
+              <div data-reveal="from-right" className="surface-card rounded-3xl border border-surface-border p-5 shadow-soft sm:p-7">
+                <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.13em] text-slate-500">Club moderator</p>
                 <ExecutiveCard member={panel.moderator} prominent />
                 <p className="mb-4 mt-7 text-xs font-extrabold uppercase tracking-[0.13em] text-slate-500">Student leadership</p>
                 <div className="grid gap-3 sm:grid-cols-2">{panelMembers.map((member) => <ExecutiveCard key={member.id} member={member} />)}</div>
@@ -171,7 +178,7 @@ export default function HomePage() {
           <SectionHeading eyebrow="Measured impact" title="Small experiments. Lasting momentum." align="center" inverse />
           <dl className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {siteStats.map((stat, index) => (
-              <div key={stat.label} className="glass-panel relative overflow-hidden rounded-2xl p-7 text-center sm:p-8">
+              <div data-reveal="scale" key={stat.label} className="glass-panel relative overflow-hidden rounded-2xl p-7 text-center sm:p-8">
                 <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-0.5 ${["bg-teal-300", "bg-gold-300", "bg-violet-300", "bg-science-300"][index % 4]}`} />
                 <dt className="text-xs font-extrabold uppercase tracking-[0.13em] text-slate-400">{stat.label}</dt>
                 <dd>
@@ -192,7 +199,7 @@ export default function HomePage() {
 
 function HeroBackdrop() {
   return (
-    <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
+    <div aria-hidden="true" data-parallax="0.08" className="absolute inset-0 overflow-hidden">
       <div className="absolute left-1/2 top-[42%] aspect-square w-[52rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.055]" />
       <div className="absolute left-1/2 top-[42%] aspect-square w-[38rem] -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-full border border-dashed border-teal-300/10" />
       <div className="absolute left-1/2 top-[42%] aspect-square w-[25rem] -translate-x-1/2 -translate-y-1/2 -rotate-12 rounded-full border border-gold-300/10" />
@@ -207,7 +214,7 @@ function HeroBackdrop() {
 
 function FeaturedFestival({ festival }: { festival: NonNullable<ReturnType<typeof getCurrentOrUpcomingFestival>> }) {
   return (
-    <article className="group grid overflow-hidden rounded-[2rem] border border-paper-200 bg-navy-950 shadow-soft lg:grid-cols-[1.08fr_.92fr]">
+    <article data-reveal="scale" className="group grid overflow-hidden rounded-[2rem] border border-paper-200 bg-navy-950 shadow-soft lg:grid-cols-[1.08fr_.92fr]">
       <Link href={`/festivals/${festival.slug}`} className="relative min-h-[320px] overflow-hidden lg:min-h-[510px]">
         <Image src={festival.coverImage.src} alt={festival.coverImage.alt} fill sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.02]" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-950/55 via-transparent to-transparent" />

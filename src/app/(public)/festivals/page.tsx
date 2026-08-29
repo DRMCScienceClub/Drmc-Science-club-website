@@ -56,7 +56,7 @@ export default function FestivalsPage() {
         </div>
       </PageHero>
 
-      <section className="bg-white py-18 sm:py-24">
+      <section className="site-surface py-18 sm:py-24">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
             <SectionHeading
@@ -102,7 +102,7 @@ export default function FestivalsPage() {
               description="Revisit poster-backed themes, programme categories, available records, and visual highlights from past years."
             />
             <dl className="grid grid-cols-2 gap-3 sm:min-w-72">
-              <div className="rounded-2xl border border-slate-200 bg-white px-5 py-4">
+              <div className="surface-card rounded-2xl border border-surface-border px-5 py-4 shadow-card">
                 <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
                   Editions shown
                 </dt>
@@ -110,7 +110,7 @@ export default function FestivalsPage() {
                   {festivals.length}
                 </dd>
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-white px-5 py-4">
+              <div className="surface-card rounded-2xl border border-surface-border px-5 py-4 shadow-card">
                 <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
                   Archive years
                 </dt>

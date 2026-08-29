@@ -6,6 +6,7 @@ import type {
   SiteStat,
   SocialLink,
 } from "@/types/content";
+import { auroraArchive } from "./magazines";
 
 export const siteConfig: SiteConfig = {
   name: "DRMC Science Club",
@@ -145,7 +146,7 @@ export const siteStats: readonly SiteStat[] = [
     description: "Workshops, observations, competitions and open discussions.",
   },
   {
-    value: "14",
+    value: String(auroraArchive.totalVolumes),
     label: "magazine volumes",
     description: "Student science writing, research notes and illustrations.",
   },

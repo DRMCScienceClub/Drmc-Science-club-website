@@ -53,7 +53,7 @@ export default function ActivitiesPage() {
         </dl>
       </PageHero>
 
-      <section aria-label="Upcoming activities" className="bg-white py-16 sm:py-20 lg:py-24">
+      <section aria-label="Upcoming activities" className="site-surface py-16 sm:py-20 lg:py-24">
         <Container>
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <SectionHeading
@@ -98,7 +98,7 @@ export default function ActivitiesPage() {
           </div>
           <dl className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {(Object.entries(categoryCounts) as [ActivityCategory, number][]).map(([category, count]) => (
-              <div key={category} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card">
+              <div key={category} className="surface-card rounded-2xl border border-surface-border p-5 shadow-card">
                 <span className="inline-flex size-10 items-center justify-center rounded-xl bg-science-50 text-science-700">
                   <Icon name={categoryIcons[category]} className="size-5" />
                 </span>
@@ -112,7 +112,7 @@ export default function ActivitiesPage() {
         </Container>
       </section>
 
-      <section id="activity-archive" aria-label="Completed activities" className="bg-white py-16 sm:py-20 lg:py-24">
+      <section id="activity-archive" aria-label="Completed activities" className="site-surface py-16 sm:py-20 lg:py-24">
         <Container>
           <SectionHeading
             eyebrow="Field notes"

@@ -46,6 +46,7 @@ Only approved administrators will eventually sign in. Public member accounts are
 - Subtle scientific grid, orbital, and circuit-inspired decoration that does not compete with content.
 - Supplied club mark isolated in a shared brand component for a controlled future asset swap.
 - Poster-backed carnival archive for the 8th–16th editions, with provenance-aware copy and honest empty states for records not supplied.
+- Notice-verified 2025–26 executive roster and supplied group photograph, with student numbers, shifts, signatures, and inferred face mappings excluded from the public record.
 - Shared default metadata plus route-specific titles and descriptions.
 
 ### Home page
@@ -129,6 +130,7 @@ Phase 1 uses read-only TypeScript collections under `src/data`. Stable `id`, `sl
 ### Magazine
 
 - Publication identity: **Aurora**, the annual science magazine of DRMC Science Club.
+- Archive identity: 15 published volumes in total; detailed Phase 1 prototype records cover Volumes 13–15, while Volumes 1–12 remain explicitly queued for verification and digitisation.
 - Year/issue identity, title, description, cover image, publication date.
 - Online-reader and PDF links with availability states.
 
@@ -139,8 +141,10 @@ Phase 1 uses read-only TypeScript collections under `src/data`. Stable `id`, `sl
 ### Executive session
 
 - Session label, year range, current/archive status.
-- Moderator and adviser groups.
+- Provenance status distinguishing notice-verified and prototype records.
+- Moderator, adviser, and institutional-leadership groups without relabelling official designations.
 - Departments containing ordered members with role, name, portrait, and optional biography/contact fields.
+- Optional full-panel photograph with explicit dimensions and descriptive alternative text; individual face assignments require verified portrait metadata.
 
 ### Site configuration
 
@@ -155,7 +159,7 @@ The future data layer should preserve these view-facing contracts. Components sh
 - Use semantic landmarks, one clear page heading, logical section headings, lists for collections, and tables only for truly tabular schedules/results.
 - Maintain visible `:focus-visible` treatment, keyboard-operable disclosure/menu patterns, labelled forms, adequate target sizes, and status text that does not rely on color alone.
 - Provide purposeful alternative text for editorial images and empty alternative text for purely decorative assets.
-- Honor `prefers-reduced-motion` and avoid autoplay media or motion-essential interactions.
+- Use progressive-enhancement route, hero, scroll-reveal, menu, and parallax transitions; honor `prefers-reduced-motion` and avoid autoplay media or motion-essential interactions.
 - Generate page metadata from content records; add canonical URLs, Open Graph/Twitter imagery, `robots.txt`, `sitemap.xml`, and Event/Organization/Article structured data once the domain and approved content are available.
 - Prefer server rendering, optimized images, restrained client JavaScript, and explicit image dimensions to protect Core Web Vitals.
 

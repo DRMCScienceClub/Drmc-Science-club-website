@@ -22,6 +22,7 @@ export {
   getFestivalBySlug,
 } from "./festivals";
 export {
+  auroraArchive,
   getFeaturedMagazine,
   getMagazineByYear,
   magazines,

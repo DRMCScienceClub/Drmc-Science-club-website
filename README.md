@@ -88,19 +88,24 @@ Page files should compose shared components and read from `src/data`; they shoul
 
 The shared `LogoMark` uses the supplied transparent DRMC Science Club artwork at `public/images/brand/drmc-science-club-logo.png`. A favicon-legible brand submark and square app icons are derived from the same supplied artwork. Nine supplied carnival posters are normalized under `public/images/festivals/archive/` and power poster-backed records for the 8th through 16th editions (2015–2025, with no invented entries for years absent from the supplied set).
 
+The supplied 2025–26 executive-panel photograph is stored at `public/images/executives/executive-panel-2025-26.jpg`. Names, official designations, the moderator, and institutional leadership are transcribed from the supplied committee-formation notice. The notice itself is intentionally not copied into the public site because it contains student college numbers and staff signatures; no left-to-right identity mapping is inferred from the group photograph.
+
 Festival records carry a provenance state. Poster-backed entries publish only details visible in the supplied artwork—edition, title, dates, theme, selected listed segments, and the displayed title sponsor—while unavailable schedules, results, rules, venue records, and resources use explicit empty states. The 2026 record remains visibly labelled as Phase 1 prototype content.
+
+Aurora is recorded as a 15-volume publication. Phase 1 includes detailed prototype records for Volumes 13–15; Volumes 1–12 are clearly marked as awaiting archival verification instead of assigning invented covers, dates, or files.
 
 ## Prototype boundaries
 
 - Festival registration, contact, membership, download, and online-reading actions are demonstrations unless explicitly linked to a public resource.
 - No Supabase project, database schema, storage bucket, server action, email delivery, or persistent form submission is connected.
 - No real authentication, session, authorization, or administrator credentials exist. There is intentionally no public member-login flow.
-- Except for facts transcribed from the supplied archive posters, names, dates, statistics, results, partner marks, documents, and visual assets are sample content and must be reviewed by the club before launch.
+- Except for facts transcribed from the supplied archive posters and the supplied 2025–26 committee notice, names, dates, statistics, results, partner marks, documents, and visual assets are sample content and must be reviewed by the club before launch.
+- Confirm publication consent for the supplied 2025–26 group photograph before production launch; individual student portraits remain placeholders until approved images are provided.
 - The supplied club mark is isolated behind a reusable logo component. Confirm ownership, official status, clear-space guidance, and permitted variants before production use.
 
 ## Accessibility and responsive behavior
 
-The interface is mobile-first and uses semantic landmarks, logical heading order, descriptive labels, visible keyboard focus, accessible color contrast, and touch-friendly controls. Decorative artwork is separated from meaningful content, and motion is reduced when the visitor enables `prefers-reduced-motion`.
+The interface is mobile-first and uses semantic landmarks, logical heading order, descriptive labels, visible keyboard focus, accessible color contrast, and touch-friendly controls. A progressive-enhancement motion controller adds staggered hero entrances, scroll reveals, subtle parallax, mobile-menu motion, and route transitions while leaving content visible without JavaScript. Decorative artwork is separated from meaningful content, and motion is removed when the visitor enables `prefers-reduced-motion`.
 
 When extending the prototype, preserve keyboard access, useful alternative text, non-color status cues, and the current focus treatment. New forms must include associated labels, actionable error messages, and a clear submitted state.
 

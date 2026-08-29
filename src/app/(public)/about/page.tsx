@@ -43,14 +43,14 @@ export default function AboutPage() {
         </div>
       </PageHero>
 
-      <section aria-label="Our purpose" className="bg-white py-16 sm:py-20 lg:py-24">
+      <section aria-label="Our purpose" className="site-surface py-16 sm:py-20 lg:py-24">
         <Container className="grid gap-10 lg:grid-cols-[.82fr_1.18fr] lg:items-start lg:gap-16">
           <SectionHeading
             eyebrow="Our purpose"
             title="Curiosity is the beginning, not the finish line."
             description="The club creates room for students to move from an interesting question to a method, an observation, and a result they can communicate clearly."
           />
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-7 shadow-soft sm:p-9">
+          <div className="rounded-[2rem] border border-surface-border bg-slate-50 p-7 shadow-soft sm:p-9">
             <LogoMark className="size-14" />
             <blockquote className="mt-6 text-balance font-display text-2xl font-extrabold leading-snug tracking-[-0.025em] text-navy-950 sm:text-3xl">
               “Questioning carefully, building responsibly and sharing what we discover.”
@@ -119,7 +119,7 @@ export default function AboutPage() {
           />
           <div className="mt-11 grid gap-5 lg:grid-cols-3">
             {clubPillars.map((pillar, index) => (
-              <article key={pillar.title} className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 shadow-card sm:p-8">
+              <article key={pillar.title} className="surface-card relative overflow-hidden rounded-3xl border border-surface-border p-7 shadow-card sm:p-8">
                 <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-science-50 text-science-700">
                   <Icon name={pillarIcons[index]} className="size-6" />
                 </span>
@@ -134,7 +134,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section aria-label="How the club works" className="bg-white py-16 sm:py-20 lg:py-24">
+      <section aria-label="How the club works" className="site-surface py-16 sm:py-20 lg:py-24">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[.78fr_1.22fr] lg:gap-16">
             <div>
@@ -153,7 +153,7 @@ export default function AboutPage() {
               {panel?.departments.map((department, index) => (
                 <article
                   key={department.name}
-                  className={`rounded-2xl border border-slate-200 p-6 ${index === 0 ? "bg-navy-900 text-white sm:col-span-2" : "bg-slate-50"}`}
+                  className={`rounded-2xl border p-6 shadow-card ${index === 0 ? "border-navy-700 bg-navy-900 text-white sm:col-span-2" : "border-surface-border bg-slate-50"}`}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <h2 className={`font-display text-lg font-extrabold ${index === 0 ? "text-white" : "text-navy-950"}`}>
@@ -173,7 +173,7 @@ export default function AboutPage() {
 
       <section aria-labelledby="institutional-home" className="border-y border-slate-200 bg-slate-50 py-16 sm:py-20">
         <Container>
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-7 shadow-soft sm:p-10 lg:grid lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-9">
+          <div className="surface-card rounded-[2rem] border border-surface-border p-7 shadow-soft sm:p-10 lg:grid lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-9">
             <span className="inline-flex size-16 items-center justify-center rounded-2xl bg-navy-950">
               <Icon name="shield" className="size-8 text-teal-300" />
             </span>

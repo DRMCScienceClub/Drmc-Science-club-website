@@ -22,11 +22,11 @@ export default function ContactPage() {
     <main>
       <PageHero eyebrow="Contact" title="Let’s talk science." description="Reach the club for festival coordination, institutional invitations, publication questions, or information about student programmes." icon="mail" />
 
-      <section className="bg-white py-16 sm:py-20">
+      <section className="site-surface py-16 sm:py-20">
         <Container>
           <div className="grid gap-5 lg:grid-cols-3">
             {contactMethods.map((method) => (
-              <a key={method.label} href={method.href} className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-card transition-transform hover:-translate-y-0.5">
+              <a key={method.label} href={method.href} className="surface-card group rounded-3xl border border-surface-border p-6 shadow-card transition-transform hover:-translate-y-0.5">
                 <span className="inline-flex size-11 items-center justify-center rounded-xl bg-science-50 text-science-700"><Icon name={method.icon} /></span>
                 <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.13em] text-slate-500">{method.label}</p>
                 <p className="mt-2 break-words font-display text-lg font-extrabold text-navy-950 group-hover:text-science-700">{method.value}</p>
@@ -57,7 +57,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-7 shadow-card sm:p-10">
+          <div className="surface-card rounded-[2rem] border border-surface-border p-7 shadow-card sm:p-10">
             <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-science-700">Before you write</p>
             <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-navy-950">Help us route your enquiry.</h2>
             <p className="mt-4 leading-7 text-slate-600">For a faster response, include the event or programme name, your institution, a contact person, and any relevant deadline in the subject line.</p>
@@ -72,7 +72,7 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      <section className="bg-white py-14">
+      <section className="site-surface py-14">
         <Container className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-science-700">Social channels</p><h2 className="mt-2 text-2xl font-extrabold text-navy-950">Updates, photographs, and announcements.</h2></div>
           <div className="flex flex-wrap gap-3">

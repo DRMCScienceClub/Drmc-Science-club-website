@@ -101,7 +101,7 @@ export default async function FestivalDetailPage({
       <FestivalHero festival={festival} />
       <FestivalSectionNav />
 
-      <section id="overview" className="bg-white py-18 sm:py-24">
+      <section id="overview" className="site-surface py-18 sm:py-24">
         <Container className="grid gap-12 lg:grid-cols-[1fr_22rem] lg:gap-16">
           <article>
             <span className="eyebrow">About this edition</span>
@@ -115,7 +115,7 @@ export default async function FestivalDetailPage({
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
-            <dl className="mt-10 grid gap-px overflow-hidden rounded-3xl border border-slate-200 bg-slate-200 sm:grid-cols-2">
+            <dl className="mt-10 grid gap-px overflow-hidden rounded-3xl border border-surface-border bg-slate-200 shadow-card sm:grid-cols-2">
               <div className="bg-slate-50 p-6">
                 <dt className="text-xs font-extrabold uppercase tracking-[0.12em] text-slate-500">
                   Festival theme
@@ -162,7 +162,7 @@ export default async function FestivalDetailPage({
               {festival.segments.map((segment, index) => (
                 <li
                   key={segment.slug}
-                  className="group flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-card transition-colors hover:border-science-200 sm:p-7"
+                  className="surface-card group flex h-full flex-col rounded-3xl border border-surface-border p-6 shadow-card transition-[border-color,box-shadow,transform] hover:-translate-y-0.5 hover:border-science-400 hover:shadow-soft sm:p-7"
                 >
                   <div className="flex items-center justify-between gap-4">
                     <span className="inline-flex size-10 items-center justify-center rounded-xl bg-science-50 font-display text-sm font-black text-science-700">
@@ -179,7 +179,7 @@ export default async function FestivalDetailPage({
                     {segment.summary ?? "Listed on the supplied archive poster."}
                   </p>
                   {(segment.eligibility || segment.teamSize || segment.fee) && (
-                    <dl className="mt-6 grid gap-3 border-t border-slate-100 pt-5 text-sm">
+                    <dl className="mt-6 grid gap-3 border-t border-slate-200 pt-5 text-sm">
                       {segment.eligibility && (
                         <div>
                           <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
@@ -238,7 +238,7 @@ export default async function FestivalDetailPage({
         </Container>
       </section>
 
-      <section id="schedule" className="bg-white py-18 sm:py-24">
+      <section id="schedule" className="site-surface py-18 sm:py-24">
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
             <SectionHeading
@@ -259,7 +259,7 @@ export default async function FestivalDetailPage({
                 {festival.schedule.map((day, dayIndex) => (
                   <article
                     key={day.date}
-                    className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50"
+                    className="overflow-hidden rounded-3xl border border-surface-border bg-slate-50 shadow-card"
                   >
                     <header className="flex items-center justify-between gap-4 border-b border-slate-200 bg-navy-950 px-6 py-5 text-white">
                       <div>
@@ -349,7 +349,7 @@ export default async function FestivalDetailPage({
               {festival.results.map((result, index) => (
                 <li
                   key={`${result.segment}-${result.position}-${result.recipient}`}
-                  className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-card"
+                  className="surface-card relative overflow-hidden rounded-3xl border border-surface-border p-6 shadow-card"
                 >
                   <span
                     aria-hidden="true"
@@ -378,7 +378,7 @@ export default async function FestivalDetailPage({
               ))}
             </ol>
           ) : (
-            <div className="mt-10 overflow-hidden rounded-[2rem] border border-science-200 bg-white shadow-card">
+            <div className="surface-card mt-10 overflow-hidden rounded-[2rem] border border-science-300 shadow-card">
               <div className="h-1.5 bg-gradient-to-r from-science-500 via-teal-400 to-science-300" />
               <div className="px-6 py-4 text-center sm:px-10 sm:py-6">
                 <EmptyState
@@ -401,7 +401,7 @@ export default async function FestivalDetailPage({
         </Container>
       </section>
 
-      <section id="partners" className="bg-white py-18 sm:py-24">
+      <section id="partners" className="site-surface py-18 sm:py-24">
         <Container>
           <SectionHeading
             eyebrow="Sponsors & partners"
@@ -483,9 +483,9 @@ export default async function FestivalDetailPage({
         </Container>
       </section>
 
-      <section id="resources" className="bg-white py-18 sm:py-24">
+      <section id="resources" className="site-surface py-18 sm:py-24">
         <Container>
-          <div className="grid overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50 shadow-soft lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="grid overflow-hidden rounded-[2rem] border border-surface-border bg-slate-50 shadow-soft lg:grid-cols-[0.92fr_1.08fr]">
             <div className="p-7 sm:p-10 lg:p-12">
               <span className="eyebrow">Festival resources</span>
               <h2 className="mt-4 text-balance font-display text-3xl font-extrabold tracking-[-0.035em] text-navy-950 sm:text-4xl">
@@ -811,9 +811,9 @@ function OrganizationGroup({
           {organizations.map((organization) => (
             <li
               key={`${organization.name}-${organization.role}`}
-              className="rounded-3xl border border-slate-200 bg-slate-50 p-5"
+              className="rounded-3xl border border-surface-border bg-slate-50 p-5 shadow-card"
             >
-              <div className="relative flex aspect-[2/1] items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white">
+              <div className="relative flex aspect-[2/1] items-center justify-center overflow-hidden rounded-2xl border border-surface-border bg-white">
                 {organization.logo ? (
                   <Image
                     src={organization.logo.src}
@@ -857,7 +857,7 @@ function ResourceLink({
     <a
       href={href}
       download
-      className="group flex min-h-48 flex-col justify-between rounded-3xl border border-slate-200 bg-slate-50 p-6 transition-colors hover:border-science-300 hover:bg-science-50"
+      className="group flex min-h-48 flex-col justify-between rounded-3xl border border-surface-border bg-slate-50 p-6 shadow-card transition-colors hover:border-science-400 hover:bg-science-50"
     >
       <span className="inline-flex size-11 items-center justify-center rounded-xl bg-white text-science-700 shadow-sm">
         <Icon name="download" />

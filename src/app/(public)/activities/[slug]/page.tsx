@@ -156,7 +156,7 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
           </Container>
         </header>
 
-        <section aria-labelledby="activity-overview" className="bg-white py-16 sm:py-20 lg:py-24">
+        <section aria-labelledby="activity-overview" className="site-surface py-16 sm:py-20 lg:py-24">
           <Container className="grid gap-12 lg:grid-cols-[1fr_340px] lg:gap-16">
             <div>
               <p className="eyebrow">Activity brief</p>
@@ -193,7 +193,7 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
             </div>
 
             <aside aria-label="Activity details" className="space-y-5">
-              <section className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+              <section className="rounded-3xl border border-surface-border bg-slate-50 p-6">
                 <h2 className="text-sm font-extrabold uppercase tracking-[0.12em] text-navy-950">Organized by</h2>
                 <ul className="mt-4 space-y-3">
                   {activity.organizers.map((organizer) => (
@@ -205,7 +205,7 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
                 </ul>
               </section>
 
-              <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-card">
+              <section className="surface-card rounded-3xl border border-surface-border p-6 shadow-card">
                 <h2 className="text-sm font-extrabold uppercase tracking-[0.12em] text-navy-950">Topics</h2>
                 <ul className="mt-4 flex flex-wrap gap-2" aria-label="Activity tags">
                   {activity.tags.map((tag) => (
@@ -236,7 +236,7 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
         {activity.status === "upcoming" && activity.registration && (
           <section id="register" aria-labelledby="registration-heading" className="border-y border-slate-200 bg-slate-50 py-12 sm:py-16">
             <Container>
-              <div className="grid gap-6 rounded-[2rem] border border-science-200 bg-white p-7 shadow-soft sm:p-9 lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-8">
+              <div className="surface-card grid gap-6 rounded-[2rem] border border-science-300 p-7 shadow-soft sm:p-9 lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-8">
                 <span className="inline-flex size-14 items-center justify-center rounded-2xl bg-science-50 text-science-700">
                   <Icon name="calendar" className="size-7" />
                 </span>
@@ -267,7 +267,7 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
               />
               <div className="mt-10 grid gap-5 md:grid-cols-2">
                 {activity.gallery.map((image, index) => (
-                  <figure key={`${image.src}-${index}`} className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-card">
+                  <figure key={`${image.src}-${index}`} className="surface-card group overflow-hidden rounded-3xl border border-surface-border shadow-card">
                     <div className="relative aspect-[3/2] overflow-hidden bg-navy-900">
                       <Image
                         src={image.src}
@@ -286,7 +286,7 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
         )}
       </article>
 
-      <section aria-label="More activities" className="bg-white py-16 sm:py-20 lg:py-24">
+      <section aria-label="More activities" className="site-surface py-16 sm:py-20 lg:py-24">
         <Container>
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <SectionHeading eyebrow="Keep exploring" title="More club activities" />

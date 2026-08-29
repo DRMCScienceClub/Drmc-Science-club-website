@@ -7,7 +7,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { Icon } from "@/components/ui/icon";
 import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { getFeaturedMagazine, magazines } from "@/data";
+import { auroraArchive, getFeaturedMagazine, magazines } from "@/data";
 import { formatDate } from "@/lib/utils";
 import type { MagazineIssue } from "@/types/content";
 
@@ -58,7 +58,7 @@ export default function MagazinesPage() {
       {featuredIssue ? (
         <FeaturedIssue issue={featuredIssue} />
       ) : (
-        <section className="bg-white py-18 sm:py-24">
+        <section className="site-surface py-18 sm:py-24">
           <Container>
             <EmptyState
               title="The next magazine is in development"
@@ -81,20 +81,20 @@ export default function MagazinesPage() {
               description="Each volume captures what DRMC students were investigating, building, reading, and debating in that publication year."
             />
             <dl className="grid grid-cols-2 gap-3 sm:min-w-72">
-              <div className="rounded-2xl border border-slate-200 bg-white px-5 py-4">
+              <div className="surface-card rounded-2xl border border-surface-border px-5 py-4 shadow-card">
                 <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Issues online
+                  Published volumes
                 </dt>
                 <dd className="mt-1 font-display text-3xl font-black text-science-700">
-                  {magazines.length}
+                  {auroraArchive.totalVolumes}
                 </dd>
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-white px-5 py-4">
+              <div className="surface-card rounded-2xl border border-surface-border px-5 py-4 shadow-card">
                 <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Latest volume
+                  Digitised here
                 </dt>
                 <dd className="mt-1 font-display text-3xl font-black text-teal-700">
-                  {featuredIssue?.year ?? "—"}
+                  {magazines.length}
                 </dd>
               </div>
             </dl>
@@ -115,10 +115,30 @@ export default function MagazinesPage() {
               />
             </div>
           )}
+
+          <div
+            data-reveal="up"
+            className="mt-8 flex flex-col gap-5 rounded-3xl border border-gold-200 bg-gold-50 p-6 sm:flex-row sm:items-start sm:p-8"
+          >
+            <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-white text-gold-600 shadow-sm">
+              <Icon name="book" />
+            </span>
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.13em] text-gold-600">
+                Full Aurora record · 15 volumes
+              </p>
+              <h3 className="mt-2 font-display text-2xl font-extrabold tracking-[-0.025em] text-navy-950">
+                Earlier volumes are being prepared for the digital shelf.
+              </h3>
+              <p className="mt-3 max-w-3xl leading-7 text-slate-600">
+                {auroraArchive.digitisedRange} are represented in this Phase 1 prototype. {auroraArchive.awaitingDigitisationRange} will be added only after their publication years, cover artwork, and reading files are verified from the club archive.
+              </p>
+            </div>
+          </div>
         </Container>
       </section>
 
-      <section className="bg-white py-18 sm:py-24">
+      <section className="site-surface py-18 sm:py-24">
         <Container>
           <SectionHeading
             eyebrow="Editorial practice"
@@ -201,7 +221,7 @@ export default function MagazinesPage() {
 
 function FeaturedIssue({ issue }: { issue: MagazineIssue }) {
   return (
-    <section className="overflow-hidden bg-white py-18 sm:py-24">
+    <section className="site-surface overflow-hidden py-18 sm:py-24">
       <Container>
         <div className="science-grid-dark relative grid overflow-hidden rounded-[2rem] bg-navy-950 text-white shadow-soft lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
           <div className="relative flex min-h-[460px] items-center justify-center overflow-hidden px-8 py-14 sm:min-h-[560px]">

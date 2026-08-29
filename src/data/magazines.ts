@@ -1,5 +1,12 @@
 import type { MagazineIssue } from "@/types/content";
 
+export const auroraArchive = {
+  totalVolumes: 15,
+  digitisedRange: "Volumes 13–15",
+  awaitingDigitisationRange: "Volumes 1–12",
+  note: "Fifteen Aurora volumes have been published. The three newest prototype records are represented here while earlier covers, publication years, and files await archival verification.",
+} as const;
+
 /** Annual prototype issues of the club magazine, newest first. */
 export const magazines: readonly MagazineIssue[] = [
   {
@@ -7,7 +14,7 @@ export const magazines: readonly MagazineIssue[] = [
     slug: "aurora-2026",
     title: "Aurora 2026",
     subtitle: "Signals of Tomorrow",
-    volume: "Volume 14",
+    volume: "Volume 15",
     publishedAt: "2026-04-14",
     pages: 96,
     description:
@@ -40,7 +47,7 @@ export const magazines: readonly MagazineIssue[] = [
     slug: "aurora-2025",
     title: "Aurora 2025",
     subtitle: "Living Systems",
-    volume: "Volume 13",
+    volume: "Volume 14",
     publishedAt: "2025-04-14",
     pages: 88,
     description:
@@ -73,7 +80,7 @@ export const magazines: readonly MagazineIssue[] = [
     slug: "aurora-2024",
     title: "Aurora 2024",
     subtitle: "The Measure of Wonder",
-    volume: "Volume 12",
+    volume: "Volume 13",
     publishedAt: "2024-03-26",
     pages: 84,
     description:

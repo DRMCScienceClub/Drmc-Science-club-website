@@ -8,7 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteConfig.url}/activities`, lastModified: new Date("2026-08-28"), changeFrequency: "weekly", priority: 0.9 },
     { url: `${siteConfig.url}/festivals`, lastModified: new Date("2026-08-28"), changeFrequency: "weekly", priority: 0.9 },
     { url: `${siteConfig.url}/magazines`, lastModified: new Date("2026-08-28"), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteConfig.url}/executives`, lastModified: new Date("2026-08-28"), changeFrequency: "yearly", priority: 0.7 },
+    { url: `${siteConfig.url}/executives`, lastModified: new Date("2026-08-29"), changeFrequency: "yearly", priority: 0.7 },
     { url: `${siteConfig.url}/contact`, lastModified: new Date("2026-08-28"), changeFrequency: "yearly", priority: 0.6 },
     { url: `${siteConfig.url}/join`, lastModified: new Date("2026-08-28"), changeFrequency: "monthly", priority: 0.8 },
   ];

@@ -201,10 +201,13 @@ export interface ExecutivePanel {
   startYear: number;
   endYear: number;
   isCurrent: boolean;
+  recordStatus: "official-document" | "prototype";
   title: string;
   summary: string;
+  groupImage?: ContentImage;
   moderator: ExecutiveMember;
   advisers: ExecutiveMember[];
+  institutionalLeadership?: ExecutiveMember[];
   departments: ExecutiveDepartment[];
 }
 

@@ -87,7 +87,7 @@ export default async function MagazineDetailPage({
     <main>
       <MagazineHero issue={issue} />
 
-      <section className="bg-white py-18 sm:py-24">
+      <section className="site-surface py-18 sm:py-24">
         <Container className="grid gap-12 lg:grid-cols-[1fr_21rem] lg:gap-16">
           <article>
             <span className="eyebrow">About the issue</span>
@@ -106,7 +106,7 @@ export default async function MagazineDetailPage({
                 {issue.highlights.map((highlight, index) => (
                   <li
                     key={highlight}
-                    className="flex gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5"
+                    className="flex gap-4 rounded-2xl border border-surface-border bg-slate-50 p-5 shadow-card"
                   >
                     <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-xl bg-science-100 font-display text-xs font-black text-science-700">
                       {String(index + 1).padStart(2, "0")}
@@ -138,7 +138,7 @@ export default async function MagazineDetailPage({
             </div>
           </article>
 
-          <aside className="h-fit rounded-3xl border border-slate-200 bg-slate-50 p-7 lg:sticky lg:top-28">
+          <aside className="h-fit rounded-3xl border border-surface-border bg-slate-50 p-7 shadow-card lg:sticky lg:top-28">
             <span className="inline-flex size-11 items-center justify-center rounded-xl bg-science-100 text-science-700">
               <Icon name="book" />
             </span>
@@ -278,7 +278,7 @@ export default async function MagazineDetailPage({
       </section>
 
       {otherIssues.length > 0 && (
-        <section className="bg-white py-18 sm:py-24">
+        <section className="site-surface py-18 sm:py-24">
           <Container>
             <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
               <SectionHeading

@@ -10,7 +10,7 @@ export default function ActivitiesLoading() {
           <div className="mt-5 h-6 max-w-xl animate-pulse rounded-xl bg-white/5" />
         </Container>
       </section>
-      <section className="bg-white py-16 sm:py-20">
+      <section className="site-surface py-16 sm:py-20">
         <Container>
           <span className="sr-only">Loading activity content…</span>
           <div className="h-9 w-72 max-w-full animate-pulse rounded-xl bg-slate-200" />

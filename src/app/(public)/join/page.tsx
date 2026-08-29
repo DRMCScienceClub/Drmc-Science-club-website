@@ -25,7 +25,7 @@ export default function JoinPage() {
         <div className="rounded-2xl border border-teal-300/20 bg-teal-300/10 p-5 lg:max-w-xs"><p className="text-xs font-extrabold uppercase tracking-[0.13em] text-teal-300">Intake status</p><p className="mt-2 font-extrabold text-white">Next orientation to be announced</p><p className="mt-2 text-xs leading-5 text-slate-300">Watch official club notices for the confirmed date.</p></div>
       </PageHero>
 
-      <section className="bg-white py-16 sm:py-20">
+      <section className="site-surface py-16 sm:py-20">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
             <div className="lg:sticky lg:top-28">
@@ -36,7 +36,7 @@ export default function JoinPage() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {interestAreas.map((area) => (
-                <article key={area.title} className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                <article key={area.title} className="rounded-3xl border border-surface-border bg-slate-50 p-6 shadow-card">
                   <span className="inline-flex size-11 items-center justify-center rounded-xl bg-white text-science-700 shadow-sm"><Icon name={area.icon} /></span>
                   <h3 className="mt-5 text-lg font-extrabold text-navy-950">{area.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-slate-600">{area.description}</p>
@@ -52,7 +52,7 @@ export default function JoinPage() {
           <div className="mx-auto max-w-2xl text-center"><span className="eyebrow">Membership pathway</span><h2 className="mt-4 text-balance font-display text-3xl font-extrabold tracking-tight text-navy-950 sm:text-4xl">Three simple steps to begin.</h2><p className="mt-4 leading-7 text-slate-600">The final process and dates will be published after approval by the club authority.</p></div>
           <ol className="relative mt-10 grid gap-5 lg:grid-cols-3">
             {membershipSteps.map((item) => (
-              <li key={item.step} className="relative rounded-3xl border border-slate-200 bg-white p-7 shadow-card">
+              <li key={item.step} className="surface-card relative rounded-3xl border border-surface-border p-7 shadow-card">
                 <span className="font-display text-4xl font-black text-science-200">{item.step}</span>
                 <h3 className="mt-5 text-xl font-extrabold text-navy-950">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
@@ -62,7 +62,7 @@ export default function JoinPage() {
         </Container>
       </section>
 
-      <section className="bg-white py-16 sm:py-20">
+      <section className="site-surface py-16 sm:py-20">
         <Container>
           <div className="science-grid-dark relative overflow-hidden rounded-[2rem] bg-navy-950 p-7 text-white sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:p-14">
             <div className="max-w-2xl"><span className="text-xs font-extrabold uppercase tracking-[0.14em] text-teal-300">Stay ready</span><h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">Want to know when intake opens?</h2><p className="mt-4 leading-7 text-slate-300">Follow the official channels for the next orientation notice, or email the club with a concise membership question.</p></div>
