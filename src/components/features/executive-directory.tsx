@@ -50,7 +50,30 @@ export function ExecutiveDirectory({ panels }: { panels: readonly ExecutivePanel
       </div>
 
       <section aria-live="polite" aria-label={`${panel.title} members`} className="mt-10">
-        <div className="science-grid-dark overflow-hidden rounded-3xl bg-navy-950 p-6 text-white sm:p-8 lg:p-10">
+        {panel.groupImage ? (
+          <figure data-reveal="up" className="overflow-hidden rounded-3xl border border-surface-border bg-navy-950 shadow-soft">
+            <Image
+              src={panel.groupImage.src}
+              alt={panel.groupImage.alt}
+              width={panel.groupImage.width}
+              height={panel.groupImage.height}
+              sizes="(min-width: 1280px) 1240px, calc(100vw - 2rem)"
+              className="h-auto w-full"
+            />
+            <figcaption className="flex flex-col gap-1 border-t border-white/10 px-5 py-4 text-sm text-slate-300 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+              <span>Executive batch photograph · session {panel.session}</span>
+              <span className="text-xs text-slate-400">Names below are listed independently of the photograph&apos;s left-to-right order.</span>
+            </figcaption>
+          </figure>
+        ) : (
+          <div className="surface-card science-grid flex min-h-64 flex-col items-center justify-center rounded-3xl border border-dashed border-surface-border px-6 py-12 text-center shadow-card">
+            <span className="inline-flex size-14 items-center justify-center rounded-2xl bg-teal-100 text-teal-700"><Icon name="users" className="size-7" /></span>
+            <h2 className="mt-5 font-display text-xl font-extrabold text-navy-950">Batch photograph awaiting archive</h2>
+            <p className="mt-2 max-w-md text-sm leading-6 text-slate-600">The approved group photograph for session {panel.session} has not yet been supplied.</p>
+          </div>
+        )}
+
+        <div className="science-grid-dark mt-6 overflow-hidden rounded-3xl bg-navy-950 p-6 text-white sm:p-8 lg:p-10">
           <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
               <div className="flex flex-wrap items-center gap-3">
@@ -74,23 +97,6 @@ export function ExecutiveDirectory({ panels }: { panels: readonly ExecutivePanel
             </div>
           </div>
         </div>
-
-        {panel.groupImage && (
-          <figure data-reveal="up" className="mt-6 overflow-hidden rounded-3xl border border-surface-border bg-navy-950 shadow-soft">
-            <Image
-              src={panel.groupImage.src}
-              alt={panel.groupImage.alt}
-              width={panel.groupImage.width}
-              height={panel.groupImage.height}
-              sizes="(min-width: 1280px) 1240px, calc(100vw - 2rem)"
-              className="h-auto w-full"
-            />
-            <figcaption className="flex flex-col gap-1 border-t border-white/10 px-5 py-4 text-sm text-slate-300 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-              <span>Supplied group photograph · session {panel.session}</span>
-              <span className="text-xs text-slate-400">Roster below follows the committee notice, not the photograph&apos;s left-to-right order.</span>
-            </figcaption>
-          </figure>
-        )}
 
         <section aria-labelledby="faculty-leadership" className="mt-10">
           <div className="flex items-center gap-3"><span className="inline-flex size-10 items-center justify-center rounded-xl bg-teal-100 text-teal-700"><Icon name="shield" /></span><div><p className="text-xs font-extrabold uppercase tracking-[0.13em] text-science-700">Guidance</p><h3 id="faculty-leadership" className="font-display text-2xl font-extrabold text-navy-950">{panel.advisers.length > 0 ? "Moderator & advisers" : "Moderator"}</h3></div></div>

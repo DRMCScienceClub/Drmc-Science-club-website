@@ -144,7 +144,7 @@ Phase 1 uses read-only TypeScript collections under `src/data`. Stable `id`, `sl
 - Provenance status distinguishing notice-verified and prototype records.
 - Moderator, adviser, and institutional-leadership groups without relabelling official designations.
 - Departments containing ordered members with role, name, portrait, and optional biography/contact fields.
-- Optional full-panel photograph with explicit dimensions and descriptive alternative text; individual face assignments require verified portrait metadata.
+- A full-panel photograph at the top of each selected executive batch, with explicit dimensions and descriptive alternative text; batches awaiting approved imagery use an honest archive placeholder, and individual face assignments require verified portrait metadata.
 
 ### Site configuration
 
