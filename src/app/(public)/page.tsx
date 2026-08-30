@@ -44,34 +44,42 @@ export default function HomePage() {
     <main>
       <section className="home-hero-motion dark-canvas relative overflow-hidden">
         <HeroBackdrop />
-        <Container className="relative flex min-h-[720px] flex-col items-center justify-center py-20 text-center sm:py-24 lg:py-28">
-          <div data-reveal="scale" className="glass-panel flex min-h-36 min-w-48 items-center justify-center rounded-[2rem] px-5 py-3 shadow-2xl shadow-black/20">
-            <LogoMark prominent />
+        <Container className="relative grid min-h-[720px] items-center gap-12 py-20 sm:py-24 lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,.92fr)] lg:gap-14 lg:py-28 xl:gap-20">
+          <div className="relative z-10 text-left">
+            <div data-reveal="from-top" data-reveal-delay="1" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-gold-100 backdrop-blur-md">
+              <span className="size-1.5 rounded-full bg-gold-300 shadow-[0_0_14px_rgba(229,191,98,.65)]" />
+              The science community of DRMC
+            </div>
+            <h1 className="hero-title-stage mt-7 max-w-3xl text-balance font-display text-5xl font-black leading-[1.01] tracking-[-0.06em] text-white sm:text-6xl lg:text-[4.25rem] xl:text-[4.9rem]">
+              <span className="block overflow-hidden pb-2">
+                <span data-reveal="hero-title" data-reveal-delay="2" className="block">Ask better questions.</span>
+              </span>
+              <span className="block overflow-hidden pb-2">
+                <span data-reveal="hero-title" data-reveal-delay="3" className="accent-text block">Build what&apos;s next.</span>
+              </span>
+            </h1>
+            <p data-reveal="up" data-reveal-delay="4" className="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+              We bring young scientists together to experiment, engineer, observe, and share ideas that matter—from our campus to communities across Bangladesh.
+            </p>
+            <div data-reveal="scale" data-reveal-delay="5" className="mt-9 flex w-full max-w-md flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row">
+              <ButtonLink href="/join" variant="secondary">Join the Club</ButtonLink>
+              <ButtonLink href="/activities" variant="light">Explore our work</ButtonLink>
+            </div>
+            <dl data-reveal="up" data-reveal-delay="6" className="glass-panel mt-11 grid w-full max-w-3xl overflow-hidden rounded-2xl text-left sm:grid-cols-3">
+              <div className="border-b border-white/10 px-6 py-5 sm:border-b-0 sm:border-r"><dt className="text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-slate-400">Established</dt><dd className="mt-1 font-display text-2xl font-black text-white">{siteConfig.established}</dd></div>
+              <div className="border-b border-white/10 px-6 py-5 sm:border-b-0 sm:border-r"><dt className="text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-slate-400">Festival edition</dt><dd className="mt-1 font-display text-2xl font-black text-teal-200">{festival?.edition.split(" ")[0] ?? "—"}</dd></div>
+              <div className="px-6 py-5"><dt className="text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-slate-400">Aurora volume</dt><dd className="mt-1 font-display text-2xl font-black text-gold-200">{magazine?.volume.replace("Volume ", "") ?? "—"}</dd></div>
+            </dl>
           </div>
-          <div data-reveal="from-top" data-reveal-delay="1" className="mt-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-gold-100 backdrop-blur-md">
-            <span className="size-1.5 rounded-full bg-gold-300 shadow-[0_0_14px_rgba(229,191,98,.65)]" />
-            The science community of DRMC
+
+          <div data-reveal="scale" data-reveal-delay="3" className="relative mx-auto w-full max-w-[31rem] lg:mx-0 lg:max-w-[36rem] lg:justify-self-end">
+            <div aria-hidden="true" className="absolute -inset-5 rounded-[3rem] border border-dashed border-teal-300/15 sm:-inset-7" />
+            <div className="glass-panel relative overflow-hidden rounded-[2.5rem] p-4 shadow-2xl shadow-black/25 sm:p-7 lg:p-8">
+              <span aria-hidden="true" className="absolute -right-16 -top-20 size-56 rounded-full bg-science-400/10 blur-3xl" />
+              <span aria-hidden="true" className="absolute -bottom-20 -left-16 size-52 rounded-full bg-teal-300/10 blur-3xl" />
+              <LogoMark hero className="relative" />
+            </div>
           </div>
-          <h1 className="hero-title-stage mt-7 max-w-5xl text-balance font-display text-5xl font-black leading-[1.01] tracking-[-0.06em] text-white sm:text-6xl lg:text-7xl xl:text-[5.4rem]">
-            <span className="block overflow-hidden pb-2">
-              <span data-reveal="hero-title" data-reveal-delay="2" className="block">Ask better questions.</span>
-            </span>
-            <span className="block overflow-hidden pb-2">
-              <span data-reveal="hero-title" data-reveal-delay="3" className="accent-text block">Build what&apos;s next.</span>
-            </span>
-          </h1>
-          <p data-reveal="up" data-reveal-delay="4" className="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
-            We bring young scientists together to experiment, engineer, observe, and share ideas that matter—from our campus to communities across Bangladesh.
-          </p>
-          <div data-reveal="scale" data-reveal-delay="5" className="mt-9 flex w-full max-w-md flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
-            <ButtonLink href="/join" variant="secondary">Join the Club</ButtonLink>
-            <ButtonLink href="/activities" variant="light">Explore our work</ButtonLink>
-          </div>
-          <dl data-reveal="up" data-reveal-delay="6" className="glass-panel mt-11 grid w-full max-w-3xl overflow-hidden rounded-2xl text-left sm:grid-cols-3">
-            <div className="border-b border-white/10 px-6 py-5 sm:border-b-0 sm:border-r"><dt className="text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-slate-400">Established</dt><dd className="mt-1 font-display text-2xl font-black text-white">{siteConfig.established}</dd></div>
-            <div className="border-b border-white/10 px-6 py-5 sm:border-b-0 sm:border-r"><dt className="text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-slate-400">Festival edition</dt><dd className="mt-1 font-display text-2xl font-black text-teal-200">{festival?.edition.split(" ")[0] ?? "—"}</dd></div>
-            <div className="px-6 py-5"><dt className="text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-slate-400">Aurora volume</dt><dd className="mt-1 font-display text-2xl font-black text-gold-200">{magazine?.volume.replace("Volume ", "") ?? "—"}</dd></div>
-          </dl>
         </Container>
         <div className="border-t border-white/10 bg-black/15 backdrop-blur-sm">
           <Container className="flex flex-wrap items-center justify-center gap-x-9 gap-y-3 py-4 text-[0.68rem] font-extrabold uppercase tracking-[0.15em] text-slate-400 sm:justify-between">

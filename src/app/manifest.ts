@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "The official website of DRMC Science Club.",
     start_url: "/",
     display: "standalone",
-    background_color: "#fcfaf5",
+    background_color: "#edf8f5",
     theme_color: "#0b1014",
     icons: [
       {

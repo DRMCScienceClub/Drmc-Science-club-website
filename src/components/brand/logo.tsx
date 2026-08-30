@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import clubLogoArtwork from "../../../public/images/brand/drmc-science-club-logo.png";
 import { cn } from "@/lib/utils";
 
 type LogoProps = {
@@ -11,26 +12,35 @@ type LogoProps = {
 
 export function LogoMark({
   className,
+  hero = false,
   prominent = false,
 }: {
   className?: string;
+  hero?: boolean;
   prominent?: boolean;
 }) {
+  const isPriorityArtwork = hero || prominent;
+
   return (
     <span
       aria-hidden="true"
       className={cn(
         "relative block shrink-0",
-        prominent ? "h-28 w-40 sm:h-32 sm:w-48" : "h-11 w-[4.5rem]",
+        hero
+          ? "aspect-[7/5] w-full"
+          : prominent
+            ? "h-28 w-40 sm:h-32 sm:w-48"
+            : "h-11 w-[4.5rem]",
         className,
       )}
     >
       <Image
-        src="/images/brand/drmc-science-club-logo.png"
+        src={clubLogoArtwork}
         alt=""
         fill
-        preload={prominent}
-        sizes={prominent ? "192px" : "72px"}
+        preload={isPriorityArtwork}
+        quality={100}
+        sizes={hero ? "(min-width: 1280px) 560px, (min-width: 1024px) 42vw, 88vw" : prominent ? "192px" : "72px"}
         className="object-contain"
       />
     </span>

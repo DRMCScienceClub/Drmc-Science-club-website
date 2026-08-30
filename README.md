@@ -21,7 +21,7 @@ Phase 1 is complete as a public visual prototype. The current baseline provides 
 - Account-free public access with a clearly labelled, non-functional administrator login and dashboard preview.
 - A teal-led institutional visual system with dark navy feature areas, restrained science-blue and gold accents, subtle scientific grids, clearer card borders, and softly graduated light surfaces.
 - Reusable, provenance-aware festival, magazine, activity, and executive components backed by centralized TypeScript records.
-- Supplied DRMC Science Club branding across the shared header/footer logo, browser favicon, Apple touch icon, and installable application icons.
+- High-resolution supplied DRMC Science Club branding across the shared header/footer logo, home hero, browser favicon, Apple touch icon, and installable application icons.
 - Progressive route, hero, menu, reveal, and parallax motion with keyboard, reduced-motion, and hydration-safety protections.
 - Poster-backed festival history for the 8th–16th editions, a 15-volume Aurora archive model, and a notice-verified current executive-panel record.
 
@@ -108,7 +108,7 @@ Public routes are wrapped by a shared transition boundary and progressive motion
 
 ## Supplied and verified content assets
 
-The shared `LogoMark` uses the supplied transparent DRMC Science Club artwork at `public/images/brand/drmc-science-club-logo.png`. The browser favicon, application icon, Apple touch icon, and 192/512-pixel manifest icons are derived from the same supplied club mark. The real logo remains isolated behind reusable brand components so a later approved variant can be adopted without changing page layouts.
+The shared `LogoMark` uses the newly supplied 4320-pixel transparent DRMC Science Club artwork, normalized without resizing or altering its visible pixels at `public/images/brand/drmc-science-club-logo.png`. It is statically imported so Next.js gives each revision a content-hashed URL, then delivered at the explicitly enabled 100-quality setting to avoid stale or visibly compressed brand artwork. The multi-size browser favicon and `/icon.png` are generated directly from that transparent source and retain a transparent canvas. The corresponding original high-resolution light-background source is retained byte-for-byte at `public/images/brand/drmc-science-club-logo.jpeg` and supplies the Apple touch icon and 192/512-pixel installable-app icons. The home hero uses a responsive editorial split—message and actions first on the left, prominent club mark on the right at desktop widths, and text before artwork on smaller screens. The real logo remains isolated behind reusable brand components so a later approved variant can be adopted without changing page layouts.
 
 Nine supplied carnival posters are normalized under `public/images/festivals/archive/` and power poster-backed records for the 8th through 16th editions (2015–2025, with no invented entries for years absent from the supplied set). Festival records carry a provenance state. Poster-backed entries publish only details visible in the supplied artwork—edition, title, dates, theme, selected listed segments, and the displayed title sponsor—while unavailable schedules, results, rules, venue records, and resources use explicit empty states. The 2026 record remains visibly labelled as Phase 1 prototype content.
 
