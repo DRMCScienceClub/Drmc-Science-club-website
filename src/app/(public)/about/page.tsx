@@ -9,7 +9,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import {
   clubPillars,
   getCurrentExecutivePanel,
-  getCurrentOrUpcomingFestival,
+  getFeaturedFestival,
   getFeaturedMagazine,
   siteConfig,
 } from "@/data";
@@ -25,7 +25,7 @@ const pillarIcons: IconName[] = ["target", "flask", "users"];
 
 export default function AboutPage() {
   const panel = getCurrentExecutivePanel();
-  const festival = getCurrentOrUpcomingFestival();
+  const festival = getFeaturedFestival();
   const magazine = getFeaturedMagazine();
 
   return (
@@ -56,7 +56,7 @@ export default function AboutPage() {
               “Questioning carefully, building responsibly and sharing what we discover.”
             </blockquote>
             <p className="mt-5 text-sm leading-7 text-slate-600">
-              This Phase 1 prototype uses that purpose to connect club programmes, annual festivals, student publications, and executive teams in one public archive.
+              This public archive connects verified club programmes, annual festivals, student achievements, publications, and executive teams in one place.
             </p>
           </div>
         </Container>
@@ -68,7 +68,7 @@ export default function AboutPage() {
             <SectionHeading
               eyebrow="History in progress"
               title="Built year by year, documented for what comes next."
-              description={`The club record in this prototype begins with its ${siteConfig.established} establishment year and continues through recurring programmes, festival editions, and annual student publishing.`}
+              description={`The club record begins with its ${siteConfig.established} establishment year and continues through recurring programmes, festival editions, achievements, and annual student publishing.`}
               inverse
             />
             <dl className="mt-9 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
@@ -77,7 +77,7 @@ export default function AboutPage() {
                 <dd className="mt-2 text-2xl font-extrabold text-teal-300">{siteConfig.established}</dd>
               </div>
               <div className="bg-navy-900 p-5">
-                <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Current festival</dt>
+                <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Latest festival</dt>
                 <dd className="mt-2 text-2xl font-extrabold text-science-300">{festival?.edition ?? "To be announced"}</dd>
               </div>
               <div className="bg-navy-900 p-5">
@@ -86,7 +86,7 @@ export default function AboutPage() {
               </div>
             </dl>
             <p className="mt-5 text-xs leading-5 text-slate-400">
-              Prototype facts shown above come from the shared mock content and can be replaced with verified club records in a later phase.
+              The festival edition is taken from supplied official artwork; unverified historical details remain unpublished.
             </p>
           </div>
 
@@ -98,11 +98,11 @@ export default function AboutPage() {
                   alt={festival.coverImage.alt}
                   fill
                   sizes="(min-width: 1024px) 42vw, 100vw"
-                  className="object-cover"
+                  className="object-contain"
                 />
               </div>
               <figcaption className="border-t border-white/10 px-6 py-5 text-sm leading-6 text-slate-300">
-                {festival.shortTitle} is the newest festival record represented in this prototype.
+                {festival.shortTitle} is the newest poster-verified festival record in the archive.
               </figcaption>
             </figure>
           )}
@@ -183,7 +183,7 @@ export default function AboutPage() {
                 {siteConfig.institution}
               </h2>
               <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
-                The shared prototype data presents DRMC Science Club as the institution&apos;s student science community, with a faculty moderator and advisers supporting student-led departments.
+                DRMC Science Club is the institution&apos;s student science community, with faculty and college leadership guiding its student-led executive committee.
               </p>
             </div>
             <ButtonLink href="/contact" variant="outline" className="mt-7 lg:mt-0 lg:shrink-0">Contact the club</ButtonLink>

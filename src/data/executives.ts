@@ -38,11 +38,11 @@ const department = (
 
 /**
  * The 2025–26 record is transcribed from the supplied signed committee notice.
- * Earlier sessions remain clearly marked prototype records until an approved
- * archive is supplied. College numbers, shifts, and signatures are not
- * published from the source notice.
+ * The 2024–25 record is also transcribed from its supplied signed notice.
+ * College numbers, phone numbers, shifts, signatures, and other private
+ * administrative details are intentionally not published.
  */
-export const executivePanels: readonly ExecutivePanel[] = [
+export const executivePanels: readonly ExecutivePanel[] = ([
   {
     session: "2025–26",
     startYear: 2025,
@@ -200,124 +200,173 @@ export const executivePanels: readonly ExecutivePanel[] = [
     startYear: 2024,
     endYear: 2025,
     isCurrent: false,
-    recordStatus: "prototype",
+    recordStatus: "official-document",
     title: "Executive Panel 2024–25",
     summary:
-      "This prototype archive record demonstrates how a past committee can preserve its programme work and contribution to the club's digital activity archive.",
+      "The supplied committee notice names 15 Class XII student officers for the 2024–25 session. The notice also respectfully remembers Mohammad Farhanul Islam Bhuiyan, a martyr of the Anti-Discrimination Student Movement.",
+    groupImage: {
+      src: "/images/executives/executive-panel-2024-25.jpg",
+      alt: "Members of the DRMC Science Club 2024–25 executive panel standing together on campus",
+      width: 2048,
+      height: 1365,
+    },
     moderator: member(
-      "moderator-2024",
-      "Shahidul Alam",
-      "Club Moderator · Associate Professor, Physics",
-      "Faculty Leadership",
+      "moderator-2024-25",
+      "A.K.M. Badrul Hasan",
+      "Moderator · DRMC Science Club",
+      "Faculty Guidance",
       "navy",
     ),
-    advisers: [
+    advisers: [],
+    institutionalLeadership: [
       member(
-        "adviser-rezaul-2024",
-        "Md. Rezaul Karim",
-        "Academic Adviser · Senior Lecturer, Physics",
-        "Faculty Leadership",
+        "chief-club-coordinator-2024-25",
+        "Md. Jahedul Hoque",
+        "Chief Club Co-Ordinator · Dhaka Residential Model College",
+        "Institutional Leadership",
+        "teal",
+      ),
+      member(
+        "principal-2024-25",
+        "Brig. Gen. Mohammed Zaber Hossain, PhD",
+        "Principal · Dhaka Residential Model College",
+        "Institutional Leadership",
         "blue",
       ),
     ],
     departments: [
       department(
-        "Leadership & Secretariat",
-        "Panel leadership and club administration.",
+        "Executive Committee",
+        "Official designations are presented in the order published in the supplied committee notice; the notice does not define departmental divisions.",
         [
           member(
-            "president-2024",
-            "Samin Rahman",
+            "president-2024-25",
+            "Ferdous Ahmed Fahad",
             "President",
-            "Leadership & Secretariat",
+            "Executive Committee",
             "navy",
             "Class XII",
           ),
           member(
-            "general-secretary-2024",
-            "Ahnaf Karim",
+            "general-secretary-2024-25",
+            "Ahnaf Tahmid Uddin",
             "General Secretary",
-            "Leadership & Secretariat",
+            "Executive Committee",
             "teal",
             "Class XII",
           ),
-        ],
-      ),
-      department(
-        "Academic & Research",
-        "Academic contests, talks and project review.",
-        [
           member(
-            "academic-secretary-2024",
-            "Tasnim Ahmed",
-            "Academic Secretary",
-            "Academic & Research",
+            "vice-president-day-2024-25",
+            "Mahir Ishraq Rojin",
+            "Vice-President (Day)",
+            "Executive Committee",
             "blue",
             "Class XII",
           ),
           member(
-            "astronomy-coordinator-2024",
-            "Nayeem Hasan",
-            "Astronomy Coordinator",
-            "Academic & Research",
+            "vice-president-morning-2024-25",
+            "Rakibul Islam",
+            "Vice-President (Morning)",
+            "Executive Committee",
             "slate",
-            "Class XI",
-          ),
-        ],
-      ),
-      department(
-        "Innovation & Technology",
-        "Technical exhibits, model-satellite challenge and web archive.",
-        [
-          member(
-            "innovation-secretary-2024",
-            "Rifat Hossain",
-            "Innovation Secretary",
-            "Innovation & Technology",
-            "teal",
             "Class XII",
           ),
           member(
-            "it-secretary-2024",
-            "Ishmam Noor",
-            "IT Secretary",
-            "Innovation & Technology",
+            "joint-secretary-2024-25",
+            "Md. Saimum Islam",
+            "Joint Secretary",
+            "Executive Committee",
             "navy",
-            "Class XI",
+            "Class XII",
           ),
-        ],
-      ),
-      department(
-        "Publications & Communications",
-        "Aurora and the tenth-edition visual archive.",
-        [
           member(
-            "publication-secretary-2024",
-            "Fahim Abrar",
-            "Publication Secretary",
-            "Publications & Communications",
+            "organizing-secretary-2024-25",
+            "Rejoan Ahmed Rahad",
+            "Organizing Secretary",
+            "Executive Committee",
+            "teal",
+            "Class XII",
+          ),
+          member(
+            "office-secretary-2024-25",
+            "Allen Zaman",
+            "Office Secretary",
+            "Executive Committee",
             "blue",
             "Class XII",
           ),
-        ],
-      ),
-      department(
-        "Events & Outreach",
-        "Programme delivery and school liaison.",
-        [
           member(
-            "organizing-secretary-2024",
-            "Zubair Islam",
-            "Organizing Secretary",
-            "Events & Outreach",
+            "treasurer-2024-25",
+            "Muhammad Yaseen Khan",
+            "Treasurer",
+            "Executive Committee",
             "slate",
+            "Class XII",
+          ),
+          member(
+            "publication-secretary-2024-25",
+            "Kazi Fairaz Kabir",
+            "Publication Secretary",
+            "Executive Committee",
+            "navy",
+            "Class XII",
+          ),
+          member(
+            "wall-magazine-secretary-2024-25",
+            "Md. Tahsin Abid",
+            "Wall Magazine Secretary",
+            "Executive Committee",
+            "teal",
+            "Class XII",
+          ),
+          member(
+            "robotics-secretary-2024-25",
+            "Fahmid Mustakim",
+            "Robotics Secretary",
+            "Executive Committee",
+            "blue",
+            "Class XII",
+          ),
+          member(
+            "olympiad-secretary-2024-25",
+            "Abdullah Ath Tameem",
+            "Olympiad Secretary",
+            "Executive Committee",
+            "slate",
+            "Class XII",
+          ),
+          member(
+            "quizzing-secretary-2024-25",
+            "Saundipan Saha",
+            "Quizzing Secretary",
+            "Executive Committee",
+            "navy",
+            "Class XII",
+          ),
+          member(
+            "human-resource-secretary-2024-25",
+            "Mahbubur Rahman Alif",
+            "Human Resource Secretary",
+            "Executive Committee",
+            "teal",
+            "Class XII",
+          ),
+          member(
+            "external-affairs-secretary-2024-25",
+            "Suborno Bhowmik",
+            "External Affairs Secretary",
+            "Executive Committee",
+            "blue",
             "Class XII",
           ),
         ],
       ),
     ],
   },
-];
+] satisfies readonly ExecutivePanel[]).toSorted(
+  (first, second) =>
+    second.endYear - first.endYear || second.startYear - first.startYear,
+);
 
 export const executiveSessions = executivePanels.map((panel) => panel.session);
 

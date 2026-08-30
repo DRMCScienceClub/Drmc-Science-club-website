@@ -70,11 +70,7 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
     : undefined;
   const relatedActivities = activities
     .filter((item) => item.slug !== activity.slug)
-    .toSorted((a, b) => {
-      if (a.category === activity.category && b.category !== activity.category) return -1;
-      if (a.category !== activity.category && b.category === activity.category) return 1;
-      return b.date.localeCompare(a.date);
-    })
+    .toSorted((a, b) => b.date.localeCompare(a.date))
     .slice(0, 3);
 
   return (
@@ -138,18 +134,19 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
               </div>
 
               <figure className="overflow-hidden rounded-[2rem] border border-white/10 bg-navy-900 shadow-2xl shadow-black/25">
-                <div className="relative aspect-[3/2]">
+                <div className="flex justify-center bg-navy-900">
                   <Image
                     src={activity.image.src}
                     alt={activity.image.alt}
-                    fill
+                    width={activity.image.width}
+                    height={activity.image.height}
                     preload
                     sizes="(min-width: 1024px) 42vw, 100vw"
-                    className="object-cover"
+                    className="h-auto max-h-[48rem] w-full object-contain"
                   />
                 </div>
                 <figcaption className="border-t border-white/10 px-5 py-4 text-xs leading-5 text-slate-400">
-                  Illustrative Phase 1 activity visual; final event photography can replace it later.
+                  Official programme artwork supplied for this archive record.
                 </figcaption>
               </figure>
             </div>
@@ -161,7 +158,7 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
             <div>
               <p className="eyebrow">Activity brief</p>
               <h2 id="activity-overview" className="mt-4 font-display text-3xl font-extrabold tracking-[-0.035em] text-navy-950 sm:text-4xl">
-                What participants can expect
+                Published programme details
               </h2>
               <div className="rich-text">
                 {activity.body.map((paragraph) => (
@@ -176,9 +173,9 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
                   </span>
                   <div>
                     <p className="text-xs font-extrabold uppercase tracking-[0.13em] text-teal-700">
-                      {activity.status === "upcoming" ? "Learning goals" : "Recorded outcomes"}
+                      Verified from the supplied artwork
                     </p>
-                    <h2 className="mt-1 text-xl font-extrabold text-navy-950">Programme highlights</h2>
+                    <h2 className="mt-1 text-xl font-extrabold text-navy-950">Published details</h2>
                   </div>
                 </div>
                 <ul className="mt-6 grid gap-3">
@@ -241,17 +238,22 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
                   <Icon name="calendar" className="size-7" />
                 </span>
                 <div>
-                  <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-science-700">Phase 1 prototype</p>
+                  <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-science-700">Registration</p>
                   <h2 id="registration-heading" className="mt-2 font-display text-2xl font-extrabold tracking-[-0.025em] text-navy-950">
                     {activity.registration.label}
                   </h2>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
-                    Registration is shown for interface preview only. No form is connected and no participant data is collected in this phase.
+                    Follow the published registration link for the latest participation instructions.
                   </p>
                 </div>
-                <span className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-slate-100 px-5 py-2.5 text-sm font-bold text-slate-500" aria-disabled="true">
-                  Form coming later <Icon name="clock" className="size-4" />
-                </span>
+                <ButtonLink
+                  href={activity.registration.href}
+                  external={activity.registration.external}
+                  variant="primary"
+                  icon="arrow-right"
+                >
+                  {activity.registration.label}
+                </ButtonLink>
               </div>
             </Container>
           </section>
@@ -261,20 +263,21 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
           <section aria-label="Activity gallery" className="science-grid bg-slate-50 py-16 sm:py-20 lg:py-24">
             <Container>
               <SectionHeading
-                eyebrow="Activity gallery"
-                title="A closer look at the programme."
-                description="Illustrative placeholders establish the gallery layout until approved event photographs are available."
+                eyebrow="Supporting artwork"
+                title="More published programme details."
+                description="These supplied posters preserve the schedule, category, and participation information associated with this programme."
               />
               <div className="mt-10 grid gap-5 md:grid-cols-2">
                 {activity.gallery.map((image, index) => (
                   <figure key={`${image.src}-${index}`} className="surface-card group overflow-hidden rounded-3xl border border-surface-border shadow-card">
-                    <div className="relative aspect-[3/2] overflow-hidden bg-navy-900">
+                    <div className="flex min-h-64 items-center justify-center overflow-hidden bg-navy-900">
                       <Image
                         src={image.src}
-                        alt=""
-                        fill
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
                         sizes="(min-width: 768px) 50vw, 100vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        className="h-auto max-h-[56rem] w-full object-contain"
                       />
                     </div>
                     <figcaption className="px-5 py-4 text-sm leading-6 text-slate-600">{image.alt}</figcaption>

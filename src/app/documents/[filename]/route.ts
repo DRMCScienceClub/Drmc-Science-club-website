@@ -1,6 +1,4 @@
 const prototypeDocuments = {
-  "quantum-horizon-2026-brochure.pdf": "Quantum Horizon 2026 - Festival Brochure",
-  "quantum-horizon-2026-rulebook.pdf": "Quantum Horizon 2026 - Segment Rulebook",
   "aurora-2026.pdf": "Aurora 2026 - Signals of Tomorrow",
   "aurora-2025.pdf": "Aurora 2025 - Living Systems",
   "aurora-2024.pdf": "Aurora 2024 - The Measure of Wonder",

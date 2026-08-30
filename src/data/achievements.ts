@@ -1,0 +1,256 @@
+import type { Achievement } from "@/types/content";
+
+/**
+ * Poster-backed distinctions supplied by DRMC Science Club.
+ *
+ * Most posters print a year but not an exact event date. The sourceOrder value
+ * is the publication identifier embedded in each supplied image filename, so
+ * it gives the archive a stable newest-first order without inventing dates.
+ */
+const achievementRecords: Achievement[] = [
+  {
+    id: "shadman-mihran-wico-gold",
+    recipients: ["Shadman Haq Taqui (XII-G)", "Md Mihran Tahim (VI-B)"],
+    award: "Gold Medal",
+    competition: "World Invention Creativity Olympics",
+    location: "Korea",
+    details: ["Achieved the gold medal among 373+ inventions."],
+    image: {
+      src: "/images/achievements/shadman-mihran-wico-gold.jpg",
+      alt: "DRMC Science Club congratulations poster for Shadman Haq Taqui and Md Mihran Tahim's World Invention Creativity Olympics gold medal",
+      width: 1200,
+      height: 1600,
+    },
+    sourceOrder: 1513577854141962,
+  },
+  {
+    id: "fahim-science-biology-olympiads-2026",
+    recipients: ["Md. Fahim Sahriar"],
+    award: "1st Prize and 1st Runners-up",
+    competition:
+      "47th National Science and Technology Week and Science Fair / Bangladesh Biology Olympiad",
+    year: 2026,
+    organizer: "District administration",
+    location: "Notre Dame College, Dhaka / Dhaka North regional round",
+    details: [
+      "Won 1st Prize in the Science and Tech Based Olympiad at the 47th National Science and Technology Week and Science Fair 2026.",
+      "Earned 1st runners-up in the Bangladesh Biology Olympiad regional round for Dhaka North.",
+    ],
+    image: {
+      src: "/images/achievements/2026-fahim-science-biology-olympiads.jpg",
+      alt: "DRMC Science Club congratulations poster for Md. Fahim Sahriar's two 2026 olympiad distinctions",
+      width: 1200,
+      height: 1600,
+    },
+    sourceOrder: 1441282888038126,
+  },
+  {
+    id: "team-lazy-go-wro-2025",
+    recipients: ["Team Lazy-Go"],
+    award: "6th Place Worldwide",
+    competition: "Future Engineers, World Robotics Olympiad",
+    year: 2025,
+    location: "Sands Expo and Convention Centre, Singapore",
+    details: ["Placed 6th among 64 teams.", "Scored 119 out of 122."],
+    image: {
+      src: "/images/achievements/2025-team-lazy-go-wro.jpg",
+      alt: "DRMC Science Club congratulations poster for Team Lazy-Go's sixth-place finish at the 2025 World Robotics Olympiad",
+      width: 1638,
+      height: 2048,
+    },
+    sourceOrder: 1310568381109578,
+  },
+  {
+    id: "naushan-ijso-bronze-2025",
+    recipients: ["Naushan Haque Mahir"],
+    award: "Bronze Medalist",
+    competition: "International Junior Science Olympiad (IJSO)",
+    year: 2025,
+    location: "Sirius Federal Territory, Russia",
+    details: [],
+    image: {
+      src: "/images/achievements/2025-naushan-ijso-bronze.jpg",
+      alt: "DRMC Science Club congratulations poster for Naushan Haque Mahir's bronze medal at IJSO 2025",
+      width: 1638,
+      height: 2048,
+    },
+    sourceOrder: 1310010031165413,
+  },
+  {
+    id: "preom-commonwealth-silver-2025",
+    recipients: ["Preom Barman"],
+    award: "Silver Award",
+    competition: "The Queen's Commonwealth Essay Competition",
+    year: 2025,
+    organizer: "Royal Commonwealth Society",
+    details: [],
+    image: {
+      src: "/images/achievements/2025-preom-commonwealth-silver.jpg",
+      alt: "DRMC Science Club congratulations poster for Preom Barman's silver award in the 2025 Queen's Commonwealth Essay Competition",
+      width: 1638,
+      height: 2048,
+    },
+    sourceOrder: 1307025214797228,
+  },
+  {
+    id: "mashrafi-nafis-mindspark-champion-2025",
+    recipients: ["Mashrafi Hossain", "Nafis Hasan"],
+    award: "Champion",
+    competition: "3rd MGSC Mindspark Science Expo",
+    year: 2025,
+    organizer: "Mohammadpur Government College Science Club",
+    location: "Mohammadpur Government College",
+    details: ["Winning wall magazine: “Humanities Fraudulent Cover Up”."],
+    image: {
+      src: "/images/achievements/2025-mashrafi-nafis-mindspark.jpg",
+      alt: "DRMC Science Club congratulations poster for Mashrafi Hossain and Nafis Hasan's wall magazine championship at Mindspark 2025",
+      width: 1638,
+      height: 2048,
+    },
+    sourceOrder: 1270566305109786,
+  },
+  {
+    id: "team-riverguard-wice-2025",
+    recipients: ["Team RiverGuard"],
+    award: "Gold Medalists & MIICA Special Award",
+    competition: "7th World Invention Competition & Exhibition",
+    year: 2025,
+    location: "SEGi University, Malaysia",
+    details: [],
+    image: {
+      src: "/images/achievements/2025-team-riverguard-wice.jpg",
+      alt: "DRMC Science Club congratulations poster for Team RiverGuard's gold medal and MIICA Special Award at WICE 2025",
+      width: 1638,
+      height: 2048,
+    },
+    sourceOrder: 1252565250243225,
+  },
+  {
+    id: "drmc-sparks-quiz-cup-2025",
+    recipients: ["DRMC Sparks"],
+    award: "Champion",
+    competition: "1st Collegiate Quiz Cup",
+    year: 2025,
+    organizer: "Notre Dame Science Club",
+    location: "Notre Dame College, Dhaka",
+    details: [],
+    image: {
+      src: "/images/achievements/2025-drmc-sparks-quiz-cup.jpg",
+      alt: "DRMC Science Club congratulations poster for DRMC Sparks, champion of the 1st Collegiate Quiz Cup 2025",
+      width: 1638,
+      height: 2048,
+    },
+    sourceOrder: 1243614634471620,
+  },
+  {
+    id: "team-sobuj-sarang-eicon-2025",
+    recipients: ["Team Sobuj Sarang"],
+    award: "Champion",
+    competition: "15th e-ICON World Contest",
+    year: 2025,
+    organizer: "Ministry of Education, South Korea",
+    location: "Seoul, South Korea",
+    details: [],
+    image: {
+      src: "/images/achievements/2025-team-sobuj-sarang-eicon.jpg",
+      alt: "DRMC Science Club congratulations poster for Team Sobuj Sarang's championship at the 15th e-ICON World Contest 2025",
+      width: 1638,
+      height: 2048,
+    },
+    sourceOrder: 1212363674263383,
+  },
+  {
+    id: "team-rescue-rover-techtrax",
+    recipients: ["Team Rescue Rover"],
+    award: "Champion",
+    competition: "TechTrax",
+    organizer: "Automech",
+    location: "Islamic University Bangladesh",
+    details: [],
+    image: {
+      src: "/images/achievements/team-rescue-rover-techtrax.jpg",
+      alt: "DRMC Science Club congratulations poster for Team Rescue Rover's TechTrax championship",
+      width: 1638,
+      height: 2048,
+    },
+    sourceOrder: 1211512127681871,
+  },
+  {
+    id: "radman-sn-bose-champion-2025",
+    recipients: ["Radman Siddiki"],
+    award: "Champion — Science Olympiad",
+    competition: "1st S. N. Bose National Science Festival",
+    year: 2025,
+    organizer: "Biggan Adda",
+    location: "Curzon Hall, Dhaka University",
+    details: [],
+    image: {
+      src: "/images/achievements/2025-radman-sn-bose-champion.jpg",
+      alt: "DRMC Science Club congratulations poster for Radman Siddiki's Science Olympiad championship at the 2025 S. N. Bose National Science Festival",
+      width: 1024,
+      height: 1280,
+    },
+    sourceOrder: 1155606863272398,
+  },
+  {
+    id: "niyaj-wice-campus-representative-2025",
+    recipients: ["Niyaj Morshed Sayem"],
+    award: "Best Campus Representative",
+    competition: "7th World Invention Competition & Exhibition — Bangladesh National Round",
+    year: 2025,
+    organizer: "WICE Bangladesh Official",
+    location: "Dhaka Imperial College",
+    details: [],
+    image: {
+      src: "/images/achievements/2025-niyaj-wice-campus-representative.jpg",
+      alt: "DRMC Science Club congratulations poster for Niyaj Morshed Sayem, Best Campus Representative at the 2025 WICE Bangladesh National Round",
+      width: 1024,
+      height: 1280,
+    },
+    sourceOrder: 1155594966606921,
+  },
+  {
+    id: "niyaj-farhan-wice-silver-2025",
+    recipients: ["Niyaj Morshed Sayem", "Farhan Sadik"],
+    award: "Silver Medalists",
+    competition: "7th World Invention Competition & Exhibition — Bangladesh National Round",
+    year: 2025,
+    organizer: "WICE Bangladesh Official",
+    location: "Dhaka Imperial College",
+    details: [],
+    image: {
+      src: "/images/achievements/2025-niyaj-farhan-wice-silver.jpg",
+      alt: "DRMC Science Club congratulations poster for Niyaj Morshed Sayem and Farhan Sadik's silver medals at the 2025 WICE Bangladesh National Round",
+      width: 1024,
+      height: 1280,
+    },
+    sourceOrder: 1155589129940838,
+  },
+  {
+    id: "aranya-wice-gold-2025",
+    recipients: ["Aranya Abeer Khan Prapya"],
+    award: "Gold Medalist",
+    competition: "7th World Invention Competition & Exhibition — Bangladesh National Round",
+    year: 2025,
+    organizer: "WICE Bangladesh Official",
+    location: "Dhaka Imperial College",
+    details: [],
+    image: {
+      src: "/images/achievements/2025-aranya-wice-gold.jpg",
+      alt: "DRMC Science Club congratulations poster for Aranya Abeer Khan Prapya's gold medal at the 2025 WICE Bangladesh National Round",
+      width: 1080,
+      height: 1350,
+    },
+    sourceOrder: 1154282826738135,
+  },
+];
+
+export const achievements = [...achievementRecords].sort(
+  (first, second) => second.sourceOrder - first.sourceOrder,
+);
+
+export const achievementIds = achievements.map((achievement) => achievement.id);
+
+export function getLatestAchievements(limit = 3) {
+  return achievements.slice(0, Math.max(0, limit));
+}

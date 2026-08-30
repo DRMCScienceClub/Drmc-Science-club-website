@@ -12,223 +12,136 @@ const festivalImage = (
   height = 900,
 ): ContentImage => ({ src, alt, width, height });
 
-const organization = (
-  name: string,
-  role: string,
-  logoName: string,
-): FestivalOrganization => ({
-  name,
-  role,
-  logo: festivalImage(
-    `/images/partners/${logoName}.svg`,
-    `${name} prototype partner mark`,
-    420,
-    160,
-  ),
+const segment = (title: string, category: string): FestivalSegment => ({
+  slug: title
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, ""),
+  title,
+  category,
 });
 
-const stellarLabs = organization(
-  "Stellar Labs Bangladesh",
-  "Title sponsor · prototype",
-  "stellar-labs",
-);
-const nucleusEducation = organization(
-  "Nucleus Education",
-  "Olympiad partner · prototype",
-  "nucleus-education",
-);
-const horizonTech = organization(
-  "Horizon Tech",
-  "Innovation partner · prototype",
-  "horizon-tech",
-);
-const scienceForAll = organization(
-  "Science for All Foundation",
-  "Outreach partner · prototype",
-  "science-for-all",
+const latestFestivalPoster = festivalImage(
+  "/images/festivals/archive/17th-national-science-codeavour-carnival-2026.jpg",
+  "Official poster for the 17th DRMC National Science and Codeavour 7.0 Carnival 2026",
+  1600,
+  837,
 );
 
-const upcomingFestival: Festival = {
-  slug: "quantum-horizon-2026",
-  title: "DRMC National Science Festival 2026",
-  shortTitle: "Quantum Horizon 2026",
+const latestFestival: Festival = {
+  slug: "17th-national-science-codeavour-carnival-2026",
+  title: "17th DRMC National Science & Codeavour 7.0 Carnival 2026",
+  shortTitle: "17th Science & Codeavour Carnival",
   year: 2026,
-  edition: "TBC edition",
-  theme: "Quantum Horizon: Curiosity Beyond the Visible",
+  edition: "17th edition",
+  theme: "Discere Est Evolvere",
   summary:
-    "A Phase 1 programme concept for experiments, engineering challenges and scientific exchange among school and college students across Bangladesh.",
+    "The poster-backed record of DRMC's 17th national science carnival and Codeavour 7.0 programme, held 21–23 January 2026.",
   description: [
-    "This clearly labelled prototype demonstrates how a future DRMC National Science Festival can publish live registration, schedules, segments and resources. Its title, edition, dates and programme require club approval before launch.",
-    "The proposed programme moves from the smallest particles to the largest questions facing our cities and planet, with student research, subject olympiads and open demonstrations led by the club's academic departments.",
+    "The official event artwork verifies the 17th edition, its 21–23 January 2026 dates, the theme “Discere Est Evolvere”, and a programme spanning science exhibitions, olympiads, robotics, gaming, quizzes and creative challenges.",
+    "The 44 segment names and sponsor acknowledgements below are transcribed from the supplied posters. A session-by-session schedule, rulebook, venue address and verified result sheets were not supplied, so those details are intentionally left unpublished.",
   ],
-  startDate: "2026-10-16",
-  endDate: "2026-10-17",
-  dateLabel: "16–17 October 2026 · prototype dates",
-  venue: "Dhaka Residential Model College",
-  venueAddress: "Mirpur Road, Mohammadpur, Dhaka 1207",
-  status: "upcoming",
-  recordStatus: "prototype",
+  startDate: "2026-01-21",
+  endDate: "2026-01-23",
+  dateLabel: "21–23 January 2026",
+  venue: "Venue not stated on supplied poster",
+  venueAddress: "The supplied event artwork does not state a venue address.",
+  status: "completed",
+  recordStatus: "poster-verified",
   featured: true,
-  coverImage: festivalImage(
-    "/images/festivals/quantum-horizon-2026.svg",
-    "Abstract orbital prototype artwork for Quantum Horizon 2026",
-  ),
+  coverImage: latestFestivalPoster,
   registration: {
-    status: "open",
-    label: "Prototype registration open",
-    opensAt: "2026-08-20T09:00:00+06:00",
-    closesAt: "2026-10-08T23:59:00+06:00",
-    href: "#register",
-    note: "Demonstration only. Final dates, fees, eligibility and submission links must be confirmed by the club authority.",
+    status: "closed",
+    label: "Completed edition",
+    note: "This edition concluded on 23 January 2026. Historical registration instructions were not supplied for publication.",
   },
   segments: [
-    {
-      slug: "project-display",
-      title: "Science Project Display",
-      category: "Research & innovation",
-      summary:
-        "Present a working model or evidence-based investigation to a jury of teachers, researchers and engineers.",
-      eligibility: "School (VI–X) and college (XI–XII) groups",
-      teamSize: "1–3 participants",
-      fee: "৳500 per team (mock)",
-    },
-    {
-      slug: "science-olympiad",
-      title: "Integrated Science Olympiad",
-      category: "Individual competition",
-      summary:
-        "A concept-driven written challenge spanning physics, chemistry, biology, mathematics and earth science.",
-      eligibility:
-        "Junior (VI–VIII), Secondary (IX–X), Higher Secondary (XI–XII)",
-      teamSize: "Individual",
-      fee: "৳200 per participant (mock)",
-    },
-    {
-      slug: "robotics-challenge",
-      title: "Robotics Challenge",
-      category: "Engineering",
-      summary:
-        "Design a compact autonomous rover that can navigate a marked rescue course and complete field tasks.",
-      eligibility: "Secondary and higher secondary students",
-      teamSize: "2–4 participants",
-      fee: "৳800 per team (mock)",
-    },
-    {
-      slug: "scientific-poster",
-      title: "Scientific Poster Presentation",
-      category: "Science communication",
-      summary:
-        "Turn a research question into a clear visual argument and defend it during a moderated poster walk.",
-      eligibility: "School and college students",
-      teamSize: "1–2 participants",
-      fee: "৳300 per entry (mock)",
-    },
-    {
-      slug: "astro-quiz",
-      title: "Astro Quiz",
-      category: "Team quiz",
-      summary:
-        "Fast-paced preliminary and buzzer rounds on astronomy, spaceflight and the night sky over Bangladesh.",
-      eligibility: "School and college teams",
-      teamSize: "2 participants",
-      fee: "৳300 per team (mock)",
-    },
+    segment("Codeavour Project Display Exhibition", "Exhibition"),
+    segment("Wall Magazine Exhibition", "Exhibition"),
+    segment("Scrapbook Display", "Exhibition"),
+    segment("Mobile Photography Exhibition", "Photography"),
+    segment("DSLR Photography Exhibition", "Photography"),
+    segment("Astrophotography Exhibition", "Photography"),
+    segment("Science-Based Illustration Exhibition", "Creative exhibition"),
+    segment("Treasure Hunt", "Challenge"),
+    segment("PUBG Mobile", "Gaming"),
+    segment("FC 26", "Gaming"),
+    segment("E-Football Mobile", "Gaming"),
+    segment("Valorant", "Gaming"),
+    segment("F1 25 Sim Racing", "Gaming"),
+    segment("Clash Royale", "Gaming"),
+    segment("Robo-Soccer", "Robotics"),
+    segment("Line Following Robot", "Robotics"),
+    segment("Mini Sumo", "Robotics"),
+    segment("Drag Race", "Robotics"),
+    segment("Drone Racing", "Robotics"),
+    segment("Chess Showdown", "Skill competition"),
+    segment("Rubik’s Cube Solving", "Skill competition"),
+    segment("Integration Bee", "Mathematics"),
+    segment("Math Olympiad", "Olympiad"),
+    segment("Physics Olympiad", "Olympiad"),
+    segment("Chemistry Olympiad", "Olympiad"),
+    segment("Biology Olympiad", "Olympiad"),
+    segment("Astronomy and Astrophysics Olympiad", "Olympiad"),
+    segment("Robotics Olympiad", "Olympiad"),
+    segment("Life Story Olympiad", "Olympiad"),
+    segment("Sci-Fi Crossword Matching Olympiad", "Olympiad"),
+    segment("Junior Science Olympiad", "Olympiad"),
+    segment("Crisis Problem Solving", "Challenge"),
+    segment("BuzzerBlitz", "Challenge"),
+    segment("Flash Calculation Challenge", "Challenge"),
+    segment("Star Mapping", "Astronomy"),
+    segment("Solo Quiz", "Quiz"),
+    segment("Team-Based Quiz", "Quiz"),
+    segment("Mega Quiz", "Quiz"),
+    segment("Pottermore Quiz", "Quiz"),
+    segment("Marvel vs DC Quiz", "Quiz"),
+    segment("Odd One Out", "Challenge"),
+    segment("Geo-Tagging", "Challenge"),
+    segment("Bingeflix", "Challenge"),
+    segment("Memecon", "Creative competition"),
   ],
-  schedule: [
-    {
-      date: "2026-10-16",
-      label: "Day 1 · Discover",
-      items: [
-        {
-          time: "08:00",
-          title: "Campus gates and registration desks open",
-          description: "Badge collection and project installation.",
-          venue: "College main gate & academic building",
-        },
-        {
-          time: "09:30",
-          title: "Opening ceremony",
-          description: "Welcome, festival briefing and guest address.",
-          venue: "DRMC Auditorium",
-        },
-        {
-          time: "11:00",
-          title: "Project and poster judging · Round 1",
-          venue: "Science building",
-          segmentSlug: "project-display",
-        },
-        {
-          time: "14:30",
-          title: "Integrated Science Olympiad",
-          venue: "Academic building",
-          segmentSlug: "science-olympiad",
-        },
-        {
-          time: "16:00",
-          title: "Public science demonstrations",
-          venue: "Central field pavilion",
-        },
-      ],
-    },
-    {
-      date: "2026-10-17",
-      label: "Day 2 · Build",
-      items: [
-        {
-          time: "08:30",
-          title: "Robotics arena inspection",
-          venue: "Indoor games hall",
-          segmentSlug: "robotics-challenge",
-        },
-        {
-          time: "10:00",
-          title: "Astro Quiz preliminary",
-          venue: "Language lab",
-          segmentSlug: "astro-quiz",
-        },
-        {
-          time: "12:30",
-          title: "Final project defence",
-          venue: "Science building",
-          segmentSlug: "project-display",
-        },
-        {
-          time: "15:30",
-          title: "Closing and award ceremony",
-          description: "Results, acknowledgements and closing remarks.",
-          venue: "DRMC Auditorium",
-        },
-      ],
-    },
-  ],
+  schedule: [],
   results: [],
-  resultsNote: "Results will be published here after the closing ceremony.",
-  sponsors: [stellarLabs],
-  partners: [nucleusEducation, horizonTech, scienceForAll],
-  gallery: [
-    festivalImage(
-      "/images/festivals/quantum-horizon-2026.svg",
-      "Quantum Horizon prototype festival visual",
-    ),
-    festivalImage(
-      "/images/activities/robotics-workshop.svg",
-      "Illustration of students developing a prototype robot",
-    ),
-    festivalImage(
-      "/images/activities/astronomy-night.svg",
-      "Illustration of a telescope observation session on the DRMC campus",
-    ),
+  resultsNote:
+    "Verified result sheets were not included with the supplied event artwork.",
+  sponsors: [
+    { name: "United Healthcare", role: "Title sponsor" },
+    { name: "ACI Pure Salt", role: "Co-sponsor · powered by" },
+    { name: "deli", role: "Gold sponsor" },
   ],
-  brochure: {
-    label: "Download prototype festival brochure",
-    href: "/documents/quantum-horizon-2026-brochure.pdf",
-    download: true,
-  },
-  rulebook: {
-    label: "Download prototype segment rulebook",
-    href: "/documents/quantum-horizon-2026-rulebook.pdf",
-    download: true,
-  },
+  partners: [
+    { name: "Nescafé", role: "Coffee partner" },
+    { name: "Speedcubing Bangladesh", role: "Rubik’s Cube partner" },
+    {
+      name: "DRMC Film and Photography Club",
+      role: "Photography partner",
+    },
+    { name: "ACI Fun", role: "Snacks partner" },
+    { name: "Creative Juniors", role: "Robotics partner" },
+    { name: "Polar Ice Cream", role: "Ice cream partner" },
+    { name: "Global Brand", role: "Gaming partner" },
+    { name: "khobor", role: "Online media partner" },
+    { name: "The Front Page", role: "Online media partner" },
+    { name: "The Daily Ittefaq", role: "Print media partner" },
+    { name: "Bangladesh Chess Federation", role: "Chess partner" },
+    { name: "Sunquick", role: "Refreshment partner" },
+    { name: "Banglar Math", role: "Academic partner" },
+    { name: "ESN BD", role: "Gaming promotional partner" },
+    { name: "Somokal", role: "Print media partner" },
+    { name: "Bangladesh Gamers Summit", role: "Broadcasting partner" },
+    { name: "GTV", role: "Television media partner" },
+    { name: "Sailor by Epyllion", role: "Outfit partner" },
+    { name: "Mono Space", role: "Logistic partner" },
+    { name: "ATN Bangla", role: "Television media partner" },
+    { name: "Premia Education", role: "Stationery partner" },
+    { name: "Udvash", role: "Academic partner" },
+    { name: "Channel 24", role: "Television media partner" },
+    { name: "Jaijaidin", role: "Print media partner" },
+    { name: "Radio Today 89.6 FM", role: "Radio partner" },
+  ],
+  gallery: [latestFestivalPoster],
 };
 
 type ArchivedSegmentSeed = Pick<FestivalSegment, "title" | "category">;
@@ -244,6 +157,8 @@ type HistoricalFestivalSeed = {
   endDate: string;
   dateLabel: string;
   titleSponsor: string;
+  sponsors?: readonly FestivalOrganization[];
+  partners?: readonly FestivalOrganization[];
   image: ContentImage;
   segments: readonly ArchivedSegmentSeed[];
 };
@@ -265,8 +180,8 @@ function historicalFestival(seed: HistoricalFestivalSeed): Festival {
     theme: seed.theme,
     summary: `A poster-backed record of the ${seed.edition} DRMC national science programme, held ${seed.dateLabel}.`,
     description: [
-      `The supplied event poster records the ${seed.edition} edition, its dates and the theme “${seed.theme}”. The artwork is reproduced here as the primary Phase 1 archive source.`,
-      "Segment names below are transcribed from the poster. Full schedules, result sheets, eligibility rules, sponsor classifications, venue records and downloadable documents will be added only after the club verifies its historical archive.",
+      `The supplied event poster records the ${seed.edition} edition, its dates and the theme “${seed.theme}”. The artwork is reproduced here as the primary archive source.`,
+      "Segment names below are transcribed from the poster. Full schedules, result sheets, eligibility rules, venue records and downloadable documents will be added only after the club verifies its historical archive.",
     ],
     startDate: seed.startDate,
     endDate: seed.endDate,
@@ -290,13 +205,15 @@ function historicalFestival(seed: HistoricalFestivalSeed): Festival {
     results: [],
     resultsNote:
       "Verified result sheets were not included with the supplied archive artwork.",
-    sponsors: [
-      {
-        name: seed.titleSponsor,
-        role: "Title sponsor identified on supplied poster",
-      },
-    ],
-    partners: [],
+    sponsors: seed.sponsors
+      ? [...seed.sponsors]
+      : [
+          {
+            name: seed.titleSponsor,
+            role: "Title sponsor identified on supplied poster",
+          },
+        ],
+    partners: seed.partners ? [...seed.partners] : [],
     gallery: [seed.image],
   };
 }
@@ -313,6 +230,34 @@ const historicalFestivalSeeds: readonly HistoricalFestivalSeed[] = [
     endDate: "2025-05-03",
     dateLabel: "1–3 May 2025",
     titleSponsor: "eduCare",
+    sponsors: [
+      { name: "eduCare", role: "Title sponsor" },
+      { name: "Leadswin", role: "Powered by" },
+      { name: "bKash", role: "Silver sponsor" },
+    ],
+    partners: [
+      { name: "Polar Ice Cream", role: "Ice cream partner" },
+      { name: "Jamuna TV", role: "Television media partner" },
+      {
+        name: "DRMC Film and Photography Club",
+        role: "Photography partner",
+      },
+      { name: "Lecture Publications", role: "Outfit partner" },
+      { name: "The Daily Ittefaq", role: "Print media partner" },
+      { name: "Kaler Kantho", role: "Print media partner" },
+      { name: "Prothom Alo", role: "Print media partner" },
+      { name: "Speedcubing Bangladesh", role: "Rubik’s Cube partner" },
+      { name: "Bombay Sweets", role: "Refreshment partner" },
+      { name: "PRAN", role: "Beverage partner" },
+      { name: "Ekattor TV", role: "Television media partner" },
+      { name: "GTV", role: "Television media partner" },
+      { name: "Bangladesh Chess Federation", role: "Chess partner" },
+      { name: "Masud English Academy", role: "Production partner" },
+      { name: "MSI", role: "Gaming partner" },
+      { name: "Net Heads", role: "Connectivity partner" },
+      { name: "Cudy", role: "Connectivity partner" },
+      { name: "Habibi’s Game Shop", role: "Gaming accounts partner" },
+    ],
     image: festivalImage(
       "/images/festivals/archive/16th-national-science-carnival-2025.jpg",
       "Poster for the 16th DRMC National Science Carnival 2025, featuring blue constellations on a dark star field",
@@ -546,14 +491,10 @@ const historicalFestivalSeeds: readonly HistoricalFestivalSeed[] = [
   },
 ];
 
-/**
- * The current programme is explicitly fictional Phase 1 content. Historical
- * entries are limited to facts visible in the supplied archive posters.
- */
 export const festivals: readonly Festival[] = [
-  upcomingFestival,
+  latestFestival,
   ...historicalFestivalSeeds.map(historicalFestival),
-];
+].toSorted((a, b) => b.endDate.localeCompare(a.endDate));
 
 export const festivalSlugs = festivals.map((festival) => festival.slug);
 
@@ -574,6 +515,8 @@ export function getCurrentOrUpcomingFestival(): Festival | undefined {
 
 export function getFestivalArchive(): Festival[] {
   return festivals
-    .filter((festival) => festival.status === "completed")
+    .filter(
+      (festival) => festival.status === "completed" && !festival.featured,
+    )
     .toSorted((a, b) => b.endDate.localeCompare(a.endDate));
 }

@@ -27,9 +27,9 @@ export const siteConfig = {
 const coreNavigation = contentPrimaryNavigation.filter((item) => !item.highlighted);
 
 export const primaryNavigation = [
-  ...coreNavigation.slice(0, 3),
+  ...coreNavigation.slice(0, 4),
   ...exploreNavigation,
-  ...coreNavigation.slice(3),
+  ...coreNavigation.slice(4),
 ] as const;
 
 export const footerNavigation = {

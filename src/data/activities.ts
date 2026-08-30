@@ -1,194 +1,234 @@
 import type { Activity, ContentImage } from "@/types/content";
 
-const activityImage = (src: string, alt: string): ContentImage => ({
-  src,
-  alt,
-  width: 1200,
-  height: 800,
-});
+const activityImage = (
+  src: string,
+  alt: string,
+  width: number,
+  height: number,
+): ContentImage => ({ src, alt, width, height });
 
-/** Regular club programmes, ordered by their public display priority. */
+/**
+ * Programmes transcribed from the supplied official artwork. The array itself is
+ * intentionally not treated as chronology; every public helper sorts by date.
+ */
 export const activities: readonly Activity[] = [
   {
-    slug: "robotics-control-systems-workshop",
-    title: "Robotics & Control Systems Workshop",
-    category: "Workshop",
-    status: "upcoming",
-    featured: true,
-    date: "2026-09-05",
-    dateLabel: "5 September 2026",
-    location: "DRMC ICT Lab",
-    excerpt:
-      "A beginner-friendly build session on sensors, motor control and the logic behind an autonomous rover.",
-    body: [
-      "This practical workshop introduces the sensing–decision–action loop that powers autonomous machines. Participants will work in small groups with a prepared microcontroller and rover kit.",
-      "Club mentors will demonstrate safe wiring, simple sensor calibration and a line-following control routine before each group tests its rover on a compact field course.",
-      "No prior robotics experience is required. Participants should bring a notebook; all electronic components will be provided for the session.",
-    ],
-    image: activityImage(
-      "/images/activities/robotics-workshop.svg",
-      "Student hands assembling a small educational robot",
-    ),
-    gallery: [
-      activityImage(
-        "/images/activities/robotics-workshop.svg",
-        "Robotics workshop prototype and circuit board",
-      ),
-      activityImage(
-        "/images/festivals/quantum-horizon-2026.svg",
-        "Quantum Horizon engineering programme visual",
-      ),
-    ],
-    tags: ["Robotics", "Electronics", "Programming"],
-    organizers: ["Robotics & Engineering Department", "ICT Department"],
-    highlights: [
-      "Understand ultrasonic and line sensors",
-      "Wire and test a motor-driver circuit",
-      "Tune a simple autonomous navigation routine",
-    ],
-    registration: {
-      label: "Reserve a workshop seat",
-      href: "#register",
-    },
-    relatedFestivalSlug: "quantum-horizon-2026",
-  },
-  {
-    slug: "urban-climate-solutions-forum",
-    title: "Urban Climate Solutions Forum",
-    category: "Seminar",
-    status: "upcoming",
-    featured: true,
-    date: "2026-09-12",
-    dateLabel: "12 September 2026",
-    location: "DRMC Seminar Room",
-    excerpt:
-      "Students examine heat, waterlogging and air-quality evidence, then pitch a small intervention for their neighbourhood.",
-    body: [
-      "The forum turns familiar urban problems into researchable questions. Short talks will introduce heat-island mapping, local air-quality measurement and the basics of interpreting rainfall data.",
-      "In the design round, teams will select one Dhaka neighbourhood, define an evidence gap and outline a practical school-led response. The emphasis is on testable claims rather than polished presentation.",
-    ],
-    image: activityImage(
-      "/images/activities/climate-forum.svg",
-      "Students discussing climate data around a table",
-    ),
-    gallery: [
-      activityImage(
-        "/images/activities/climate-forum.svg",
-        "Climate forum discussion and city data graphics",
-      ),
-    ],
-    tags: ["Climate", "Dhaka", "Data literacy"],
-    organizers: ["Earth & Environmental Science Department"],
-    highlights: [
-      "Read and question a local environmental dataset",
-      "Frame a testable neighbourhood research question",
-      "Pitch an achievable student-led intervention",
-    ],
-    registration: {
-      label: "Register for the forum",
-      href: "#register",
-    },
-  },
-  {
-    slug: "monsoon-sky-observation-night",
-    title: "Monsoon Sky Observation Night",
-    category: "Observation",
-    status: "completed",
-    featured: true,
-    date: "2026-07-18",
-    dateLabel: "18 July 2026",
-    location: "DRMC College Field",
-    excerpt:
-      "A guided evening of lunar observation, seasonal constellations and learning to keep a useful sky log.",
-    body: [
-      "After a weather briefing, members learned how to orient a planisphere and record cloud cover, limiting magnitude and observation conditions in a field log.",
-      "The sky cleared long enough for groups to observe the Moon and several bright seasonal objects through club telescopes. A short discussion connected the observations to Bangladesh's monsoon weather patterns.",
-    ],
-    image: activityImage(
-      "/images/activities/astronomy-night.svg",
-      "Telescope pointed toward a starry sky from the college field",
-    ),
-    gallery: [
-      activityImage(
-        "/images/activities/astronomy-night.svg",
-        "DRMC students gathered around a telescope",
-      ),
-    ],
-    tags: ["Astronomy", "Observation", "Field notes"],
-    organizers: ["Astronomy & Space Science Department"],
-    highlights: [
-      "Used a planisphere to identify seasonal constellations",
-      "Observed the lunar surface through two telescopes",
-      "Completed a structured sky-observation log",
-    ],
-  },
-  {
-    slug: "inter-house-science-olympiad-2026",
-    title: "Inter-House Science Olympiad 2026",
+    slug: "intra-catalyst-2026",
+    title: "Intra Catalyst 2026",
     category: "Competition",
     status: "completed",
-    featured: false,
-    date: "2026-06-27",
-    dateLabel: "27 June 2026",
-    location: "DRMC Academic Building",
+    recordStatus: "poster-verified",
+    featured: true,
+    date: "2026-08-29",
+    dateLabel: "29 August 2026",
+    location: "DRMC Campus, Academic Building-3",
     excerpt:
-      "More than 180 DRMC students tested their reasoning across physics, chemistry, biology and mathematics.",
+      "An intra-college project display and science olympiad programme for students from classes 3 to 12.",
     body: [
-      "The annual inter-house olympiad used separate junior and senior papers designed by the club's academic departments and reviewed by teachers.",
-      "Questions rewarded explanation, estimation and careful reading. A post-event solutions session gave participants a chance to challenge assumptions and compare approaches.",
+      "DRMC Science Club's published Intra Catalyst programme combined a project display with subject olympiads on 29 August 2026. The artwork lists Primary (classes 3–5), Junior (classes 6–8), Secondary (classes 9–10), and Senior (classes 11–12) categories.",
+      "The project display ran from 9:00 am to 1:00 pm in Academic Building-3, with reporting at 8:00 am. Mechanical, non-mechanical, and IT projects competed together in an open category, and each team could include one to three people.",
+      "The published olympiad schedule was General Science, 9:00–9:30 am; Junior Science, 9:45–10:15 am; Physics, 10:30–11:00 am; Chemistry, 11:15–11:45 am; and Biology, 12:00–12:30 pm. The prize-giving time was marked to be announced.",
     ],
     image: activityImage(
-      "/images/activities/science-olympiad.svg",
-      "Students working on science olympiad papers in a classroom",
+      "/images/activities/2026-intra-catalyst-overview.jpg",
+      "Official Intra Catalyst 2026 overview poster",
+      1279,
+      1638,
     ),
     gallery: [
       activityImage(
-        "/images/activities/science-olympiad.svg",
-        "Inter-house science olympiad classroom",
+        "/images/activities/2026-intra-catalyst-schedule.jpg",
+        "Official Intra Catalyst 2026 event schedule",
+        1638,
+        2048,
+      ),
+      activityImage(
+        "/images/activities/2026-intra-catalyst-project-display.jpg",
+        "Official Intra Catalyst 2026 project-display information",
+        1638,
+        2048,
+      ),
+      activityImage(
+        "/images/activities/2026-intra-catalyst-olympiad-guidelines.jpg",
+        "Official Intra Catalyst 2026 olympiad guidelines",
+        1638,
+        2048,
       ),
     ],
-    tags: ["Olympiad", "Reasoning", "Competition"],
-    organizers: ["Academic Affairs Department", "Research Department"],
+    tags: ["Project display", "Science olympiad", "Intra-college"],
+    organizers: ["DRMC Science Club"],
     highlights: [
-      "184 participants across two divisions",
-      "Four interdisciplinary question sections",
-      "Open solutions and review session",
+      "Project display: 9:00 am–1:00 pm; reporting time: 8:00 am",
+      "Project teams of 1–3 people in one open category",
+      "Olympiad pre-registration was required, with a 30-minute exam duration",
+      "Olympiad participants were asked to report 15 minutes before their announced time",
     ],
   },
   {
-    slug: "microscopy-lab-discovery-day",
-    title: "Microscopy Lab Discovery Day",
-    category: "Workshop",
+    slug: "bmec-national-round-2026",
+    title: "Banglar Math Excellency Championship 2026 — National Round",
+    category: "Competition",
     status: "completed",
-    featured: false,
-    date: "2026-05-16",
-    dateLabel: "16 May 2026",
-    location: "DRMC Biology Laboratory",
+    recordStatus: "poster-verified",
+    featured: true,
+    date: "2026-05-01",
+    dateLabel: "1 May 2026",
+    location: "DRMC Campus, Academic Building-3",
     excerpt:
-      "A careful first look at slide preparation, compound microscopes and documenting biological observations.",
+      "DRMC hosted the national round of the 2026 Banglar Math Excellency Championship in association with Banglar Math.",
     body: [
-      "Participants learned the parts of a compound microscope and practised focusing from low to high power without damaging prepared slides.",
-      "Groups prepared temporary onion epidermis and leaf samples, then made labelled observational drawings that separated what was visible from what they expected to see.",
+      "The supplied event artwork identifies DRMC Campus, Academic Building-3 as the venue for the national round of the Banglar Math Excellency Championship 2026.",
+      "The national round was scheduled for 1 May 2026 and presented in association with DRMC Science Club and Banglar Math.",
     ],
     image: activityImage(
-      "/images/activities/lab-discovery.svg",
-      "Student viewing a prepared sample through a laboratory microscope",
+      "/images/activities/2026-bmec-national-round.jpg",
+      "Official poster for the BMEC 2026 national round at DRMC",
+      2048,
+      1717,
     ),
-    gallery: [
-      activityImage(
-        "/images/activities/lab-discovery.svg",
-        "Microscope, slides and student lab notes",
-      ),
-    ],
-    tags: ["Biology", "Microscopy", "Laboratory"],
-    organizers: ["Biology & Life Science Department"],
+    gallery: [],
+    tags: ["Mathematics", "National round", "Competition"],
+    organizers: ["Banglar Math", "DRMC Science Club"],
     highlights: [
-      "Prepared temporary plant-cell slides",
-      "Practised safe microscope handling",
-      "Created evidence-based observation drawings",
+      "National round of BMEC 2026",
+      "Hosted at DRMC Campus, Academic Building-3",
+      "Held on 1 May 2026",
+    ],
+  },
+  {
+    slug: "intra-academic-trials-2025",
+    title: "Intra Academic Trials 2025",
+    category: "Competition",
+    status: "completed",
+    recordStatus: "poster-verified",
+    featured: true,
+    date: "2025-10-20",
+    dateLabel: "20 October 2025",
+    location: "Venue not printed on the supplied schedule",
+    excerpt:
+      "A five-part DRMC Science Club academic trial covering physics, chemistry, astronomy, junior science, and biology.",
+    body: [
+      "DRMC Science Club's published schedule placed five academic trials on 20 October 2025. The supplied artwork does not print a venue, so no venue has been inferred for this archive record.",
+      "The announced sequence was Physics, 12:00–12:35 pm; Chemistry, 12:45–1:20 pm; Astronomy, 1:30–2:05 pm; Junior Science, 2:15–2:50 pm; and Biology, 3:00–3:35 pm.",
+    ],
+    image: activityImage(
+      "/images/activities/2025-intra-academic-trials.jpg",
+      "Official schedule for the 2025 Intra Academic Trials",
+      2048,
+      1717,
+    ),
+    gallery: [],
+    tags: ["Academic trial", "Olympiad", "Intra-college"],
+    organizers: ["DRMC Science Club"],
+    highlights: [
+      "Physics: 12:00–12:35 pm",
+      "Chemistry: 12:45–1:20 pm",
+      "Astronomy: 1:30–2:05 pm",
+      "Junior Science: 2:15–2:50 pm",
+      "Biology: 3:00–3:35 pm",
+    ],
+  },
+  {
+    slug: "banglar-math-workshop-2025",
+    title: "Mathematical Workshop with Banglar Math",
+    category: "Workshop",
+    status: "completed",
+    recordStatus: "poster-verified",
+    featured: false,
+    date: "2025-09-02",
+    endDate: "2025-09-04",
+    dateLabel: "2–4 September 2025",
+    location: "DRMC Auditorium",
+    excerpt:
+      "A three-day mathematics workshop with separate sessions for classes 3–5, 6–8, and 9–12.",
+    body: [
+      "DRMC Science Club and DR(MC)² announced a three-day mathematical workshop with Banglar Math at the DRMC Auditorium.",
+      "The published timetable was 2 September, 12:45–2:00 pm for classes 3–5; 3 September, 1:20–2:35 pm for classes 6–8; and 4 September, 12:45–2:00 pm for classes 9–12.",
+    ],
+    image: activityImage(
+      "/images/activities/2025-banglar-math-workshop.jpg",
+      "Official poster for the 2025 mathematical workshop with Banglar Math",
+      1638,
+      2048,
+    ),
+    gallery: [],
+    tags: ["Mathematics", "Workshop", "Banglar Math"],
+    organizers: ["DRMC Science Club", "DR(MC)²", "Banglar Math"],
+    highlights: [
+      "Classes 3–5: 2 September, 12:45–2:00 pm",
+      "Classes 6–8: 3 September, 1:20–2:35 pm",
+      "Classes 9–12: 4 September, 12:45–2:00 pm",
+    ],
+  },
+  {
+    slug: "us-college-application-workshop-2025",
+    title: "US College Application Workshop",
+    category: "Workshop",
+    status: "completed",
+    recordStatus: "poster-verified",
+    featured: false,
+    date: "2025-08-23",
+    dateLabel: "23 August 2025",
+    location: "DRMC Auditorium",
+    excerpt:
+      "A Premia Education × DRMC Science Club workshop on the US college application process.",
+    body: [
+      "The updated programme poster announces a 23 August workshop at the DRMC Auditorium and notes that the date was scheduled with HSC '25 in mind.",
+      "This archive places the programme in 2025 from that printed HSC '25 context. No additional time or programme details have been added beyond the supplied artwork.",
+    ],
+    image: activityImage(
+      "/images/activities/2025-us-college-application-workshop.jpg",
+      "Official poster for the US College Application Workshop at DRMC",
+      1508,
+      1889,
+    ),
+    gallery: [],
+    tags: ["College application", "Higher education", "Workshop"],
+    organizers: ["Premia Education", "DRMC Science Club"],
+    highlights: [
+      "Announced for 23 August",
+      "Venue: DRMC Auditorium",
+      "Presented by Premia Education × DRMC Science Club",
+    ],
+  },
+  {
+    slug: "igso-preparation-seminar-2025",
+    title: "IGSO Preparation Seminar 2025",
+    category: "Seminar",
+    status: "completed",
+    recordStatus: "poster-verified",
+    featured: false,
+    date: "2025-08-11",
+    dateLabel: "11 August 2025",
+    location: "Dhaka Residential Model College",
+    excerpt:
+      "A preparation seminar for the 2nd International General Science Olympiad, presented by DRMC Science Club.",
+    body: [
+      "Under the message “Science Isn't Just a Subject — It's Your Superpower!”, DRMC Science Club announced a preparation seminar for the 2nd International General Science Olympiad.",
+      "The supplied poster schedules the seminar for 11 August 2025, from 12:00 to 1:00 pm, at Dhaka Residential Model College.",
+    ],
+    image: activityImage(
+      "/images/activities/2025-igso-preparation-seminar.jpg",
+      "Official poster for the 2025 IGSO preparation seminar",
+      1338,
+      750,
+    ),
+    gallery: [],
+    tags: ["General science", "Olympiad preparation", "Seminar"],
+    organizers: ["DRMC Science Club"],
+    highlights: [
+      "Preparation for the 2nd International General Science Olympiad",
+      "11 August 2025, 12:00–1:00 pm",
+      "Hosted at Dhaka Residential Model College",
     ],
   },
 ];
+
+const newestFirst = (a: Activity, b: Activity) =>
+  b.date.localeCompare(a.date);
+
+const soonestFirst = (a: Activity, b: Activity) =>
+  a.date.localeCompare(b.date);
 
 export const activitySlugs = activities.map((activity) => activity.slug);
 
@@ -198,12 +238,27 @@ export function getActivityBySlug(slug: string): Activity | undefined {
 
 export function getLatestActivities(limit = 3): Activity[] {
   return [...activities]
-    .sort((a, b) => b.date.localeCompare(a.date))
+    .sort(newestFirst)
     .slice(0, Math.max(0, limit));
 }
 
+export function getUpcomingActivities(): Activity[] {
+  return activities
+    .filter((activity) => activity.status === "upcoming")
+    .toSorted(soonestFirst);
+}
+
+export function getCompletedActivities(): Activity[] {
+  return activities
+    .filter((activity) => activity.status === "completed")
+    .toSorted(newestFirst);
+}
+
 export function getFeaturedActivities(limit?: number): Activity[] {
-  const featured = activities.filter((activity) => activity.featured);
+  const featured = activities
+    .filter((activity) => activity.featured)
+    .toSorted(newestFirst);
+
   return typeof limit === "number"
     ? featured.slice(0, Math.max(0, limit))
     : featured;

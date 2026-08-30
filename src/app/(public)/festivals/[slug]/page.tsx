@@ -251,7 +251,7 @@ export default async function FestivalDetailPage({
               description={
                 festival.recordStatus === "poster-verified"
                   ? "The poster verifies the festival dates, but not a session-by-session schedule."
-                  : "Times in this Phase 1 prototype are shown in Bangladesh Standard Time and remain subject to official confirmation."
+                  : "Published times are shown in Bangladesh Standard Time and remain subject to official confirmation."
               }
             />
             {festival.schedule.length > 0 ? (
@@ -408,8 +408,8 @@ export default async function FestivalDetailPage({
             title="Made possible through shared investment in science."
             description={
               festival.recordStatus === "poster-verified"
-                ? "The title sponsor shown below is transcribed from the supplied poster; a complete structured acknowledgement record is still being prepared."
-                : "Phase 1 uses clearly fictional partner marks to demonstrate how approved acknowledgements will appear on the live site."
+                ? "These sponsor and partner acknowledgements are transcribed from the supplied event artwork."
+                : "Approved sponsor and partner acknowledgements for this edition are listed below."
             }
           />
           <div className="mt-10 grid gap-10 lg:grid-cols-2">
@@ -436,7 +436,7 @@ export default async function FestivalDetailPage({
             description={
               festival.recordStatus === "poster-verified"
                 ? "The supplied poster anchors this archive entry while approved event photography is catalogued."
-                : "Illustrated placeholders establish the future gallery rhythm while real, consent-cleared event photography is being prepared."
+                : "Approved, consent-cleared festival photography is collected here."
             }
             inverse
           />
@@ -494,7 +494,7 @@ export default async function FestivalDetailPage({
               <p className="mt-4 leading-7 text-slate-600">
                 {festival.recordStatus === "poster-verified"
                   ? "A verified brochure or rulebook was not supplied with this archive record. Approved historical files can be attached here later."
-                  : "Brochure and rulebook destinations are Phase 1 demonstration links. Official, approved PDFs will replace them before launch."}
+                  : "Official brochure and rulebook files for this edition are available below."}
               </p>
             </div>
             <div className="grid gap-4 border-t border-slate-200 bg-white p-7 sm:grid-cols-2 sm:p-10 lg:border-l lg:border-t-0">
@@ -649,9 +649,15 @@ function FestivalHero({ festival }: { festival: Festival }) {
               <ButtonLink href="#segments" variant="secondary">
                 Explore segments
               </ButtonLink>
-              <ButtonLink href="#schedule" variant="light" icon="calendar">
-                View schedule
-              </ButtonLink>
+              {festival.schedule.length > 0 ? (
+                <ButtonLink href="#schedule" variant="light" icon="calendar">
+                  View schedule
+                </ButtonLink>
+              ) : (
+                <ButtonLink href="#partners" variant="light">
+                  Sponsors & partners
+                </ButtonLink>
+              )}
             </div>
           </div>
 
@@ -685,7 +691,7 @@ function FestivalHero({ festival }: { festival: Festival }) {
               </figcaption>
             ) : (
               <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/90 to-transparent p-6 pt-20 text-xs font-semibold uppercase tracking-[0.12em] text-science-100">
-                Concept artwork · Phase 1 prototype
+                Festival cover artwork
               </figcaption>
             )}
           </figure>
@@ -781,13 +787,8 @@ function RegistrationPanel({ festival }: { festival: Festival }) {
             className="mt-6 w-full"
             icon="external"
           >
-            Prototype registration link
+            Open registration
           </ButtonLink>
-        )}
-        {festival.recordStatus === "prototype" && (
-          <p className="mt-4 text-xs leading-5 text-slate-400">
-            Phase 1 demonstration only—no submission or payment is processed.
-          </p>
         )}
       </div>
     </aside>
@@ -864,7 +865,7 @@ function ResourceLink({
       </span>
       <span className="mt-8">
         <span className="block text-xs font-extrabold uppercase tracking-[0.12em] text-teal-700">
-          {type} · Prototype PDF
+          {type} · PDF
         </span>
         <span className="mt-2 block font-bold leading-6 text-navy-950 group-hover:text-science-700">
           {label}

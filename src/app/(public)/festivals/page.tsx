@@ -11,14 +11,14 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
   festivals,
-  getCurrentOrUpcomingFestival,
+  getFeaturedFestival,
   getFestivalArchive,
 } from "@/data";
 
 export const metadata: Metadata = {
   title: "Science Festivals",
   description:
-    "Explore the current DRMC National Science Festival, competition segments, schedules, results, galleries, and past festival editions.",
+    "Explore the latest verified DRMC National Science Carnival, its poster-backed programme, sponsors, partners, and past festival editions.",
   alternates: { canonical: "/festivals" },
   openGraph: {
     title: "DRMC National Science Festivals",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export default function FestivalsPage() {
-  const currentFestival = getCurrentOrUpcomingFestival();
+  const featuredFestival = getFeaturedFestival();
   const archive = getFestivalArchive();
 
   return (
@@ -42,12 +42,12 @@ export default function FestivalsPage() {
         icon="rocket"
       >
         <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-          {currentFestival && (
+          {featuredFestival && (
             <ButtonLink
-              href={`/festivals/${currentFestival.slug}`}
+              href={`/festivals/${featuredFestival.slug}`}
               variant="secondary"
             >
-              Current edition
+              Latest verified edition
             </ButtonLink>
           )}
           <ButtonLink href="#archive" variant="light" icon="calendar">
@@ -60,9 +60,9 @@ export default function FestivalsPage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
             <SectionHeading
-              eyebrow="Featured edition"
-              title="The next horizon is already in view."
-              description="Find dates, eligibility, registration guidance, and the complete programme for our current festival."
+              eyebrow="Latest verified edition"
+              title="The 17th carnival in the official record."
+              description="Explore the supplied poster, 44 listed programme segments, and poster-backed sponsor and partner acknowledgements from January 2026."
             />
             <div className="flex flex-wrap gap-x-8 gap-y-3 border-t border-slate-200 pt-6 text-sm font-semibold text-slate-600 lg:justify-end">
               <span className="inline-flex items-center gap-2">
@@ -76,13 +76,13 @@ export default function FestivalsPage() {
             </div>
           </div>
 
-          {currentFestival ? (
-            <FeaturedEdition festival={currentFestival} />
+          {featuredFestival ? (
+            <FeaturedEdition festival={featuredFestival} />
           ) : (
             <div className="mt-10">
               <EmptyState
-                title="The next festival is being prepared"
-                description="Dates and registration guidance will appear here after the programme is approved."
+                title="The latest festival record is being catalogued"
+                description="Verified dates and programme details will appear here as the archive is reviewed."
                 action={{ label: "Explore past editions", href: "#archive" }}
               />
             </div>
@@ -112,7 +112,7 @@ export default function FestivalsPage() {
               </div>
               <div className="surface-card rounded-2xl border border-surface-border px-5 py-4 shadow-card">
                 <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Archive years
+                  Earlier editions
                 </dt>
                 <dd className="mt-1 font-display text-3xl font-black text-teal-700">
                   {archive.length}
@@ -173,10 +173,10 @@ export default function FestivalsPage() {
 function FeaturedEdition({
   festival,
 }: {
-  festival: NonNullable<ReturnType<typeof getCurrentOrUpcomingFestival>>;
+  festival: NonNullable<ReturnType<typeof getFeaturedFestival>>;
 }) {
   const registrationTone =
-    festival.registration.status === "open" ? "teal" : "amber";
+    festival.registration.status === "open" ? "teal" : "slate";
 
   return (
     <article className="mt-10 grid overflow-hidden rounded-[2rem] border border-slate-200 bg-navy-950 shadow-soft lg:grid-cols-[1.08fr_0.92fr]">
@@ -190,7 +190,7 @@ function FeaturedEdition({
           fill
           preload
           sizes="(min-width: 1024px) 55vw, 100vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+          className="object-contain transition-transform duration-700 group-hover:scale-[1.02]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-950/75 via-transparent to-transparent" />
         <p className="absolute bottom-6 left-6 rounded-full border border-white/20 bg-navy-950/70 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.13em] text-white backdrop-blur-md">

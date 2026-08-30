@@ -1,4 +1,4 @@
-/** Shared content primitives used by the public prototype and the mock admin. */
+/** Shared content primitives used by the public site and the mock admin. */
 export interface ContentLink {
   label: string;
   href: string;
@@ -150,8 +150,10 @@ export interface Activity {
   title: string;
   category: ActivityCategory;
   status: ActivityStatus;
+  recordStatus: "prototype" | "poster-verified";
   featured: boolean;
   date: string;
+  endDate?: string;
   dateLabel: string;
   location: string;
   excerpt: string;
@@ -163,6 +165,23 @@ export interface Activity {
   highlights: string[];
   registration?: ContentLink;
   relatedFestivalSlug?: string;
+}
+
+export interface Achievement {
+  id: string;
+  recipients: string[];
+  award: string;
+  competition: string;
+  year?: number;
+  organizer?: string;
+  location?: string;
+  details: string[];
+  image: ContentImage;
+  /**
+   * The numeric publication identifier from the supplied source artwork.
+   * It provides a stable newest-first order when an exact event date is absent.
+   */
+  sourceOrder: number;
 }
 
 export interface MagazineIssue {

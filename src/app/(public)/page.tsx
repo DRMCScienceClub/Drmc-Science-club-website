@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { LogoMark } from "@/components/brand/logo";
+import { AchievementCard } from "@/components/features/achievement-card";
 import { ActivityCard } from "@/components/features/activity-card";
 import { ExecutiveCard } from "@/components/features/executive-card";
 import { FestivalCard } from "@/components/features/festival-card";
@@ -15,11 +16,12 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
   getCurrentExecutivePanel,
-  getCurrentOrUpcomingFestival,
   getExecutiveMemberCount,
+  getFeaturedFestival,
   getFestivalArchive,
   getFeaturedMagazine,
   getLatestActivities,
+  getLatestAchievements,
   siteConfig,
   siteStats,
 } from "@/data";
@@ -27,13 +29,14 @@ import {
 export const metadata: Metadata = {
   title: { absolute: "DRMC Science Club | Curiosity into Discovery" },
   description:
-    "Explore DRMC Science Club activities, the National Science Festival, annual magazine, executive panel, and opportunities for DRMC students.",
+    "Explore verified DRMC Science Club activities, achievements, National Science Carnival records, the annual magazine, and executive panels.",
   alternates: { canonical: "/" },
 };
 
 export default function HomePage() {
-  const festival = getCurrentOrUpcomingFestival();
+  const festival = getFeaturedFestival();
   const activities = getLatestActivities(3);
+  const achievements = getLatestAchievements(3);
   const archive = getFestivalArchive().slice(0, 2);
   const magazine = getFeaturedMagazine();
   const panel = getCurrentExecutivePanel();
@@ -95,17 +98,17 @@ export default function HomePage() {
       <section className="bg-paper-50 py-20 sm:py-24">
         <Container>
           <div className="mb-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-            <SectionHeading eyebrow="Flagship programme" title="The next big question starts here." description="Our national festival brings student science out of notebooks and into conversation." />
+            <SectionHeading eyebrow="Latest verified carnival" title="The 17th edition, preserved from the official artwork." description="Explore the January 2026 carnival's 44 listed segments and its poster-backed sponsor and partner record." />
             <ButtonLink href="/festivals" variant="ghost" className="self-start sm:shrink-0">Festival archive</ButtonLink>
           </div>
-          {festival ? <FeaturedFestival festival={festival} /> : <EmptyState title="Festival announcement coming soon" description="The next edition will appear here once its programme is confirmed." action={{ label: "Browse the archive", href: "/festivals" }} />}
+          {festival ? <FeaturedFestival festival={festival} /> : <EmptyState title="Festival record being catalogued" description="The latest verified edition will appear here after its source artwork is reviewed." action={{ label: "Browse the archive", href: "/festivals" }} />}
         </Container>
       </section>
 
       <section className="site-surface science-grid border-y border-paper-200 py-20 sm:py-24">
         <Container>
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-            <SectionHeading eyebrow="Latest activities" title="Science is something we do." description="Workshops, observations, challenges, and conversations designed for active learning." />
+            <SectionHeading eyebrow="Latest activities" title="Science is something we do." description="Poster-backed competitions, workshops, and seminars designed for active learning." />
             <ButtonLink href="/activities" variant="outline" className="self-start sm:shrink-0">View all activities</ButtonLink>
           </div>
           {activities.length > 0 ? (
@@ -116,13 +119,39 @@ export default function HomePage() {
         </Container>
       </section>
 
+      <section className="bg-paper-50 py-20 sm:py-24">
+        <Container>
+          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+            <SectionHeading
+              eyebrow="Latest achievements"
+              title="Student work recognized beyond the classroom."
+              description="Poster-backed distinctions in invention, olympiads, robotics, quizzing, and science communication, ordered by the supplied publication sequence."
+            />
+            <ButtonLink href="/achievements" variant="outline" className="self-start sm:shrink-0">
+              View all achievements
+            </ButtonLink>
+          </div>
+          {achievements.length > 0 ? (
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {achievements.map((achievement) => (
+                <AchievementCard key={achievement.id} achievement={achievement} />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-10">
+              <EmptyState title="Achievement archive being prepared" />
+            </div>
+          )}
+        </Container>
+      </section>
+
       <section className="bg-paper-100 py-20 sm:py-24">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
-            <SectionHeading eyebrow="Festival archive" title="A record of ideas, teams, and shared discovery." description="Every edition leaves a useful trail—winning work, photographs, schedules, and the people who made it possible." />
+            <SectionHeading eyebrow="Festival archive" title="A record of ideas, teams, and shared discovery." description="Revisit the supplied posters, themes, programme categories, sponsors, and partners from earlier editions." />
             <div className="flex flex-wrap gap-3 lg:justify-end">
               <ButtonLink href="/festivals" variant="outline">Explore all editions</ButtonLink>
-              <ButtonLink href={festival ? `/festivals/${festival.slug}` : "/festivals"}>Current festival</ButtonLink>
+              <ButtonLink href={festival ? `/festivals/${festival.slug}` : "/festivals"}>Latest verified edition</ButtonLink>
             </div>
           </div>
           {archive.length > 0 ? (
@@ -183,7 +212,7 @@ export default function HomePage() {
 
       <section className="dark-canvas border-y border-white/10 py-16 text-white sm:py-20">
         <Container>
-          <SectionHeading eyebrow="Measured impact" title="Small experiments. Lasting momentum." align="center" inverse />
+          <SectionHeading eyebrow="Documented archive" title="Official artwork, carefully catalogued." align="center" inverse />
           <dl className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {siteStats.map((stat, index) => (
               <div data-reveal="scale" key={stat.label} className="glass-panel relative overflow-hidden rounded-2xl p-7 text-center sm:p-8">
@@ -220,16 +249,16 @@ function HeroBackdrop() {
   );
 }
 
-function FeaturedFestival({ festival }: { festival: NonNullable<ReturnType<typeof getCurrentOrUpcomingFestival>> }) {
+function FeaturedFestival({ festival }: { festival: NonNullable<ReturnType<typeof getFeaturedFestival>> }) {
   return (
     <article data-reveal="scale" className="group grid overflow-hidden rounded-[2rem] border border-paper-200 bg-navy-950 shadow-soft lg:grid-cols-[1.08fr_.92fr]">
       <Link href={`/festivals/${festival.slug}`} className="relative min-h-[320px] overflow-hidden lg:min-h-[510px]">
-        <Image src={festival.coverImage.src} alt={festival.coverImage.alt} fill sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.02]" />
+        <Image src={festival.coverImage.src} alt={festival.coverImage.alt} fill sizes="(min-width: 1024px) 55vw, 100vw" className="object-contain transition-transform duration-700 group-hover:scale-[1.02]" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-950/55 via-transparent to-transparent" />
         <span className="absolute bottom-6 left-6 rounded-full border border-white/20 bg-navy-950/65 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.13em] text-white backdrop-blur-md">{festival.edition}</span>
       </Link>
       <div className="science-grid-dark flex flex-col justify-center p-7 sm:p-10 lg:p-12">
-        <StatusBadge tone={festival.registration.status === "open" ? "teal" : "amber"}>{festival.registration.label}</StatusBadge>
+        <StatusBadge tone={festival.registration.status === "open" ? "teal" : "slate"}>{festival.registration.label}</StatusBadge>
         <p className="mt-6 text-xs font-extrabold uppercase tracking-[0.14em] text-gold-300">{festival.theme}</p>
         <h3 className="mt-3 font-display text-3xl font-extrabold tracking-[-0.04em] text-white sm:text-4xl">{festival.title}</h3>
         <p className="mt-5 text-sm leading-7 text-slate-300">{festival.summary}</p>

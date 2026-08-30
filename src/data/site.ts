@@ -6,6 +6,9 @@ import type {
   SiteStat,
   SocialLink,
 } from "@/types/content";
+import { achievements } from "./achievements";
+import { activities } from "./activities";
+import { festivals } from "./festivals";
 import { auroraArchive } from "./magazines";
 
 export const siteConfig: SiteConfig = {
@@ -32,6 +35,11 @@ export const primaryNavigation: readonly NavigationItem[] = [
     description: "Workshops, observations and competitions",
   },
   {
+    label: "Achievements",
+    href: "/achievements",
+    description: "Student distinctions documented in club announcements",
+  },
+  {
     label: "Executives",
     href: "/executives",
     description: "Current and archived panels",
@@ -53,7 +61,7 @@ export const exploreNavigation: readonly NavigationItem[] = [
   {
     label: "Science Festivals",
     href: "/festivals",
-    description: "Current festival and past editions",
+    description: "The latest verified carnival and past editions",
   },
   {
     label: "Annual Magazine",
@@ -68,6 +76,7 @@ export const footerNavigation = [
     links: [
       { label: "About the club", href: "/about" },
       { label: "Activities", href: "/activities" },
+      { label: "Achievements", href: "/achievements" },
       { label: "Festivals", href: "/festivals" },
       { label: "Magazines", href: "/magazines" },
     ],
@@ -86,64 +95,27 @@ export const footerNavigation = [
   },
 ] as const;
 
-/** Notices are scheduled in Bangladesh Standard Time and selected at render time. */
-export const notices: readonly Notice[] = [
-  {
-    id: "festival-registration-2026",
-    title: "Registration now open",
-    message:
-      "Prototype registration for DRMC National Science Festival 2026 closes on 8 October.",
-    startsAt: "2026-08-20T09:00:00+06:00",
-    endsAt: "2026-10-08T23:59:00+06:00",
-    link: {
-      label: "View festival",
-      href: "/festivals/quantum-horizon-2026",
-    },
-    tone: "announcement",
-  },
-  {
-    id: "robotics-workshop-2026",
-    title: "Limited workshop seats",
-    message:
-      "The Robotics & Control Systems Workshop takes place in the ICT Lab on 5 September.",
-    startsAt: "2026-08-27T08:00:00+06:00",
-    endsAt: "2026-09-05T12:00:00+06:00",
-    link: {
-      label: "Workshop details",
-      href: "/activities/robotics-control-systems-workshop",
-    },
-    tone: "info",
-  },
-  {
-    id: "festival-gate-update-2026",
-    title: "Participant entry update",
-    message:
-      "Registered festival teams should carry their confirmation and institution ID to the Mohammadpur gate.",
-    startsAt: "2026-10-14T08:00:00+06:00",
-    endsAt: "2026-10-17T17:00:00+06:00",
-    link: {
-      label: "Check the schedule",
-      href: "/festivals/quantum-horizon-2026#schedule",
-    },
-    tone: "urgent",
-  },
-];
+/**
+ * No time-sensitive notice was included in the supplied source set. Keeping
+ * this empty prevents an expired or speculative announcement from appearing.
+ */
+export const notices: readonly Notice[] = [];
 
 export const siteStats: readonly SiteStat[] = [
   {
-    value: "18+",
-    label: "years of inquiry",
-    description: "A student science community growing at DRMC since 2008.",
+    value: String(festivals.length),
+    label: "festival editions",
+    description: "Poster-backed records spanning the 8th through 17th editions.",
   },
   {
-    value: "2,500+",
-    label: "festival participants",
-    description: "Learners welcomed from institutions across Bangladesh.",
+    value: String(activities.length),
+    label: "verified activities",
+    description: "Supplied programme artwork preserved in chronological order.",
   },
   {
-    value: "40+",
-    label: "annual learning hours",
-    description: "Workshops, observations, competitions and open discussions.",
+    value: String(achievements.length),
+    label: "achievement records",
+    description: "Poster-backed student and team distinctions in the archive.",
   },
   {
     value: String(auroraArchive.totalVolumes),

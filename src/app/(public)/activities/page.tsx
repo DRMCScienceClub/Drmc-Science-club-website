@@ -7,7 +7,11 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { activities } from "@/data";
+import {
+  activities,
+  getCompletedActivities,
+  getUpcomingActivities,
+} from "@/data";
 import type { ActivityCategory } from "@/types/content";
 
 export const metadata: Metadata = {
@@ -26,8 +30,8 @@ const categoryIcons: Record<ActivityCategory, IconName> = {
 };
 
 export default function ActivitiesPage() {
-  const upcoming = activities.filter((activity) => activity.status === "upcoming");
-  const completed = activities.filter((activity) => activity.status === "completed");
+  const upcoming = getUpcomingActivities();
+  const completed = getCompletedActivities();
   const categoryCounts = activities.reduce<Partial<Record<ActivityCategory, number>>>((counts, activity) => {
     counts[activity.category] = (counts[activity.category] ?? 0) + 1;
     return counts;
@@ -37,8 +41,8 @@ export default function ActivitiesPage() {
     <main>
       <PageHero
         eyebrow="Activities"
-        title="Science becomes real when you use it."
-        description="From a first circuit to a careful field observation, our programmes are designed around active participation, useful questions, and evidence students can explain."
+        title="A verified record of club programmes."
+        description="Explore DRMC Science Club competitions, olympiads, workshops, and seminars transcribed from the supplied official event artwork."
         icon="flask"
       >
         <dl className="grid grid-cols-2 gap-3 text-center sm:min-w-72">
@@ -59,7 +63,7 @@ export default function ActivitiesPage() {
             <SectionHeading
               eyebrow="Next on campus"
               title="Upcoming programmes"
-              description="Check the date, venue, learning goals, and prototype registration status before you take part."
+              description="Future programmes will appear here after their date and venue are published in official club materials."
             />
             <ButtonLink href="/join" variant="outline" className="self-start sm:shrink-0">
               Membership information
@@ -76,7 +80,7 @@ export default function ActivitiesPage() {
             <div className="mt-10">
               <EmptyState
                 title="The next activity is being prepared"
-                description="New workshops and sessions will appear here when their dates and venues are ready."
+                description="The supplied programme set contains completed events only. New workshops and sessions will appear here after their details are confirmed."
                 action={{ label: "Browse completed activities", href: "#activity-archive" }}
               />
             </div>
@@ -90,10 +94,10 @@ export default function ActivitiesPage() {
             <SectionHeading
               eyebrow="Programme mix"
               title="Different ways to investigate."
-              description="The Phase 1 archive groups each programme by its primary format while keeping every detail page focused on learning outcomes."
+              description="This archive groups each poster-backed programme by its primary published format."
             />
             <p className="max-w-md text-sm leading-6 text-slate-500">
-              Categories reflect the current prototype content and will expand as the club publishes more programmes.
+              Counts reflect the official artwork currently available to the archive and will grow as more verified programmes are added.
             </p>
           </div>
           <dl className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -117,7 +121,7 @@ export default function ActivitiesPage() {
           <SectionHeading
             eyebrow="Field notes"
             title="Completed activities"
-            description="Revisit what participants explored, the methods they practised, and the outcomes recorded by each programme."
+            description="Programmes are ordered newest first by their published event date. Each detail page distinguishes printed facts from context inferred from the supplied artwork."
           />
           {completed.length > 0 ? (
             <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

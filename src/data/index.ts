@@ -2,9 +2,16 @@ export {
   activities,
   activitySlugs,
   getActivityBySlug,
+  getCompletedActivities,
   getFeaturedActivities,
   getLatestActivities,
+  getUpcomingActivities,
 } from "./activities";
+export {
+  achievementIds,
+  achievements,
+  getLatestAchievements,
+} from "./achievements";
 export {
   executivePanels,
   executiveSessions,
