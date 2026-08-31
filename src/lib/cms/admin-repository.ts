@@ -124,15 +124,23 @@ export async function getCmsOverview() {
     .sort((a, b) => String(b.updated_at).localeCompare(String(a.updated_at)))
     .slice(0, 8);
 
-  const [{ count: newContactCount }, { count: newJoinCount }] = await Promise.all([
+  const now = new Date().toISOString();
+  const [{ count: newContactCount }, { count: newJoinCount }, { count: activeNotificationCount }] = await Promise.all([
     supabase.from("contact_submissions").select("id", { count: "exact", head: true }).eq("status", "new"),
     supabase.from("join_submissions").select("id", { count: "exact", head: true }).eq("status", "new"),
+    supabase
+      .from("notifications")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "published")
+      .lte("starts_at", now)
+      .or(`ends_at.is.null,ends_at.gte.${now}`),
   ]);
 
   return {
     counts,
     recent,
     submissions: (newContactCount ?? 0) + (newJoinCount ?? 0),
+    activeNotifications: activeNotificationCount ?? 0,
   };
 }
 

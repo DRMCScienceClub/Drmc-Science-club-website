@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit --incremental false",
+    "db:seed:plan": "tsx scripts/seed-supabase.ts",
+    "db:seed": "node --env-file=.env.local --import tsx scripts/seed-supabase.ts --apply",
+    "db:bootstrap-admin": "node --env-file=.env.local --import tsx scripts/bootstrap-admin.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.5",

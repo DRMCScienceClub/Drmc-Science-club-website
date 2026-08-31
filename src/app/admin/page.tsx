@@ -1,378 +1,137 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminShell } from "@/app/admin/_components/admin-shell";
-import { PrototypeBanner } from "@/app/admin/_components/prototype-banner";
+import { AdminPageHeader } from "@/app/admin/_components/admin-page-header";
 import { Icon, type IconName } from "@/components/ui/icon";
-import { activities } from "@/data/activities";
-import { festivals } from "@/data/festivals";
-import { magazines } from "@/data/magazines";
+import { requireAdmin } from "@/lib/auth";
+import { getCmsOverview } from "@/lib/cms/admin-repository";
+import { cmsResources } from "@/lib/cms/resources";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard Prototype",
-  description:
-    "Phase 1 mock administration dashboard for previewing the future DRMC Science Club publishing workflow.",
+  title: "Content Dashboard",
+  description: "Secure content administration for the DRMC Science Club website.",
 };
 
-const upcomingProgrammes =
-  activities.filter((activity) => activity.status === "upcoming").length +
-  festivals.filter(
-    (festival) => festival.status === "upcoming" || festival.status === "ongoing",
-  ).length;
+function resourcePath(table: string) {
+  return table === "executive_panels" ? "executives" : table;
+}
 
-const kpis: ReadonlyArray<{
-  label: string;
-  value: string;
-  detail: string;
-  icon: IconName;
-  tone: string;
-}> = [
-  {
-    label: "Mock records",
-    value: String(activities.length + festivals.length + magazines.length),
-    detail: "Across three public collections",
-    icon: "globe",
-    tone: "bg-science-100 text-science-700",
-  },
-  {
-    label: "Upcoming",
-    value: String(upcomingProgrammes),
-    detail: "Festivals and activities",
-    icon: "calendar",
-    tone: "bg-teal-100 text-teal-700",
-  },
-  {
-    label: "Open registration",
-    value: String(
-      festivals.filter((festival) => festival.registration.status === "open")
-        .length,
-    ),
-    detail: "Prototype registration states",
-    icon: "users",
-    tone: "bg-amber-100 text-amber-800",
-  },
-  {
-    label: "Magazine issues",
-    value: String(magazines.length),
-    detail: "Annual archive entries",
-    icon: "book",
-    tone: "bg-violet-100 text-violet-700",
-  },
-];
+function statusClasses(status: string) {
+  if (status === "published") return "bg-teal-50 text-teal-700 ring-teal-200";
+  if (status === "archived") return "bg-slate-100 text-slate-600 ring-slate-200";
+  return "bg-amber-50 text-amber-800 ring-amber-200";
+}
 
-const recentContent = [
-  {
-    title: festivals[0]?.shortTitle ?? "Current science festival",
-    type: "Festival",
-    state: "Scheduled",
-    stateClass: "bg-science-50 text-science-700 ring-science-200",
-    changed: "Today, 09:40",
-  },
-  {
-    title: activities[0]?.title ?? "Latest club activity",
-    type: "Activity",
-    state: "Review",
-    stateClass: "bg-amber-50 text-amber-800 ring-amber-200",
-    changed: "Yesterday, 16:15",
-  },
-  {
-    title: magazines[0]?.title ?? "Annual magazine",
-    type: "Magazine",
-    state: "Published",
-    stateClass: "bg-teal-50 text-teal-700 ring-teal-200",
-    changed: "25 Aug, 12:30",
-  },
-  {
-    title: activities[1]?.title ?? "Club programme",
-    type: "Activity",
-    state: "Draft",
-    stateClass: "bg-slate-100 text-slate-700 ring-slate-200",
-    changed: "24 Aug, 10:05",
-  },
-] as const;
+function formatDate(value: unknown) {
+  if (typeof value !== "string") return "—";
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(value));
+}
 
-const quickActions: ReadonlyArray<{
-  title: string;
-  description: string;
-  icon: IconName;
-}> = [
-  {
-    title: "Create festival",
-    description: "Add programme, segments, schedules, and results.",
-    icon: "atom",
-  },
-  {
-    title: "Add activity",
-    description: "Prepare a story, gallery, and public event details.",
-    icon: "flask",
-  },
-  {
-    title: "Upload magazine",
-    description: "Publish a cover, reader link, and approved PDF.",
-    icon: "book",
-  },
-];
+export default async function AdminDashboardPage() {
+  const identity = await requireAdmin("/admin");
+  const overview = await getCmsOverview();
+  const totalPublished = overview.counts.reduce((sum, item) => sum + item.published, 0);
+  const totalDrafts = overview.counts.reduce((sum, item) => sum + item.drafts, 0);
 
-const readiness = [
-  { label: "Festival profile", value: 88 },
-  { label: "Activity archive", value: 76 },
-  { label: "Executive directory", value: 64 },
-] as const;
+  const kpis: ReadonlyArray<{
+    label: string;
+    value: number;
+    detail: string;
+    icon: IconName;
+    tone: string;
+  }> = [
+    { label: "Published", value: totalPublished, detail: "Live public records", icon: "globe", tone: "bg-science-100 text-science-700" },
+    { label: "Drafts", value: totalDrafts, detail: "Awaiting editorial work", icon: "book", tone: "bg-amber-100 text-amber-800" },
+    { label: "Active notices", value: overview.activeNotifications, detail: "Visible in the current window", icon: "calendar", tone: "bg-teal-100 text-teal-700" },
+    { label: "Unread submissions", value: overview.submissions, detail: "New contact and join requests", icon: "mail", tone: "bg-violet-100 text-violet-700" },
+  ];
 
-export default function AdminDashboardPage() {
   return (
-    <AdminShell>
-      <div className="mx-auto max-w-[1320px]">
-        <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
-          <div>
-            <p className="eyebrow">Administration preview</p>
-            <h1 className="mt-3 font-display text-3xl font-extrabold tracking-[-0.035em] text-navy-950 sm:text-4xl">
-              Content overview
-            </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
-              A proposed editorial workspace for keeping the public website
-              accurate, timely, and institutionally reviewed.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-extrabold uppercase tracking-[0.12em] text-slate-600 shadow-sm">
-              <span className="size-2 rounded-full bg-amber-500" aria-hidden="true" />
-              Mock data only
-            </span>
-            <Link
-              href="/"
-              className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-navy-950 px-4 text-sm font-bold text-white shadow-sm transition-colors hover:bg-navy-800"
-            >
-              View website
-              <Icon name="external" className="size-4" />
-            </Link>
-          </div>
-        </div>
+    <AdminShell identity={identity} active="overview">
+      <div className="mx-auto max-w-[1380px]">
+        <AdminPageHeader
+          eyebrow="Secure administration"
+          title={`Welcome back, ${identity.displayName?.split(" ")[0] || "administrator"}.`}
+          description="Review publication health, continue editorial work, and keep the public website accurate. Every mutation is authorised server-side and recorded in the audit history."
+        />
 
-        <div className="mt-7">
-          <PrototypeBanner />
-        </div>
-
-        <section aria-labelledby="dashboard-snapshot" className="mt-8">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <h2
-                id="dashboard-snapshot"
-                className="font-display text-xl font-extrabold tracking-[-0.02em] text-navy-950"
-              >
-                Site snapshot
-              </h2>
-              <p className="mt-1 text-sm text-slate-500">
-                Calculated from the local prototype collections.
-              </p>
-            </div>
-            <span className="hidden items-center gap-2 text-xs font-bold text-slate-500 sm:inline-flex">
-              <Icon name="clock" className="size-4" />
-              Previewed 27 August 2026
-            </span>
-          </div>
-
+        <section aria-labelledby="dashboard-snapshot" className="mt-9">
+          <h2 id="dashboard-snapshot" className="font-display text-xl font-extrabold tracking-[-0.02em] text-navy-950">Site snapshot</h2>
+          <p className="mt-1 text-sm text-slate-500">Live counts from the protected Supabase workspace.</p>
           <dl className="mt-4 grid gap-4 sm:grid-cols-2 2xl:grid-cols-4">
             {kpis.map((kpi) => (
-              <div
-                key={kpi.label}
-                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card"
-              >
+              <div key={kpi.label} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <dt className="text-sm font-bold text-slate-500">
-                      {kpi.label}
-                    </dt>
+                    <dt className="text-sm font-bold text-slate-500">{kpi.label}</dt>
                     <dd>
                       <span className="mt-2 block font-display text-3xl font-extrabold tracking-[-0.04em] text-navy-950">{kpi.value}</span>
                       <span className="mt-3 block text-xs font-semibold leading-5 text-slate-500">{kpi.detail}</span>
                     </dd>
                   </div>
-                  <span
-                    className={`grid size-11 shrink-0 place-items-center rounded-xl ${kpi.tone}`}
-                  >
-                    <Icon name={kpi.icon} />
-                  </span>
+                  <span className={`grid size-11 shrink-0 place-items-center rounded-xl ${kpi.tone}`}><Icon name={kpi.icon} /></span>
                 </div>
               </div>
             ))}
           </dl>
         </section>
 
-        <div className="mt-8 grid items-start gap-6 2xl:grid-cols-[minmax(0,1.55fr)_minmax(19rem,0.75fr)]">
-          <section
-            aria-labelledby="recent-content"
-            className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card"
-          >
-            <div className="flex flex-col gap-3 border-b border-slate-200 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-              <div>
-                <h2
-                  id="recent-content"
-                  className="font-display text-xl font-extrabold tracking-[-0.02em] text-navy-950"
-                >
-                  Recent content
-                </h2>
-                <p className="mt-1 text-sm text-slate-500">
-                  Sample editorial states for interface review.
-                </p>
+        <div className="mt-8 grid items-start gap-6 2xl:grid-cols-[minmax(0,1.45fr)_minmax(21rem,0.8fr)]">
+          <section aria-labelledby="recent-content" className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card">
+            <div className="border-b border-slate-200 px-5 py-5 sm:px-6">
+              <h2 id="recent-content" className="font-display text-xl font-extrabold tracking-[-0.02em] text-navy-950">Recently changed</h2>
+              <p className="mt-1 text-sm text-slate-500">The latest edits across the content system.</p>
+            </div>
+            {overview.recent.length ? (
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[680px] border-collapse text-left">
+                  <thead><tr className="border-b border-slate-200 bg-slate-50/80 text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-slate-500">
+                    <th className="px-6 py-3.5">Content</th><th className="px-4 py-3.5">Type</th><th className="px-4 py-3.5">State</th><th className="px-6 py-3.5 text-right">Updated</th>
+                  </tr></thead>
+                  <tbody>
+                    {overview.recent.map((record) => (
+                      <tr key={`${record.table}-${record.id}`} className="border-b border-slate-100 last:border-0">
+                        <td className="px-6 py-4">
+                          <Link href={`/admin/${resourcePath(record.table)}/${record.id}/edit`} className="font-extrabold text-navy-950 hover:text-science-700">{record.title}</Link>
+                        </td>
+                        <td className="px-4 py-4 text-sm font-semibold text-slate-500">{record.type}</td>
+                        <td className="px-4 py-4"><span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-extrabold capitalize ring-1 ring-inset ${statusClasses(record.status)}`}>{record.status}</span></td>
+                        <td className="px-6 py-4 text-right text-xs font-semibold text-slate-500">{formatDate(record.updated_at)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-              <span className="inline-flex w-fit rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">
-                Read-only preview
-              </span>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[680px] border-collapse text-left">
-                <caption className="sr-only">
-                  Mock recent content and editorial status
-                </caption>
-                <thead>
-                  <tr className="border-b border-slate-200 bg-slate-50/80 text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-slate-500">
-                    <th className="px-6 py-3.5" scope="col">
-                      Content
-                    </th>
-                    <th className="px-4 py-3.5" scope="col">
-                      Type
-                    </th>
-                    <th className="px-4 py-3.5" scope="col">
-                      Editorial state
-                    </th>
-                    <th className="px-6 py-3.5 text-right" scope="col">
-                      Mock update
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {recentContent.map((item) => (
-                    <tr key={item.title} className="text-sm">
-                      <th
-                        scope="row"
-                        className="max-w-xs px-6 py-4 font-bold text-navy-950"
-                      >
-                        {item.title}
-                      </th>
-                      <td className="px-4 py-4 font-semibold text-slate-600">
-                        {item.type}
-                      </td>
-                      <td className="px-4 py-4">
-                        <span
-                          className={`inline-flex rounded-full px-2.5 py-1 text-xs font-extrabold ring-1 ring-inset ${item.stateClass}`}
-                        >
-                          {item.state}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-right text-xs font-semibold text-slate-500">
-                        {item.changed}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            ) : (
+              <div className="px-6 py-12 text-center text-sm font-semibold text-slate-500">No content has been created yet. Choose a collection to add the first record.</div>
+            )}
           </section>
 
-          <section
-            aria-labelledby="content-readiness"
-            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card sm:p-6"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h2
-                  id="content-readiness"
-                  className="font-display text-xl font-extrabold tracking-[-0.02em] text-navy-950"
-                >
-                  Content readiness
-                </h2>
-                <p className="mt-1 text-sm leading-6 text-slate-500">
-                  Illustrative progress—not a live audit.
-                </p>
-              </div>
-              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-teal-100 text-teal-700">
-                <Icon name="target" className="size-5" />
-              </span>
+          <aside className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card sm:p-6">
+            <h2 className="font-display text-xl font-extrabold text-navy-950">Collections</h2>
+            <p className="mt-1 text-sm leading-6 text-slate-500">Open a focused editorial workspace.</p>
+            <div className="mt-5 grid gap-3">
+              {cmsResources.map((resource) => {
+                const counts = overview.counts.find((item) => item.table === resource.table);
+                return (
+                  <Link key={resource.key} href={`/admin/${resource.key}`} className="group flex items-center gap-3 rounded-xl border border-slate-200 p-3.5 transition-colors hover:border-science-300 hover:bg-science-50">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-slate-100 text-science-700 group-hover:bg-white"><Icon name={resource.icon} className="size-4" /></span>
+                    <span className="min-w-0 flex-1"><span className="block text-sm font-extrabold text-navy-950">{resource.label}</span><span className="mt-0.5 block text-xs font-semibold text-slate-500">{counts?.published ?? 0} published · {counts?.drafts ?? 0} drafts</span></span>
+                    <Icon name="chevron-right" className="size-4 text-slate-400" />
+                  </Link>
+                );
+              })}
             </div>
-
-            <div className="mt-6 space-y-5">
-              {readiness.map((item) => (
-                <div key={item.label}>
-                  <div className="flex items-center justify-between gap-4 text-sm">
-                    <span className="font-bold text-navy-900">{item.label}</span>
-                    <span className="font-extrabold text-slate-500">
-                      {item.value}%
-                    </span>
-                  </div>
-                  <div
-                    aria-label={`${item.label}: ${item.value}% complete`}
-                    aria-valuemax={100}
-                    aria-valuemin={0}
-                    aria-valuenow={item.value}
-                    className="mt-2 h-2 overflow-hidden rounded-full bg-slate-100"
-                    role="progressbar"
-                  >
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-science-600 to-teal-500"
-                      style={{ width: `${item.value}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 rounded-xl bg-slate-50 p-4">
-              <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-slate-500">
-                Before launch
-              </p>
-              <p className="mt-2 text-sm font-semibold leading-6 text-slate-700">
-                Club authorities must verify names, dates, statistics, documents,
-                and media permissions.
-              </p>
-            </div>
-          </section>
+          </aside>
         </div>
-
-        <section aria-labelledby="quick-actions" className="mt-8">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <h2
-                id="quick-actions"
-                className="font-display text-xl font-extrabold tracking-[-0.02em] text-navy-950"
-              >
-                Quick actions
-              </h2>
-              <p className="mt-1 text-sm text-slate-500">
-                Planned publishing tools, disabled during Phase 1.
-              </p>
-            </div>
-            <span className="hidden text-xs font-bold text-slate-500 sm:block">
-              Supabase + role access planned
-            </span>
-          </div>
-
-          <div className="mt-4 grid gap-4 md:grid-cols-3">
-            {quickActions.map((action) => (
-              <button
-                key={action.title}
-                type="button"
-                disabled
-                className="group flex min-h-36 cursor-not-allowed items-start gap-4 rounded-2xl border border-dashed border-slate-300 bg-white p-5 text-left opacity-80 shadow-sm"
-              >
-                <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-science-50 text-science-700">
-                  <Icon name={action.icon} />
-                </span>
-                <span>
-                  <span className="block font-display text-base font-extrabold text-navy-950">
-                    {action.title}
-                  </span>
-                  <span className="mt-2 block text-sm font-medium leading-6 text-slate-500">
-                    {action.description}
-                  </span>
-                  <span className="mt-3 inline-flex text-[0.68rem] font-extrabold uppercase tracking-[0.13em] text-science-700">
-                    Available in a future phase
-                  </span>
-                </span>
-              </button>
-            ))}
-          </div>
-        </section>
       </div>
     </AdminShell>
   );

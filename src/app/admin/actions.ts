@@ -182,6 +182,7 @@ function baseRow(
   data: Record<string, unknown>,
   userId: string,
   existing: boolean,
+  existingPublishedAt: string | null,
 ) {
   const status = values.status as PublicationStatus;
   const row: Record<string, unknown> = {
@@ -190,7 +191,7 @@ function baseRow(
     status,
     is_featured: Boolean(values.is_featured),
     updated_by: userId,
-    published_at: status === "published" ? new Date().toISOString() : null,
+    published_at: status === "published" ? existingPublishedAt ?? new Date().toISOString() : null,
     archived_at: status === "archived" ? new Date().toISOString() : null,
   };
   if (!existing) row.created_by = userId;
@@ -397,18 +398,28 @@ export async function saveCmsRecordAction(
   const supabase = await createSupabaseServerClient();
   const id = typeof values.id === "string" && values.id ? values.id : null;
   let existingData: Record<string, unknown> = {};
-  if (id) {
+  let existingPublishedAt: string | null = null;
+  if (id && resource.key !== "notifications") {
     const { data: existing, error } = await supabase
       .from(resource.table)
-      .select("data")
+      .select("data,published_at")
       .eq("id", id)
       .maybeSingle();
     if (error) return { ok: false, message: `The record could not be loaded: ${error.message}` };
     if (existing?.data && typeof existing.data === "object") existingData = existing.data as Record<string, unknown>;
+    if (typeof existing?.published_at === "string") existingPublishedAt = existing.published_at;
+  } else if (id) {
+    const { data: existing, error } = await supabase
+      .from(resource.table)
+      .select("published_at")
+      .eq("id", id)
+      .maybeSingle();
+    if (error) return { ok: false, message: `The record could not be loaded: ${error.message}` };
+    if (typeof existing?.published_at === "string") existingPublishedAt = existing.published_at;
   }
 
   const publicData = publicDataFor(resource, values, existingData, id ?? undefined);
-  const row = baseRow(resource, values, publicData, identity.id, Boolean(id));
+  const row = baseRow(resource, values, publicData, identity.id, Boolean(id), existingPublishedAt);
 
   let savedId = id;
   if (id) {

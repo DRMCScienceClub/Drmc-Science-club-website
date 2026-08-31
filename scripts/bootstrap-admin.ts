@@ -113,7 +113,7 @@ async function main(): Promise<void> {
     {
       id: user.id,
       email,
-      full_name: fullName,
+      display_name: fullName,
       role: "super_admin",
       is_active: true,
       updated_at: new Date().toISOString(),

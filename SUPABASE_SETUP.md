@@ -208,10 +208,10 @@ Deactivate a departing administrator in `profiles.is_active` before revoking
 sessions. Do not delete the audit history. Review active accounts and roles at
 each executive handover.
 
-The baseline migration must be hardened before production so contributors
-cannot turn an existing published root record back into a draft, mutate child
-rows belonging to published festivals/panels, or upload directly into the
-public bucket. Test those negative cases using a real contributor session.
+The baseline policies prevent contributors from changing published root rows,
+editing normalized festival/panel relationships, or uploading directly into
+the public bucket. Re-test those negative cases with a real contributor session
+after every policy migration; do not rely on the dashboard hiding controls.
 
 ## 8. Redirect URLs and MFA
 
@@ -251,11 +251,10 @@ backup or archive the specifically reviewed seeded rows.
 
 ## 10. Known pre-production checks
 
-- Add a forward migration fixing the `site_settings` audit trigger: the baseline
-  audit function expects an `id`, while this table is keyed by `key`.
 - Prove contributors cannot unpublish content through a direct REST update.
-- Restrict child-table edits according to the owning root record and role.
-- Restrict `cms-public` promotion to editors/super admins.
+- Prove contributors cannot mutate normalized festival or executive child rows.
+- Prove only editors/super admins can promote objects to `cms-public`.
+- Confirm `site_settings` changes create an audit entry keyed by `key`.
 - Add abuse protection and rate limiting before enabling public contact/join
   writes in production.
 - Confirm backup/restore, admin recovery, media consent, and data-retention

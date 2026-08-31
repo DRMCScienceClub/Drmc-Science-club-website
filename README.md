@@ -117,7 +117,7 @@ src/
 ├── app/
 │   ├── (public)/          # Public pages and dynamic detail routes
 │   │   └── template.tsx   # Public route-transition boundary
-│   ├── admin/             # Mock admin login and dashboard
+│   ├── admin/             # Protected login, dashboard, and CMS routes
 │   ├── globals.css        # Design tokens, base styles, and motion preferences
 │   ├── layout.tsx         # Root metadata and document shell
 │   └── not-found.tsx      # Site-wide 404 state
@@ -134,7 +134,10 @@ supabase/migrations/       # Versioned PostgreSQL, RLS, audit, and Storage setup
 docs/                      # Operational handover material
 ```
 
-Page files should compose shared components and read from `src/data`; they should not carry duplicated festival, magazine, activity, or executive content. This makes the later move from in-memory data to a repository or CMS layer straightforward.
+Page files compose shared components and read through `src/lib/content`. That
+repository queries published Supabase records when configured and uses
+`src/data` only as an environment-safe local fallback; page files should not
+carry duplicated festival, magazine, activity, achievement, or executive data.
 
 ## Visual system and motion
 

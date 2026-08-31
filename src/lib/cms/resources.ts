@@ -93,6 +93,7 @@ export const cmsResources: readonly CmsResource[] = [
         name: "registration_status",
         label: "Registration",
         type: "select",
+        required: true,
         options: [
           { label: "Opening soon", value: "opening-soon" },
           { label: "Open", value: "open" },
@@ -152,12 +153,14 @@ export const cmsResources: readonly CmsResource[] = [
         name: "category",
         label: "Category",
         type: "select",
+        required: true,
         options: ["Workshop", "Observation", "Competition", "Outreach", "Seminar"].map((value) => ({ label: value, value })),
       },
       {
         name: "event_status",
         label: "Event state",
         type: "select",
+        required: true,
         options: [
           { label: "Upcoming", value: "upcoming" },
           { label: "Completed", value: "completed" },
@@ -239,6 +242,7 @@ export const cmsResources: readonly CmsResource[] = [
         name: "tone",
         label: "Tone",
         type: "select",
+        required: true,
         options: [
           { label: "Information", value: "info" },
           { label: "Announcement", value: "announcement" },

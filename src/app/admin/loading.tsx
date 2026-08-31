@@ -10,10 +10,10 @@ export default function AdminLoading() {
       <div className="w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-7 text-center shadow-card">
         <LogoMark className="mx-auto" />
         <p className="mt-5 font-display text-lg font-extrabold text-navy-950">
-          Loading mock admin workspace…
+          Loading admin workspace…
         </p>
         <p className="mt-2 text-sm leading-6 text-slate-500">
-          Phase 1 prototype · no live account or data connection
+          Verifying your session and loading protected content
         </p>
         <div className="mt-6 h-1.5 overflow-hidden rounded-full bg-slate-100">
           <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-science-600 to-teal-400" />

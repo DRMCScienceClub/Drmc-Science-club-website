@@ -194,14 +194,14 @@ const magazineRows = magazines.map((magazine) => ({
   volume: magazine.volume,
   pdf_url: magazine.downloadPdf.href,
   reader_url: magazine.readOnline.href,
-  status: "published",
+  status: "draft",
   is_featured: magazine.featured,
   cover_image_url: magazine.coverImage.src,
   data: withSeedMetadata(
     magazine as unknown as Record<string, unknown>,
     "prototype",
   ),
-  published_at: seedPublishedAt,
+  published_at: null,
 }));
 
 const executivePanelRows = executivePanels.map((panel) => {
@@ -235,7 +235,9 @@ const seedSets: SeedSet[] = [
 function printPlan(): void {
   console.log("Phase 2 content seed plan");
   for (const set of seedSets) {
-    console.log(`- ${set.table}: ${set.rows.length} published root rows`);
+    const published = set.rows.filter((row) => row.status === "published").length;
+    const drafts = set.rows.length - published;
+    console.log(`- ${set.table}: ${set.rows.length} root rows (${published} published, ${drafts} draft)`);
   }
   console.log(
     "Each root row contains the complete Phase 1 public view model in data JSON.",
