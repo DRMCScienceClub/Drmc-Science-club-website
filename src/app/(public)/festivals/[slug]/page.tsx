@@ -9,11 +9,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { Icon } from "@/components/ui/icon";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
-import {
-  festivalSlugs,
-  festivals,
-  getFestivalBySlug,
-} from "@/data";
+import { getFestival, getFestivals } from "@/lib/content";
 import type {
   Festival,
   FestivalOrganization,
@@ -24,17 +20,15 @@ type FestivalPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return festivalSlugs.map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  return (await getFestivals()).map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: FestivalPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const festival = getFestivalBySlug(slug);
+  const festival = await getFestival(slug);
 
   if (!festival) {
     return {
@@ -81,7 +75,7 @@ export default async function FestivalDetailPage({
   params,
 }: FestivalPageProps) {
   const { slug } = await params;
-  const festival = getFestivalBySlug(slug);
+  const festival = await getFestival(slug);
 
   if (!festival) {
     notFound();
@@ -90,7 +84,7 @@ export default async function FestivalDetailPage({
   const usesPublishedProgramme =
     festival.segmentSource === "published-programme";
 
-  const otherEditions = festivals
+  const otherEditions = (await getFestivals())
     .filter((edition) => edition.slug !== festival.slug)
     .toSorted(
       (a, b) =>

@@ -1,0 +1,510 @@
+"use server";
+
+import { revalidatePath, revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
+import { z } from "zod";
+import { requireAdmin, requireRole, type AdminRole } from "@/lib/auth";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getCmsResource, slugify, type CmsResource, type PublicationStatus } from "@/lib/cms/resources";
+import { parseJsonField, validateCmsForm, type CmsFormResult } from "@/lib/cms/validation";
+
+export type { CmsFormResult } from "@/lib/cms/validation";
+
+const statusSchema = z.enum(["draft", "published", "archived"]);
+const submissionStatusSchema = z.enum(["new", "in_review", "resolved", "spam", "archived"]);
+const roleSchema = z.enum(["super_admin", "editor", "contributor"]);
+
+function nullable(value: unknown) {
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
+function numberOrNull(value: unknown) {
+  if (typeof value !== "string" || !value) return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function isoOrNull(value: unknown) {
+  if (typeof value !== "string" || !value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
+function imageValue(current: unknown, url: unknown, title: string) {
+  const existing = current && typeof current === "object" ? current as Record<string, unknown> : {};
+  return {
+    ...existing,
+    src: nullable(url) ?? existing.src ?? "/images/brand/drmc-science-club-logo.png",
+    alt: existing.alt ?? title,
+    width: existing.width ?? 1600,
+    height: existing.height ?? 900,
+  };
+}
+
+function publicDataFor(
+  resource: CmsResource,
+  values: Record<string, unknown>,
+  existingData: Record<string, unknown>,
+  recordId?: string,
+) {
+  const suppliedData = parseJsonField(values.data_json, existingData);
+  const data = suppliedData && typeof suppliedData === "object" && !Array.isArray(suppliedData)
+    ? { ...(suppliedData as Record<string, unknown>) }
+    : { ...existingData };
+  const title = String(values.title);
+  const slug = String(values.slug);
+  const summary = String(values.summary ?? "");
+  const coverUrl = values.cover_image_url;
+
+  switch (resource.key) {
+    case "festivals": {
+      const startsAt = isoOrNull(values.starts_at);
+      const endsAt = isoOrNull(values.ends_at);
+      const year = numberOrNull(values.festival_year) ?? new Date().getFullYear();
+      return {
+        ...data,
+        slug,
+        title,
+        shortTitle: data.shortTitle ?? title,
+        year,
+        edition: String(values.edition ?? ""),
+        theme: data.theme ?? "Science, discovery, and innovation",
+        summary,
+        description: Array.isArray(data.description) ? data.description : [summary],
+        startDate: startsAt?.slice(0, 10) ?? data.startDate ?? `${year}-01-01`,
+        endDate: endsAt?.slice(0, 10) ?? startsAt?.slice(0, 10) ?? data.endDate ?? `${year}-01-01`,
+        dateLabel: data.dateLabel ?? String(year),
+        venue: String(values.venue ?? ""),
+        venueAddress: data.venueAddress ?? String(values.venue ?? ""),
+        status: data.status ?? "completed",
+        recordStatus: data.recordStatus ?? "prototype",
+        featured: Boolean(values.is_featured),
+        coverImage: imageValue(data.coverImage, coverUrl, title),
+        registration: {
+          ...(data.registration && typeof data.registration === "object" ? data.registration as object : {}),
+          status: String(values.registration_status ?? "not-required"),
+          label: (data.registration as Record<string, unknown> | undefined)?.label ?? "Registration",
+          note: (data.registration as Record<string, unknown> | undefined)?.note ?? "Check the official club channels for updates.",
+        },
+        segments: parseJsonField(values.segments_json, data.segments ?? []),
+        schedule: parseJsonField(values.schedule_json, data.schedule ?? []),
+        results: parseJsonField(values.results_json, data.results ?? []),
+        resultsNote: data.resultsNote ?? "Results will be published after official verification.",
+        sponsors: parseJsonField(values.sponsors_json, data.sponsors ?? []),
+        partners: parseJsonField(values.partners_json, data.partners ?? []),
+        gallery: Array.isArray(data.gallery) ? data.gallery : [],
+      };
+    }
+    case "activities": {
+      const startsAt = isoOrNull(values.starts_at);
+      return {
+        ...data,
+        slug,
+        title,
+        category: String(values.category ?? "Workshop"),
+        status: String(values.event_status ?? "completed"),
+        recordStatus: data.recordStatus ?? "prototype",
+        featured: Boolean(values.is_featured),
+        date: startsAt?.slice(0, 10) ?? data.date ?? new Date().toISOString().slice(0, 10),
+        endDate: isoOrNull(values.ends_at)?.slice(0, 10) ?? data.endDate,
+        dateLabel: data.dateLabel ?? startsAt?.slice(0, 10) ?? "Date to be announced",
+        location: String(values.location ?? ""),
+        excerpt: summary,
+        body: Array.isArray(data.body) ? data.body : [summary],
+        image: imageValue(data.image, coverUrl, title),
+        gallery: Array.isArray(data.gallery) ? data.gallery : [],
+        tags: Array.isArray(data.tags) ? data.tags : [],
+        organizers: Array.isArray(data.organizers) ? data.organizers : ["DRMC Science Club"],
+        highlights: Array.isArray(data.highlights) ? data.highlights : [],
+      };
+    }
+    case "achievements":
+      return {
+        ...data,
+        id: recordId ?? data.id ?? slug,
+        recipients: String(values.recipients ?? "").split(",").map((name) => name.trim()).filter(Boolean),
+        award: title,
+        competition: String(values.competition ?? ""),
+        year: numberOrNull(values.achievement_year) ?? undefined,
+        details: Array.isArray(data.details) ? data.details : [summary],
+        image: imageValue(data.image, coverUrl, title),
+        sourceOrder: typeof data.sourceOrder === "number" ? data.sourceOrder : Date.now(),
+      };
+    case "magazines": {
+      const year = numberOrNull(values.publication_year) ?? new Date().getFullYear();
+      return {
+        ...data,
+        year,
+        slug,
+        title,
+        subtitle: data.subtitle ?? "DRMC Science Club annual magazine",
+        volume: String(values.volume ?? ""),
+        publishedAt: data.publishedAt ?? `${year}-01-01`,
+        pages: typeof data.pages === "number" ? data.pages : 0,
+        description: summary,
+        highlights: Array.isArray(data.highlights) ? data.highlights : [],
+        coverImage: imageValue(data.coverImage, coverUrl, title),
+        featured: Boolean(values.is_featured),
+        readOnline: {
+          label: "Read online",
+          href: nullable(values.reader_url) ?? (data.readOnline as Record<string, unknown> | undefined)?.href ?? "#",
+          external: true,
+        },
+        downloadPdf: {
+          label: "Download PDF",
+          href: nullable(values.pdf_url) ?? (data.downloadPdf as Record<string, unknown> | undefined)?.href ?? "#",
+          download: true,
+        },
+      };
+    }
+    case "executives": {
+      const startsYear = numberOrNull(values.starts_year) ?? new Date().getFullYear();
+      const endsYear = numberOrNull(values.ends_year) ?? startsYear + 1;
+      return {
+        ...data,
+        session: String(values.session_label ?? `${startsYear}–${endsYear}`),
+        startYear: startsYear,
+        endYear: endsYear,
+        isCurrent: Boolean(values.is_current),
+        recordStatus: data.recordStatus ?? "official-document",
+        title,
+        summary,
+      };
+    }
+    default:
+      return data;
+  }
+}
+
+function baseRow(
+  resource: CmsResource,
+  values: Record<string, unknown>,
+  data: Record<string, unknown>,
+  userId: string,
+  existing: boolean,
+) {
+  const status = values.status as PublicationStatus;
+  const row: Record<string, unknown> = {
+    title: values.title,
+    slug: values.slug,
+    status,
+    is_featured: Boolean(values.is_featured),
+    updated_by: userId,
+    published_at: status === "published" ? new Date().toISOString() : null,
+    archived_at: status === "archived" ? new Date().toISOString() : null,
+  };
+  if (!existing) row.created_by = userId;
+
+  if (resource.key !== "notifications") {
+    row.summary = values.summary;
+    row.cover_image_url = nullable(values.cover_image_url);
+    row.data = data;
+  }
+
+  switch (resource.key) {
+    case "festivals":
+      Object.assign(row, {
+        edition: values.edition,
+        festival_year: numberOrNull(values.festival_year),
+        starts_at: isoOrNull(values.starts_at),
+        ends_at: isoOrNull(values.ends_at),
+        venue: values.venue,
+        registration_status: values.registration_status,
+      });
+      break;
+    case "activities":
+      Object.assign(row, {
+        category: values.category,
+        event_status: values.event_status,
+        starts_at: isoOrNull(values.starts_at),
+        ends_at: isoOrNull(values.ends_at),
+        location: values.location,
+      });
+      break;
+    case "achievements":
+      Object.assign(row, {
+        recipients: String(values.recipients ?? "").split(",").map((name) => name.trim()).filter(Boolean),
+        competition: values.competition,
+        achievement_year: numberOrNull(values.achievement_year),
+      });
+      break;
+    case "magazines":
+      Object.assign(row, {
+        publication_year: numberOrNull(values.publication_year),
+        volume: values.volume,
+        pdf_url: nullable(values.pdf_url),
+        reader_url: nullable(values.reader_url),
+      });
+      break;
+    case "executives":
+      Object.assign(row, {
+        session_label: values.session_label,
+        starts_year: numberOrNull(values.starts_year),
+        ends_year: numberOrNull(values.ends_year),
+        is_current: Boolean(values.is_current),
+      });
+      break;
+    case "notifications":
+      Object.assign(row, {
+        message: values.message,
+        tone: values.tone,
+        starts_at: isoOrNull(values.starts_at) ?? new Date().toISOString(),
+        ends_at: isoOrNull(values.ends_at),
+        link_label: nullable(values.link_label),
+        link_url: nullable(values.link_url),
+      });
+      break;
+  }
+  return row;
+}
+
+async function syncFestivalRelations(
+  supabase: Awaited<ReturnType<typeof createSupabaseServerClient>>,
+  festivalId: string,
+  values: Record<string, unknown>,
+  role: AdminRole,
+) {
+  if (role === "contributor") return;
+
+  const segments = parseJsonField(values.segments_json, []) as Array<Record<string, unknown>>;
+  const schedule = parseJsonField(values.schedule_json, []) as Array<Record<string, unknown>>;
+  const results = parseJsonField(values.results_json, []) as Array<Record<string, unknown>>;
+  const sponsors = parseJsonField(values.sponsors_json, []) as Array<Record<string, unknown>>;
+  const partners = parseJsonField(values.partners_json, []) as Array<Record<string, unknown>>;
+
+  await Promise.all([
+    supabase.from("festival_schedule_items").delete().eq("festival_id", festivalId),
+    supabase.from("festival_results").delete().eq("festival_id", festivalId),
+    supabase.from("festival_organizations").delete().eq("festival_id", festivalId),
+  ]);
+  await supabase.from("festival_segments").delete().eq("festival_id", festivalId);
+
+  if (Array.isArray(segments) && segments.length) {
+    const { error } = await supabase.from("festival_segments").insert(
+      segments.map((segment, index) => ({
+        festival_id: festivalId,
+        slug: slugify(String(segment.slug ?? segment.title ?? `segment-${index + 1}`)),
+        title: String(segment.title ?? `Segment ${index + 1}`),
+        category: String(segment.category ?? ""),
+        summary: String(segment.summary ?? ""),
+        eligibility: String(segment.eligibility ?? ""),
+        team_size: String(segment.teamSize ?? ""),
+        fee: String(segment.fee ?? ""),
+        sort_order: index,
+      })),
+    );
+    if (error) throw new Error(`Festival segments could not be synchronized: ${error.message}`);
+  }
+
+  const scheduleRows = Array.isArray(schedule)
+    ? schedule.flatMap((day, dayIndex) => {
+        const items = Array.isArray(day.items) ? day.items as Array<Record<string, unknown>> : [];
+        return items.map((item, itemIndex) => ({
+          festival_id: festivalId,
+          schedule_date: String(day.date ?? new Date().toISOString().slice(0, 10)),
+          time_label: String(item.time ?? "TBA"),
+          title: String(item.title ?? "Programme item"),
+          description: String(item.description ?? ""),
+          venue: String(item.venue ?? ""),
+          sort_order: dayIndex * 100 + itemIndex,
+        }));
+      })
+    : [];
+  if (scheduleRows.length) {
+    const { error } = await supabase.from("festival_schedule_items").insert(scheduleRows);
+    if (error) throw new Error(`Festival schedule could not be synchronized: ${error.message}`);
+  }
+
+  if (Array.isArray(results) && results.length) {
+    const { error } = await supabase.from("festival_results").insert(
+      results.map((result, index) => ({
+        festival_id: festivalId,
+        position: String(result.position ?? "Special Mention"),
+        recipient: String(result.recipient ?? "To be announced"),
+        institution: String(result.institution ?? ""),
+        sort_order: index,
+      })),
+    );
+    if (error) throw new Error(`Festival results could not be synchronized: ${error.message}`);
+  }
+
+  for (const [kind, organizations] of [["sponsor", sponsors], ["partner", partners]] as const) {
+    if (!Array.isArray(organizations)) continue;
+    for (const [index, organization] of organizations.entries()) {
+      const name = String(organization.name ?? "").trim();
+      if (!name) continue;
+      const logo = organization.logo && typeof organization.logo === "object"
+        ? organization.logo as Record<string, unknown>
+        : null;
+      const { data: org, error: orgError } = await supabase
+        .from("organizations")
+        .upsert({
+          name,
+          slug: slugify(name),
+          website_url: nullable(organization.href),
+          logo_url: nullable(logo?.src),
+          logo_alt: String(logo?.alt ?? `${name} logo`),
+        }, { onConflict: "slug" })
+        .select("id")
+        .single();
+      if (orgError) throw new Error(`Organization ${name} could not be saved: ${orgError.message}`);
+      const { error: joinError } = await supabase.from("festival_organizations").insert({
+        festival_id: festivalId,
+        organization_id: org.id,
+        kind,
+        role_label: String(organization.role ?? (kind === "sponsor" ? "Sponsor" : "Partner")),
+        sort_order: index,
+      });
+      if (joinError) throw new Error(`Organization ${name} could not be linked: ${joinError.message}`);
+    }
+  }
+}
+
+function invalidateResource(resource: CmsResource, slug?: string) {
+  revalidateTag(`content:${resource.table}`, "max");
+  revalidatePath(`/admin/${resource.key}`);
+  revalidatePath("/admin");
+  revalidatePath("/");
+  if (resource.publicBasePath) {
+    revalidatePath(resource.publicBasePath);
+    if (slug) revalidatePath(`${resource.publicBasePath}/${slug}`);
+  }
+}
+
+export async function saveCmsRecordAction(
+  _previousState: CmsFormResult,
+  formData: FormData,
+): Promise<CmsFormResult> {
+  const resource = getCmsResource(String(formData.get("resource") ?? ""));
+  if (!resource) return { ok: false, message: "Unknown content type." };
+
+  const identity = await requireAdmin(`/admin/${resource.key}`);
+  const validation = validateCmsForm(resource, formData);
+  if (!validation.success) {
+    return {
+      ok: false,
+      message: "Please correct the highlighted fields.",
+      fieldErrors: z.flattenError(validation.error).fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  const values = validation.data;
+  const requestedStatus = values.status as PublicationStatus;
+  if (identity.role === "contributor" && requestedStatus !== "draft") {
+    return { ok: false, message: "Contributors can save drafts but cannot publish or archive records." };
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const id = typeof values.id === "string" && values.id ? values.id : null;
+  let existingData: Record<string, unknown> = {};
+  if (id) {
+    const { data: existing, error } = await supabase
+      .from(resource.table)
+      .select("data")
+      .eq("id", id)
+      .maybeSingle();
+    if (error) return { ok: false, message: `The record could not be loaded: ${error.message}` };
+    if (existing?.data && typeof existing.data === "object") existingData = existing.data as Record<string, unknown>;
+  }
+
+  const publicData = publicDataFor(resource, values, existingData, id ?? undefined);
+  const row = baseRow(resource, values, publicData, identity.id, Boolean(id));
+
+  let savedId = id;
+  if (id) {
+    const { error } = await supabase.from(resource.table).update(row).eq("id", id);
+    if (error) return { ok: false, message: `The ${resource.singular} could not be saved: ${error.message}` };
+  } else {
+    const { data, error } = await supabase.from(resource.table).insert(row).select("id").single();
+    if (error) return { ok: false, message: `The ${resource.singular} could not be created: ${error.message}` };
+    savedId = data.id;
+  }
+
+  if (resource.key === "festivals" && savedId) {
+    try {
+      await syncFestivalRelations(supabase, savedId, values, identity.role);
+    } catch (error) {
+      return { ok: false, message: error instanceof Error ? error.message : "Festival relationships could not be synchronized." };
+    }
+  }
+
+  invalidateResource(resource, String(values.slug));
+  redirect(`/admin/${resource.key}?saved=1`);
+}
+
+export async function changePublicationStatusAction(formData: FormData) {
+  const resource = getCmsResource(String(formData.get("resource") ?? ""));
+  const id = String(formData.get("id") ?? "");
+  const status = statusSchema.safeParse(formData.get("status"));
+  if (!resource || !z.uuid().safeParse(id).success || !status.success) throw new Error("Invalid publication request.");
+
+  const identity = await requireAdmin(`/admin/${resource.key}`);
+  if (identity.role === "contributor" && status.data !== "draft") throw new Error("Contributors cannot publish or archive records.");
+  const supabase = await createSupabaseServerClient();
+  const { data: current } = await supabase.from(resource.table).select("slug").eq("id", id).single();
+  const { error } = await supabase.from(resource.table).update({
+    status: status.data,
+    published_at: status.data === "published" ? new Date().toISOString() : null,
+    archived_at: status.data === "archived" ? new Date().toISOString() : null,
+    updated_by: identity.id,
+  }).eq("id", id);
+  if (error) throw new Error(`Publication status could not be changed: ${error.message}`);
+  invalidateResource(resource, current?.slug);
+}
+
+export async function deleteCmsRecordAction(formData: FormData) {
+  const resource = getCmsResource(String(formData.get("resource") ?? ""));
+  const id = String(formData.get("id") ?? "");
+  if (!resource || !z.uuid().safeParse(id).success) throw new Error("Invalid delete request.");
+  await requireRole(["super_admin"], `/admin/${resource.key}`);
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.from(resource.table).delete().eq("id", id);
+  if (error) throw new Error(`The ${resource.singular} could not be deleted: ${error.message}`);
+  invalidateResource(resource);
+}
+
+export async function updateSubmissionStatusAction(formData: FormData) {
+  await requireRole(["super_admin", "editor"], "/admin/submissions");
+  const kind = formData.get("kind") === "join" ? "join" : "contact";
+  const table = kind === "join" ? "join_submissions" : "contact_submissions";
+  const id = String(formData.get("id") ?? "");
+  const status = submissionStatusSchema.safeParse(formData.get("status"));
+  const notes = String(formData.get("admin_notes") ?? "").trim().slice(0, 5000);
+  if (!z.uuid().safeParse(id).success || !status.success) throw new Error("Invalid submission update.");
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.from(table).update({ status: status.data, admin_notes: notes }).eq("id", id);
+  if (error) throw new Error(`Submission could not be updated: ${error.message}`);
+  revalidatePath("/admin/submissions");
+  revalidatePath("/admin");
+}
+
+export async function updateAdminProfileAction(formData: FormData) {
+  const current = await requireRole(["super_admin"], "/admin/users");
+  const id = String(formData.get("id") ?? "");
+  const role = roleSchema.safeParse(formData.get("role"));
+  const isActive = formData.get("is_active") === "on";
+  const displayName = String(formData.get("display_name") ?? "").trim().slice(0, 120);
+  if (!z.uuid().safeParse(id).success || !role.success) throw new Error("Invalid administrator profile update.");
+  if (id === current.id && (!isActive || role.data !== "super_admin")) {
+    throw new Error("You cannot remove your own active super-administrator access.");
+  }
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.from("profiles").update({
+    display_name: displayName,
+    role: role.data,
+    is_active: isActive,
+  }).eq("id", id);
+  if (error) throw new Error(`Administrator profile could not be updated: ${error.message}`);
+  revalidatePath("/admin/users");
+}
+
+export async function updateMediaStatusAction(formData: FormData) {
+  const identity = await requireRole(["super_admin", "editor"], "/admin/media");
+  const id = String(formData.get("id") ?? "");
+  const status = statusSchema.safeParse(formData.get("status"));
+  if (!z.uuid().safeParse(id).success || !status.success) throw new Error("Invalid media update.");
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.from("media_assets").update({ status: status.data, updated_by: identity.id }).eq("id", id);
+  if (error) throw new Error(`Media status could not be updated: ${error.message}`);
+  revalidatePath("/admin/media");
+}

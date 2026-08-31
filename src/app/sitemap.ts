@@ -1,7 +1,14 @@
 import type { MetadataRoute } from "next";
-import { activities, festivals, magazines, siteConfig } from "@/data";
+import { siteConfig } from "@/data";
+import { getAchievements, getActivities, getFestivals, getMagazines } from "@/lib/content";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [activities, achievements, festivals, magazines] = await Promise.all([
+    getActivities(),
+    getAchievements(),
+    getFestivals(),
+    getMagazines(),
+  ]);
   const staticPages: MetadataRoute.Sitemap = [
     { url: siteConfig.url, lastModified: new Date("2026-08-30"), changeFrequency: "weekly", priority: 1 },
     { url: `${siteConfig.url}/about`, lastModified: new Date("2026-08-28"), changeFrequency: "monthly", priority: 0.8 },
@@ -28,11 +35,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: festival.status === "completed" ? 0.7 : 0.9,
   }));
 
+  const achievementPages: MetadataRoute.Sitemap = achievements.map((achievement) => ({
+    url: `${siteConfig.url}/achievements/${achievement.slug}`,
+    lastModified: achievement.updatedAt ? new Date(achievement.updatedAt) : undefined,
+    changeFrequency: "yearly",
+    priority: 0.7,
+  }));
+
   const magazinePages: MetadataRoute.Sitemap = magazines.map((issue) => ({
     url: `${siteConfig.url}/magazines/${issue.year}`,
     changeFrequency: "yearly",
     priority: 0.7,
   }));
 
-  return [...staticPages, ...activityPages, ...festivalPages, ...magazinePages];
+  return [...staticPages, ...activityPages, ...achievementPages, ...festivalPages, ...magazinePages];
 }

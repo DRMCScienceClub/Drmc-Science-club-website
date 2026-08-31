@@ -8,26 +8,19 @@ import { Container } from "@/components/ui/container";
 import { Icon } from "@/components/ui/icon";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
-import {
-  activities,
-  activitySlugs,
-  getActivityBySlug,
-  getFestivalBySlug,
-} from "@/data";
+import { getActivities, getActivity, getFestival } from "@/lib/content";
 
 type ActivityPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return activitySlugs.map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  return (await getActivities()).map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: ActivityPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const activity = getActivityBySlug(slug);
+  const activity = await getActivity(slug);
 
   if (!activity) {
     notFound();
@@ -59,16 +52,16 @@ export async function generateMetadata({ params }: ActivityPageProps): Promise<M
 
 export default async function ActivityDetailPage({ params }: ActivityPageProps) {
   const { slug } = await params;
-  const activity = getActivityBySlug(slug);
+  const activity = await getActivity(slug);
 
   if (!activity) {
     notFound();
   }
 
   const relatedFestival = activity.relatedFestivalSlug
-    ? getFestivalBySlug(activity.relatedFestivalSlug)
+    ? await getFestival(activity.relatedFestivalSlug)
     : undefined;
-  const relatedActivities = activities
+  const relatedActivities = (await getActivities())
     .filter((item) => item.slug !== activity.slug)
     .toSorted((a, b) => b.date.localeCompare(a.date))
     .slice(0, 3);

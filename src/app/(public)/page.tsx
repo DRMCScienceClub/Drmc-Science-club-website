@@ -15,16 +15,21 @@ import { Icon } from "@/components/ui/icon";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
-  getCurrentExecutivePanel,
   getExecutiveMemberCount,
-  getFeaturedFestival,
-  getFestivalArchive,
-  getFeaturedMagazine,
-  getLatestActivities,
-  getLatestAchievements,
   siteConfig,
   siteStats,
 } from "@/data";
+import {
+  getAchievements,
+  getActivities,
+  getCurrentPanel,
+  getExecutivePanels,
+  getFeaturedFestivalRecord,
+  getFeaturedMagazineRecord,
+  getFestivals,
+  getMagazines,
+} from "@/lib/content";
+import type { Festival } from "@/types/content";
 
 export const metadata: Metadata = {
   title: { absolute: "DRMC Science Club | Curiosity into Discovery" },
@@ -33,13 +38,24 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-export default function HomePage() {
-  const festival = getFeaturedFestival();
-  const activities = getLatestActivities(3);
-  const achievements = getLatestAchievements(3);
-  const archive = getFestivalArchive().slice(0, 2);
-  const magazine = getFeaturedMagazine();
-  const panel = getCurrentExecutivePanel();
+export default async function HomePage() {
+  const [allFestivals, allActivities, allAchievements, magazines, panels] =
+    await Promise.all([
+      getFestivals(),
+      getActivities(),
+      getAchievements(),
+      getMagazines(),
+      getExecutivePanels(),
+    ]);
+  const festival = getFeaturedFestivalRecord(allFestivals);
+  const activities = allActivities.toSorted((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+  const achievements = allAchievements.slice(0, 3);
+  const archive = allFestivals
+    .filter((item) => item.status === "completed" && item.slug !== festival?.slug)
+    .toSorted((a, b) => b.endDate.localeCompare(a.endDate))
+    .slice(0, 2);
+  const magazine = getFeaturedMagazineRecord(magazines);
+  const panel = getCurrentPanel(panels);
   const panelMembers = panel?.departments.flatMap((department) => department.members).slice(0, 3) ?? [];
   const panelMemberCount = panel ? getExecutiveMemberCount(panel) : 0;
 
@@ -249,7 +265,7 @@ function HeroBackdrop() {
   );
 }
 
-function FeaturedFestival({ festival }: { festival: NonNullable<ReturnType<typeof getFeaturedFestival>> }) {
+function FeaturedFestival({ festival }: { festival: Festival }) {
   return (
     <article data-reveal="scale" className="group grid overflow-hidden rounded-[2rem] border border-paper-200 bg-navy-950 shadow-soft lg:grid-cols-[1.08fr_.92fr]">
       <Link href={`/festivals/${festival.slug}`} className="relative min-h-[320px] overflow-hidden lg:min-h-[510px]">

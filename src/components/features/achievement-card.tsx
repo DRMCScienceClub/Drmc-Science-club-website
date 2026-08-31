@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
 import { StatusBadge } from "@/components/ui/status-badge";
 import type { Achievement } from "@/types/content";
@@ -7,7 +8,7 @@ function recipientLabel(recipients: string[]) {
   return recipients.join(" & ");
 }
 
-export function AchievementCard({ achievement }: { achievement: Achievement }) {
+export function AchievementCard({ achievement }: { achievement: Achievement & { slug?: string } }) {
   const recipients = recipientLabel(achievement.recipients);
 
   return (
@@ -36,7 +37,11 @@ export function AchievementCard({ achievement }: { achievement: Achievement }) {
           {achievement.award}
         </p>
         <h2 className="mt-3 text-balance font-display text-xl font-extrabold tracking-[-0.025em] text-navy-950">
-          {recipients}
+          {achievement.slug ? (
+            <Link href={`/achievements/${achievement.slug}`} className="rounded-sm transition-colors hover:text-science-700">
+              {recipients}
+            </Link>
+          ) : recipients}
         </h2>
         <p className="mt-3 text-sm font-semibold leading-6 text-science-800">
           {achievement.competition}

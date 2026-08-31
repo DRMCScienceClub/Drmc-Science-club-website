@@ -9,11 +9,8 @@ import { Icon } from "@/components/ui/icon";
 import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatusBadge } from "@/components/ui/status-badge";
-import {
-  festivals,
-  getFeaturedFestival,
-  getFestivalArchive,
-} from "@/data";
+import { getFeaturedFestivalRecord, getFestivals } from "@/lib/content";
+import type { Festival } from "@/types/content";
 
 export const metadata: Metadata = {
   title: "Science Festivals",
@@ -29,9 +26,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function FestivalsPage() {
-  const featuredFestival = getFeaturedFestival();
-  const archive = getFestivalArchive();
+export default async function FestivalsPage() {
+  const festivals = await getFestivals();
+  const featuredFestival = getFeaturedFestivalRecord(festivals);
+  const archive = festivals
+    .filter((festival) => festival.status === "completed" && festival.slug !== featuredFestival?.slug)
+    .toSorted((a, b) => b.endDate.localeCompare(a.endDate));
 
   return (
     <main>
@@ -173,7 +173,7 @@ export default function FestivalsPage() {
 function FeaturedEdition({
   festival,
 }: {
-  festival: NonNullable<ReturnType<typeof getFeaturedFestival>>;
+  festival: Festival;
 }) {
   const registrationTone =
     festival.registration.status === "open" ? "teal" : "slate";

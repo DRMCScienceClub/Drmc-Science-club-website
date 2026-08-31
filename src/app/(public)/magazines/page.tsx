@@ -7,7 +7,8 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { Icon } from "@/components/ui/icon";
 import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { auroraArchive, getFeaturedMagazine, magazines } from "@/data";
+import { auroraArchive } from "@/data";
+import { getFeaturedMagazineRecord, getMagazines } from "@/lib/content";
 import { formatDate } from "@/lib/utils";
 import type { MagazineIssue } from "@/types/content";
 
@@ -25,8 +26,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function MagazinesPage() {
-  const featuredIssue = getFeaturedMagazine();
+export default async function MagazinesPage() {
+  const magazines = await getMagazines();
+  const featuredIssue = getFeaturedMagazineRecord(magazines);
   const archive = magazines.filter(
     (issue) => issue.year !== featuredIssue?.year,
   );

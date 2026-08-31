@@ -8,11 +8,16 @@ import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeading } from "@/components/ui/section-heading";
 import {
   clubPillars,
-  getCurrentExecutivePanel,
-  getFeaturedFestival,
-  getFeaturedMagazine,
   siteConfig,
 } from "@/data";
+import {
+  getCurrentPanel,
+  getExecutivePanels,
+  getFeaturedFestivalRecord,
+  getFeaturedMagazineRecord,
+  getFestivals,
+  getMagazines,
+} from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About",
@@ -23,10 +28,15 @@ export const metadata: Metadata = {
 
 const pillarIcons: IconName[] = ["target", "flask", "users"];
 
-export default function AboutPage() {
-  const panel = getCurrentExecutivePanel();
-  const festival = getFeaturedFestival();
-  const magazine = getFeaturedMagazine();
+export default async function AboutPage() {
+  const [panels, festivals, magazines] = await Promise.all([
+    getExecutivePanels(),
+    getFestivals(),
+    getMagazines(),
+  ]);
+  const panel = getCurrentPanel(panels);
+  const festival = getFeaturedFestivalRecord(festivals);
+  const magazine = getFeaturedMagazineRecord(magazines);
   const committeeMembers =
     panel?.departments.flatMap((department) => department.members) ?? [];
   const committeePreview = committeeMembers.slice(0, 4);

@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Icon } from "@/components/ui/icon";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { getMagazineByYear, magazines, magazineYears } from "@/data";
+import { getMagazine, getMagazines } from "@/lib/content";
 import { formatDate } from "@/lib/utils";
 import type { MagazineIssue } from "@/types/content";
 
@@ -15,17 +15,15 @@ type MagazinePageProps = {
   params: Promise<{ year: string }>;
 };
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return magazineYears.map((year) => ({ year: String(year) }));
+export async function generateStaticParams() {
+  return (await getMagazines()).map(({ year }) => ({ year: String(year) }));
 }
 
 export async function generateMetadata({
   params,
 }: MagazinePageProps): Promise<Metadata> {
   const { year } = await params;
-  const issue = getMagazineByYear(year);
+  const issue = await getMagazine(year);
 
   if (!issue) {
     return {
@@ -73,13 +71,13 @@ export default async function MagazineDetailPage({
   params,
 }: MagazinePageProps) {
   const { year } = await params;
-  const issue = getMagazineByYear(year);
+  const issue = await getMagazine(year);
 
   if (!issue) {
     notFound();
   }
 
-  const otherIssues = magazines
+  const otherIssues = (await getMagazines())
     .filter((magazine) => magazine.year !== issue.year)
     .slice(0, 2);
 

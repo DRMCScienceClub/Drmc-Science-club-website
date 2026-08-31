@@ -7,11 +7,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeading } from "@/components/ui/section-heading";
-import {
-  activities,
-  getCompletedActivities,
-  getUpcomingActivities,
-} from "@/data";
+import { getActivities } from "@/lib/content";
 import type { ActivityCategory } from "@/types/content";
 
 export const metadata: Metadata = {
@@ -29,9 +25,14 @@ const categoryIcons: Record<ActivityCategory, IconName> = {
   Seminar: "lightbulb",
 };
 
-export default function ActivitiesPage() {
-  const upcoming = getUpcomingActivities();
-  const completed = getCompletedActivities();
+export default async function ActivitiesPage() {
+  const activities = await getActivities();
+  const upcoming = activities
+    .filter((activity) => activity.status === "upcoming")
+    .toSorted((a, b) => a.date.localeCompare(b.date));
+  const completed = activities
+    .filter((activity) => activity.status === "completed")
+    .toSorted((a, b) => b.date.localeCompare(a.date));
   const categoryCounts = activities.reduce<Partial<Record<ActivityCategory, number>>>((counts, activity) => {
     counts[activity.category] = (counts[activity.category] ?? 0) + 1;
     return counts;

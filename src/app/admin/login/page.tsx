@@ -2,21 +2,38 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
 import { Icon } from "@/components/ui/icon";
-import { PrototypeBanner } from "@/app/admin/_components/prototype-banner";
+import { LoginForm } from "@/app/admin/login/login-form";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export const metadata: Metadata = {
-  title: "Administrator Sign-in Prototype",
+  title: "Administrator Sign-in",
   description:
-    "Static Phase 1 preview of the future DRMC Science Club administrator sign-in experience.",
+    "Secure administrator access for the DRMC Science Club content workspace.",
 };
 
 const accessPrinciples = [
   "Administrator access only—there will be no public member login.",
   "Role checks will protect every content change, not only this screen.",
-  "Credentials and sessions will be handled by a secure provider in a later phase.",
+  "Credentials and sessions are handled by Supabase Auth.",
 ] as const;
 
-export default function AdminLoginPage() {
+type LoginPageProps = {
+  searchParams: Promise<{ returnTo?: string; setup?: string }>;
+};
+
+function safeReturnPath(value: string | undefined) {
+  return value?.startsWith("/admin") &&
+    value !== "/admin/login" &&
+    !value.startsWith("//")
+    ? value
+    : "/admin";
+}
+
+export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
+  const query = await searchParams;
+  const configured = isSupabaseConfigured();
+  const returnTo = safeReturnPath(query.returnTo);
+
   return (
     <main className="science-grid min-h-screen bg-[#f3f7fa] px-4 py-5 sm:px-6 sm:py-8 lg:px-8">
       <a className="skip-link" href="#login-panel">
@@ -44,13 +61,13 @@ export default function AdminLoginPage() {
 
           <div className="relative z-10 my-auto py-16">
             <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-teal-300">
-              Future content operations
+              Content operations
             </p>
             <p className="mt-5 max-w-lg font-display text-4xl font-extrabold leading-[1.08] tracking-[-0.04em] xl:text-5xl">
               Steward the club&apos;s public record with care.
             </p>
             <p className="mt-6 max-w-lg text-base leading-8 text-slate-300">
-              This proposed workspace will help authorised club administrators
+              This private workspace helps authorised club administrators
               review festival details, publish activity stories, maintain annual
               magazines, and archive executive panels.
             </p>
@@ -71,7 +88,7 @@ export default function AdminLoginPage() {
           </div>
 
           <p className="relative z-10 text-xs font-semibold text-slate-400">
-            DRMC Science Club · Phase 1 visual prototype
+            DRMC Science Club · Authorised access only
           </p>
         </section>
 
@@ -100,92 +117,22 @@ export default function AdminLoginPage() {
               Administrator sign-in
             </h1>
             <p className="mt-3 text-sm leading-7 text-slate-600 sm:text-base">
-              A static preview of the private access point planned for authorised
-              club administrators.
+              Use an invited administrator account to enter the private content
+              workspace.
             </p>
 
-            <div className="mt-6">
-              <PrototypeBanner compact />
-            </div>
+            {!configured && (
+              <div role="status" className="mt-6 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-bold leading-6 text-amber-950">
+                Supabase is not configured in this environment. Add the public
+                project URL and publishable (or anon) key to enable sign-in.
+              </div>
+            )}
 
-            <div
-              role="note"
-              className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold leading-6 text-red-900"
-            >
-              Do not enter any password or personal credential. All controls
-              below are intentionally disabled.
-            </div>
-
-            <form
-              aria-describedby="login-help"
-              aria-label="Disabled administrator sign-in form"
-              className="mt-7"
-            >
-              <fieldset disabled className="space-y-5">
-                <legend className="sr-only">
-                  Administrator credentials — unavailable in Phase 1
-                </legend>
-
-                <div>
-                  <label
-                    htmlFor="admin-email"
-                    className="text-sm font-extrabold text-navy-900"
-                  >
-                    Institutional email
-                  </label>
-                  <div className="relative mt-2">
-                    <Icon
-                      name="mail"
-                      className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400"
-                    />
-                    <input
-                      id="admin-email"
-                      type="email"
-                      placeholder="Authentication is not connected"
-                      className="min-h-12 w-full rounded-xl border border-slate-300 bg-slate-100 py-3 pl-11 pr-4 text-sm font-semibold text-slate-500 opacity-100"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between gap-3">
-                    <label
-                      htmlFor="admin-password"
-                      className="text-sm font-extrabold text-navy-900"
-                    >
-                      Password
-                    </label>
-                    <span className="text-xs font-bold text-slate-500">
-                      Recovery unavailable
-                    </span>
-                  </div>
-                  <div className="relative mt-2">
-                    <Icon
-                      name="shield"
-                      className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400"
-                    />
-                    <input
-                      id="admin-password"
-                      type="password"
-                      placeholder="Credentials are not accepted"
-                      className="min-h-12 w-full rounded-xl border border-slate-300 bg-slate-100 py-3 pl-11 pr-4 text-sm font-semibold text-slate-500 opacity-100"
-                    />
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  className="inline-flex min-h-12 w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl bg-slate-300 px-5 text-sm font-extrabold text-slate-600 opacity-100"
-                >
-                  Sign-in unavailable in Phase 1
-                  <Icon name="arrow-right" className="size-4" />
-                </button>
-              </fieldset>
-            </form>
+            <LoginForm configured={configured} returnTo={returnTo} />
 
             <p id="login-help" className="mt-4 text-center text-xs font-semibold leading-5 text-slate-500">
-              Real access will require an administrator invitation, secure
-              authentication, and role-based authorisation.
+              Access requires an administrator invitation and an active assigned
+              role. There is no public sign-up.
             </p>
 
             <div className="mt-7 flex flex-col items-center justify-between gap-3 border-t border-slate-200 pt-6 sm:flex-row">
@@ -196,13 +143,9 @@ export default function AdminLoginPage() {
                 <Icon name="arrow-left" className="size-4" />
                 Back to public website
               </Link>
-              <Link
-                href="/admin"
-                className="inline-flex min-h-10 items-center gap-2 rounded-xl px-3 text-sm font-bold text-slate-500 transition-colors hover:bg-slate-100 hover:text-navy-900"
-              >
-                Preview dashboard
-                <Icon name="chevron-right" className="size-4" />
-              </Link>
+              <span className="text-xs font-bold text-slate-500">
+                Invitation-only administrator access
+              </span>
             </div>
           </div>
         </section>

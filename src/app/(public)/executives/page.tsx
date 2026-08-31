@@ -3,7 +3,8 @@ import { ExecutiveDirectory } from "@/components/features/executive-directory";
 import { JoinCta } from "@/components/features/join-cta";
 import { Container } from "@/components/ui/container";
 import { PageHero } from "@/components/ui/page-hero";
-import { executivePanels, getCurrentExecutivePanel, getExecutiveMemberCount } from "@/data";
+import { getExecutiveMemberCount } from "@/data";
+import { getCurrentPanel, getExecutivePanels } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Executive Panels",
@@ -11,8 +12,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/executives" },
 };
 
-export default function ExecutivesPage() {
-  const current = getCurrentExecutivePanel();
+export default async function ExecutivesPage() {
+  const executivePanels = await getExecutivePanels();
+  const current = getCurrentPanel(executivePanels);
 
   return (
     <main>

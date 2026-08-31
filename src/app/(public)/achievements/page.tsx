@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/container";
 import { Icon } from "@/components/ui/icon";
 import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { achievements } from "@/data";
+import { getAchievements } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Achievements",
@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/achievements" },
 };
 
-export default function AchievementsPage() {
+export default async function AchievementsPage() {
+  const achievements = await getAchievements();
   const recordsWithPrintedYear = achievements.filter(
     (achievement) => achievement.year !== undefined,
   ).length;

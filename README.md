@@ -1,29 +1,61 @@
 # DRMC Science Club Website
 
-Phase 1 of the official public website for **Dhaka Residential Model College Science Club (DRMCSC)**. The public experience combines the club's supplied artwork and official records with a responsive information architecture and reusable design system. A database and private administration workflow remain future work.
+The official website for **Dhaka Residential Model College Science Club (DRMCSC)**. The approved Phase 1 public experience combines the club's supplied artwork and official records with a responsive information architecture and reusable design system. Phase 2 adds the Supabase CMS foundation, protected administration workflow, content import tooling, and operational documentation without replacing that public design.
 
-Public visitors do not need an account. The `/admin` area is deliberately presented as a mock interface, and `/admin/login` does not authenticate against a real service yet.
+Public visitors never need an account. Administrator access is invitation-only; there is no public registration flow.
 
 ## Technology
 
 - Next.js 16 with the App Router
 - React 19 and TypeScript in strict mode
 - Tailwind CSS 4
+- Supabase Auth, PostgreSQL, Storage, and Row Level Security
+- `@supabase/ssr` and `@supabase/supabase-js`
 - ESLint with the Next.js configuration
 - `next/image` for stable, responsive visual assets and a system-font stack for offline-safe builds
 - Centralized, typed content records
 
-## Current Phase 1 implementation
+## Phase 1 public baseline
 
-The current baseline provides the full public route architecture, centralized typed content, supplied archival media, responsive and accessible layouts, honest missing-data states, and a clearly labelled non-functional administration preview. Supabase, persistent forms, and real authentication remain future work.
+The public baseline provides the full route architecture, centralized typed content, supplied archival media, responsive and accessible layouts, and honest missing-data states. Phase 2 migrates these view-facing contracts gradually rather than redesigning working pages.
 
 - Complete responsive public route set for the home page, club information, activities, achievements, festivals, Aurora magazine archive, executive panels, contact, and membership guidance.
-- Account-free public access with a clearly labelled, non-functional administrator login and dashboard preview.
+- Account-free public access and a private administrator surface.
 - A teal-led institutional visual system with dark navy feature areas, restrained science-blue and gold accents, subtle scientific grids, clearer card borders, and softly graduated light surfaces.
 - Reusable, provenance-aware festival, magazine, activity, achievement, and executive components backed by centralized TypeScript records.
 - High-resolution supplied DRMC Science Club branding across the shared header/footer logo, home hero, browser favicon, Apple touch icon, and installable application icons.
 - Progressive route, hero, menu, reveal, and parallax motion with keyboard, reduced-motion, and hydration-safety protections.
 - Poster-backed festival history for the 8th–17th editions, six supplied activity programmes, 14 achievement announcements, a 15-volume Aurora archive model, and notice-verified 2024–25 and 2025–26 executive panels.
+
+## Phase 2 CMS foundation
+
+Phase 2 introduces a versioned Supabase schema for administrator profiles,
+festivals, activities, achievements, magazines, executive panels,
+notifications, media, private contact/join submissions, settings, and audit
+records. Every exposed table has Row Level Security. Anonymous database clients
+may read only published content; private submissions and administrator data are
+restricted to authorised roles.
+
+The migration also creates private `cms-staging` and public `cms-public`
+Storage buckets. Unreviewed files belong in staging; only validated and approved
+assets may be promoted to the public bucket.
+
+Operational entry points:
+
+```bash
+# Inspect the deterministic import without writing
+npx tsx scripts/seed-supabase.ts
+
+# Apply to local Supabase after configuring .env.local
+node --env-file=.env.local --import tsx scripts/seed-supabase.ts --apply
+
+# One-time only, with ALLOW_INITIAL_ADMIN_BOOTSTRAP=true
+node --env-file=.env.local --import tsx scripts/bootstrap-admin.ts
+```
+
+Read [SUPABASE_SETUP.md](SUPABASE_SETUP.md) before applying a migration or
+creating an administrator. Future executive teams should also follow
+[the CMS handover checklist](docs/CMS_HANDOVER.md).
 
 ## Run locally
 
@@ -42,7 +74,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-The Phase 1 prototype does not require environment values, so an empty `.env.local` is valid. The names in `.env.example` reserve the configuration surface for later integration work; never commit real keys or credentials.
+Static fallback content can still render without Supabase values. Database-backed and administrator features require the project URL and anonymous key; trusted maintenance scripts additionally require the server-only service-role key. Never commit real keys or credentials.
 
 ### Quality checks
 
@@ -55,7 +87,7 @@ git diff --check
 npm start
 ```
 
-Run lint, route type generation, the standalone strict TypeScript check, the production build, and `git diff --check` before opening a pull request. `npm start` serves the production build after `npm run build` succeeds. The current Phase 1 baseline passes lint with zero warnings, route type generation, a clean TypeScript check, and the production build.
+Run lint, route type generation, the standalone strict TypeScript check, the production build, and `git diff --check` before opening a pull request. Also run `npx supabase db lint` and migration/RLS tests whenever database files change. `npm start` serves the production build after `npm run build` succeeds.
 
 ## Public routes
 
@@ -73,8 +105,8 @@ Run lint, route type generation, the standalone strict TypeScript check, the pro
 | `/executives` | Current and archived panels with per-session batch photography, role groups, moderator, advisers, and institutional leadership |
 | `/contact` | Club contact information, location, and direct enquiry channels |
 | `/join` | Public membership information and future intake pathway |
-| `/admin/login` | Clearly labelled mock administrator sign-in |
-| `/admin` | Clearly labelled mock content dashboard |
+| `/admin/login` | Invitation-only administrator sign-in |
+| `/admin` | Protected, role-aware content dashboard |
 
 Unknown activity, festival, and magazine identifiers resolve to the site-wide 404 experience. Route-level loading and empty-state patterns keep asynchronous and content-free states intentional.
 
@@ -97,6 +129,9 @@ src/
 ├── data/                  # Single source of truth for typed public content
 └── types/                 # Shared domain and component types
 public/                    # Supplied archive artwork and supporting visual assets
+scripts/                   # Controlled content import and first-admin bootstrap
+supabase/migrations/       # Versioned PostgreSQL, RLS, audit, and Storage setup
+docs/                      # Operational handover material
 ```
 
 Page files should compose shared components and read from `src/data`; they should not carry duplicated festival, magazine, activity, or executive content. This makes the later move from in-memory data to a repository or CMS layer straightforward.
@@ -124,8 +159,8 @@ Aurora is recorded as a 15-volume publication. Phase 1 includes detailed prototy
 ## Prototype boundaries
 
 - Festival registration, contact, membership, download, and online-reading actions are demonstrations unless explicitly linked to a public resource.
-- No Supabase project, database schema, storage bucket, server action, email delivery, or persistent form submission is connected.
-- No real authentication, session, authorization, or administrator credentials exist. There is intentionally no public member-login flow.
+- The migration and application support Supabase, but every local, staging, and production environment still requires its own project, secrets, migration run, Auth configuration, and authorization tests.
+- There is intentionally no public member-login or registration flow. Administrator accounts are provisioned manually and remain inactive until an authorised role is assigned.
 - Facts in the festival, activity, achievement, and executive archives are limited to the supplied posters and committee notices. Existing magazine prototypes and other unverified fields remain explicitly labelled or use missing-data states.
 - Confirm publication consent for both supplied executive group photographs and the achievement artwork before production launch; individual student portraits remain placeholders until approved images are provided.
 - The supplied club mark is isolated behind a reusable logo component. Confirm ownership, official status, clear-space guidance, and permitted variants before production use.
@@ -138,10 +173,10 @@ When extending the prototype, preserve keyboard access, useful alternative text,
 
 ## SEO and content quality
 
-The root layout provides shared metadata while each route supplies a meaningful title and description. Dynamic detail routes derive metadata from their matching mock record and return a true not-found state for unknown identifiers. Phase 1 also includes generated `robots.txt`, `sitemap.xml`, a club-logo favicon, Apple touch icon, and manifest-ready application icons. Before production launch, verify the canonical domain, add approved Open Graph imagery and organization/event structured data, and confirm whether bilingual content is required.
+The root layout provides shared metadata while each route supplies a meaningful title and description. Dynamic detail routes derive metadata from their matching content record and return a true not-found state for unknown identifiers. Phase 1 also includes generated `robots.txt`, `sitemap.xml`, a club-logo favicon, Apple touch icon, and manifest-ready application icons. Before production launch, verify the canonical domain, add approved Open Graph imagery and organization/event structured data, and confirm whether bilingual content is required.
 
 ## Environment and secrets
 
 Only variables prefixed with `NEXT_PUBLIC_` may be exposed to browser code. `SUPABASE_SERVICE_ROLE_KEY` is reserved for future server-only administration and must never be imported by a client component. Keep local values in `.env.local` and production values in the deployment provider's encrypted environment settings.
 
-See [PROJECT_PLAN.md](./PROJECT_PLAN.md) for the route architecture, Phase 1 deliverables, and the staged path to a data-backed production website.
+See [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) for database operations and [PROJECT_PLAN.md](./PROJECT_PLAN.md) for the route architecture and staged production plan.
