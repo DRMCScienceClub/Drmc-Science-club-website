@@ -87,6 +87,9 @@ export default async function FestivalDetailPage({
     notFound();
   }
 
+  const usesPublishedProgramme =
+    festival.segmentSource === "published-programme";
+
   const otherEditions = festivals
     .filter((edition) => edition.slug !== festival.slug)
     .toSorted(
@@ -148,12 +151,16 @@ export default async function FestivalDetailPage({
             eyebrow="Festival segments"
             title={
               festival.recordStatus === "poster-verified"
-                ? "Programme categories preserved from the poster."
+                ? usesPublishedProgramme
+                  ? "The complete published programme, preserved."
+                  : "Programme categories preserved from the poster."
                 : "Choose the format that fits your question."
             }
             description={
               festival.recordStatus === "poster-verified"
-                ? "Names are transcribed from the supplied artwork; detailed rules and eligibility have not yet been digitised."
+                ? usesPublishedProgramme
+                  ? "All 44 programme names are transcribed from the contemporaneous event listing; detailed rules are intentionally kept separate from this concise archive."
+                  : "Names are transcribed from the supplied artwork; detailed rules and eligibility have not yet been digitised."
                 : "Each segment tests a different scientific habit—from sustained investigation to fast reasoning and collaborative engineering."
             }
           />
@@ -176,7 +183,10 @@ export default async function FestivalDetailPage({
                     {segment.title}
                   </h3>
                   <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
-                    {segment.summary ?? "Listed on the supplied archive poster."}
+                    {segment.summary ??
+                      (usesPublishedProgramme
+                        ? "Recorded in the published event programme."
+                        : "Listed on the supplied archive poster.")}
                   </p>
                   {(segment.eligibility || segment.teamSize || segment.fee) && (
                     <dl className="mt-6 grid gap-3 border-t border-slate-200 pt-5 text-sm">
@@ -401,8 +411,19 @@ export default async function FestivalDetailPage({
         </Container>
       </section>
 
-      <section id="partners" className="site-surface py-18 sm:py-24">
-        <Container>
+      <section
+        id="partners"
+        className="science-grid relative overflow-hidden border-y border-slate-200 bg-slate-50 py-18 sm:py-24"
+      >
+        <div
+          aria-hidden="true"
+          className="absolute -right-24 top-16 size-80 rounded-full bg-teal-200/25 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute -left-24 bottom-20 size-72 rounded-full bg-science-200/20 blur-3xl"
+        />
+        <Container className="relative">
           <SectionHeading
             eyebrow="Sponsors & partners"
             title="Made possible through shared investment in science."
@@ -412,13 +433,20 @@ export default async function FestivalDetailPage({
                 : "Approved sponsor and partner acknowledgements for this edition are listed below."
             }
           />
-          <div className="mt-10 grid gap-10 lg:grid-cols-2">
+          <div className="mt-10">
             <OrganizationGroup
               title="Festival sponsors"
+              eyebrow="Principal support"
+              description="The organizations presented, powered, and supported this edition at its principal sponsorship tiers."
               organizations={festival.sponsors}
+              featured
             />
+          </div>
+          <div className="mt-12 border-t border-slate-200 pt-10 sm:mt-16 sm:pt-12">
             <OrganizationGroup
               title="Programme partners"
+              eyebrow="Across the programme"
+              description="Specialist, academic, media, hospitality, and production partners helped bring the wider carnival experience together."
               organizations={festival.partners}
             />
           </div>
@@ -797,42 +825,102 @@ function RegistrationPanel({ festival }: { festival: Festival }) {
 
 function OrganizationGroup({
   title,
+  eyebrow,
+  description,
   organizations,
+  featured = false,
 }: {
   title: string;
+  eyebrow: string;
+  description: string;
   organizations: FestivalOrganization[];
+  featured?: boolean;
 }) {
   return (
-    <div>
-      <h3 className="text-sm font-extrabold uppercase tracking-[0.13em] text-slate-500">
-        {title}
-      </h3>
+    <section
+      className={
+        featured
+          ? "science-grid-dark overflow-hidden rounded-[2rem] border border-navy-700 bg-navy-950 p-5 shadow-soft sm:p-7 lg:p-8"
+          : undefined
+      }
+    >
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="max-w-2xl">
+          <p
+            className={`text-[0.7rem] font-extrabold uppercase tracking-[0.14em] ${featured ? "text-teal-300" : "text-science-700"}`}
+          >
+            {eyebrow}
+          </p>
+          <h3
+            className={`mt-2 font-display text-2xl font-extrabold tracking-[-0.03em] sm:text-3xl ${featured ? "text-white" : "text-navy-950"}`}
+          >
+            {title}
+          </h3>
+          <p
+            className={`mt-2 text-sm leading-6 ${featured ? "text-slate-300" : "text-slate-600"}`}
+          >
+            {description}
+          </p>
+        </div>
+        <span
+          className={`w-fit shrink-0 rounded-full px-3 py-1.5 text-[0.68rem] font-extrabold uppercase tracking-[0.11em] ${featured ? "border border-white/10 bg-white/10 text-teal-300" : "border border-science-200 bg-science-50 text-science-700"}`}
+        >
+          {organizations.length} {organizations.length === 1 ? "organization" : "organizations"}
+        </span>
+      </div>
+
       {organizations.length > 0 ? (
-        <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+        <ul
+          className={`mt-6 grid gap-5 ${featured ? (organizations.length === 2 ? "mx-auto max-w-4xl md:grid-cols-2" : "md:grid-cols-3") : "sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"}`}
+        >
           {organizations.map((organization) => (
             <li
               key={`${organization.name}-${organization.role}`}
-              className="rounded-3xl border border-surface-border bg-slate-50 p-5 shadow-card"
+              className={`group overflow-hidden rounded-3xl border shadow-card ${featured ? "border-white/10 bg-navy-900" : "border-surface-border bg-white"}`}
             >
-              <div className="relative flex aspect-[2/1] items-center justify-center overflow-hidden rounded-2xl border border-surface-border bg-white">
+              <div
+                className={`relative flex items-center justify-center overflow-hidden ${organization.logo ? "" : "aspect-[5/4]"} ${featured ? "bg-navy-900" : "bg-navy-950"}`}
+                style={
+                  organization.logo
+                    ? {
+                        aspectRatio: `${organization.logo.width} / ${organization.logo.height}`,
+                      }
+                    : undefined
+                }
+              >
                 {organization.logo ? (
                   <Image
                     src={organization.logo.src}
                     alt={organization.logo.alt}
                     fill
-                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 100vw"
-                    className="object-contain p-4"
+                    sizes={
+                      featured
+                        ? "(min-width: 1024px) 30vw, (min-width: 768px) 32vw, 100vw"
+                        : "(min-width: 1280px) 22vw, (min-width: 1024px) 30vw, (min-width: 640px) 46vw, 100vw"
+                    }
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                 ) : (
-                  <Icon name="atom" className="size-10 text-science-300" />
+                  <div className="flex size-full items-center justify-center bg-gradient-to-br from-navy-900 via-navy-950 to-navy-800">
+                    <span className="font-display text-5xl font-black tracking-[-0.08em] text-teal-300">
+                      {organization.name.slice(0, 2).toUpperCase()}
+                    </span>
+                  </div>
                 )}
+                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
               </div>
-              <h4 className="mt-4 font-bold text-navy-950">
-                {organization.name}
-              </h4>
-              <p className="mt-1 text-xs font-semibold leading-5 text-slate-500">
-                {organization.role}
-              </p>
+              <div className="p-4 sm:p-5">
+                <p
+                  className={`text-[0.65rem] font-extrabold uppercase tracking-[0.12em] ${featured ? "text-teal-300" : "text-science-700"}`}
+                >
+                  {organization.role}
+                </p>
+                <h4
+                  className={`mt-1.5 font-display text-lg font-extrabold leading-6 tracking-[-0.02em] ${featured ? "text-white" : "text-navy-950"}`}
+                >
+                  {organization.name}
+                </h4>
+              </div>
             </li>
           ))}
         </ul>
@@ -841,7 +929,7 @@ function OrganizationGroup({
           Acknowledgements will be added after confirmation.
         </p>
       )}
-    </div>
+    </section>
   );
 }
 

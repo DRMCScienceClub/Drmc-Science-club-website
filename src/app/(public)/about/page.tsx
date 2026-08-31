@@ -27,6 +27,9 @@ export default function AboutPage() {
   const panel = getCurrentExecutivePanel();
   const festival = getFeaturedFestival();
   const magazine = getFeaturedMagazine();
+  const committeeMembers =
+    panel?.departments.flatMap((department) => department.members) ?? [];
+  const committeePreview = committeeMembers.slice(0, 4);
 
   return (
     <main>
@@ -136,37 +139,121 @@ export default function AboutPage() {
 
       <section aria-label="How the club works" className="site-surface py-16 sm:py-20 lg:py-24">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[.78fr_1.22fr] lg:gap-16">
+          <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-start lg:gap-16">
             <div>
               <SectionHeading
                 eyebrow="How the club works"
                 title="Student teams, connected by one programme."
                 description={panel?.summary ?? "The executive structure will appear here when the current panel is published."}
               />
+              {panel && (
+                <dl className="mt-7 grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl border border-surface-border bg-slate-50 px-4 py-4 shadow-card">
+                    <dt className="text-[0.68rem] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+                      Student officers
+                    </dt>
+                    <dd className="mt-1 font-display text-3xl font-black tracking-tight text-navy-950">
+                      {committeeMembers.length}
+                    </dd>
+                  </div>
+                  <div className="rounded-2xl border border-surface-border bg-slate-50 px-4 py-4 shadow-card">
+                    <dt className="text-[0.68rem] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+                      Current session
+                    </dt>
+                    <dd className="mt-2 font-display text-xl font-extrabold tracking-tight text-teal-700">
+                      {panel.session}
+                    </dd>
+                  </div>
+                </dl>
+              )}
               <div className="mt-7 flex flex-wrap gap-3">
                 <ButtonLink href="/executives" variant="outline">Meet the executive panel</ButtonLink>
                 <ButtonLink href="/activities" variant="ghost">See the work</ButtonLink>
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {panel?.departments.map((department, index) => (
-                <article
-                  key={department.name}
-                  className={`rounded-2xl border p-6 shadow-card ${index === 0 ? "border-navy-700 bg-navy-900 text-white sm:col-span-2" : "border-surface-border bg-slate-50"}`}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <h2 className={`font-display text-lg font-extrabold ${index === 0 ? "text-white" : "text-navy-950"}`}>
-                      {department.name}
-                    </h2>
-                    <span className={`rounded-full px-2.5 py-1 text-[0.65rem] font-extrabold uppercase tracking-wider ${index === 0 ? "bg-white/10 text-teal-300" : "bg-science-100 text-science-700"}`}>
-                      {department.members.length} members
+            {panel && (
+              <article className="surface-card overflow-hidden rounded-[2rem] border border-surface-border shadow-soft">
+                <div className="science-grid-dark relative aspect-[16/9] overflow-hidden bg-navy-950">
+                  {panel.groupImage ? (
+                    <Image
+                      src={panel.groupImage.src}
+                      alt={panel.groupImage.alt}
+                      fill
+                      sizes="(min-width: 1024px) 54vw, 100vw"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="flex size-full items-center justify-center">
+                      <Icon name="users" className="size-16 text-teal-300" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/15 to-transparent" />
+                  <div className="absolute inset-x-0 top-0 flex items-center justify-between gap-3 p-4 sm:p-5">
+                    <span className="rounded-full border border-white/15 bg-navy-950/75 px-3 py-1.5 text-[0.66rem] font-extrabold uppercase tracking-[0.12em] text-teal-300 backdrop-blur-md">
+                      Current panel
+                    </span>
+                    <span className="rounded-full border border-white/15 bg-navy-950/75 px-3 py-1.5 text-[0.66rem] font-extrabold uppercase tracking-[0.12em] text-white backdrop-blur-md">
+                      Notice-verified
                     </span>
                   </div>
-                  <p className={`mt-3 text-sm leading-6 ${index === 0 ? "text-slate-300" : "text-slate-600"}`}>{department.description}</p>
-                </article>
-              ))}
-            </div>
+                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+                    <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-teal-300">
+                      Executive committee
+                    </p>
+                    <h2 className="mt-2 font-display text-2xl font-extrabold tracking-[-0.03em] text-white sm:text-3xl">
+                      The {panel.session} student leadership team
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="p-5 sm:p-7">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.13em] text-science-700">
+                        Leadership preview
+                      </p>
+                      <h3 className="mt-1 font-display text-xl font-extrabold tracking-tight text-navy-950">
+                        Meet the officers guiding the programme.
+                      </h3>
+                    </div>
+                    <p className="text-xs font-semibold text-slate-500">
+                      {committeeMembers.length} officers · Class XII
+                    </p>
+                  </div>
+
+                  <ol className="mt-5 grid gap-3 sm:grid-cols-2">
+                    {committeePreview.map((member, index) => (
+                      <li
+                        key={member.id}
+                        className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white/70 p-3.5"
+                      >
+                        <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-xl bg-navy-950 text-xs font-black text-teal-300">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-sm font-extrabold leading-5 text-navy-950">
+                            {member.name}
+                          </span>
+                          <span className="mt-0.5 block text-xs font-semibold leading-5 text-slate-500">
+                            {member.role}
+                          </span>
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+
+                  <div className="mt-5 flex items-start gap-3 rounded-2xl bg-science-50 px-4 py-3.5 text-sm leading-6 text-slate-600">
+                    <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-white text-science-700 shadow-sm">
+                      <Icon name="shield" className="size-4" />
+                    </span>
+                    <p>
+                      Official designations follow the supplied committee notice; the full directory preserves its published order.
+                    </p>
+                  </div>
+                </div>
+              </article>
+            )}
           </div>
         </Container>
       </section>

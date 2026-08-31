@@ -126,6 +126,7 @@ export interface Festival {
   featured: boolean;
   coverImage: ContentImage;
   registration: FestivalRegistration;
+  segmentSource?: "supplied-artwork" | "published-programme";
   segments: FestivalSegment[];
   schedule: FestivalScheduleDay[];
   results: FestivalResult[];

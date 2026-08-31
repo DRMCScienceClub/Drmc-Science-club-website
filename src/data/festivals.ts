@@ -12,6 +12,32 @@ const festivalImage = (
   height = 900,
 ): ContentImage => ({ src, alt, width, height });
 
+const partnerArtwork = (
+  slug: string,
+  name: string,
+  width = 1350,
+  height = 1080,
+): ContentImage =>
+  festivalImage(
+    `/images/festivals/partners/2026/${slug}.jpg`,
+    `Official festival acknowledgement artwork featuring ${name}`,
+    width,
+    height,
+  );
+
+const archivedPartnerArtwork = (
+  slug: string,
+  name: string,
+  width = 1024,
+  height = 1280,
+): ContentImage =>
+  festivalImage(
+    `/images/festivals/partners/2025/${slug}.jpg`,
+    `Official 16th festival acknowledgement artwork featuring ${name}`,
+    width,
+    height,
+  );
+
 const segment = (title: string, category: string): FestivalSegment => ({
   slug: title
     .toLowerCase()
@@ -56,6 +82,7 @@ const latestFestival: Festival = {
     label: "Completed edition",
     note: "This edition concluded on 23 January 2026. Historical registration instructions were not supplied for publication.",
   },
+  segmentSource: "supplied-artwork",
   segments: [
     segment("Codeavour Project Display Exhibition", "Exhibition"),
     segment("Wall Magazine Exhibition", "Exhibition"),
@@ -107,39 +134,171 @@ const latestFestival: Festival = {
   resultsNote:
     "Verified result sheets were not included with the supplied event artwork.",
   sponsors: [
-    { name: "United Healthcare", role: "Title sponsor" },
-    { name: "ACI Pure Salt", role: "Co-sponsor · powered by" },
-    { name: "deli", role: "Gold sponsor" },
+    {
+      name: "United Healthcare",
+      role: "Title sponsor",
+      logo: partnerArtwork(
+        "united-healthcare",
+        "United Healthcare",
+        2048,
+        1603,
+      ),
+    },
+    {
+      name: "ACI Pure Salt",
+      role: "Co-sponsor · powered by",
+      logo: partnerArtwork("aci-pure-salt", "ACI Pure Salt", 2048, 1603),
+    },
+    {
+      name: "deli",
+      role: "Gold sponsor",
+      logo: partnerArtwork("deli", "deli", 2048, 1603),
+    },
   ],
   partners: [
-    { name: "Nescafé", role: "Coffee partner" },
-    { name: "Speedcubing Bangladesh", role: "Rubik’s Cube partner" },
+    {
+      name: "Nescafé",
+      role: "Coffee partner",
+      logo: partnerArtwork("nescafe", "Nescafé", 2048, 1603),
+    },
+    {
+      name: "Speedcubing Bangladesh",
+      role: "Rubik’s Cube partner",
+      logo: partnerArtwork("speedcubing-bangladesh", "Speedcubing Bangladesh"),
+    },
     {
       name: "DRMC Film and Photography Club",
       role: "Photography partner",
+      logo: partnerArtwork(
+        "drmc-film-photography-club",
+        "DRMC Film and Photography Club",
+        2048,
+        1639,
+      ),
     },
-    { name: "ACI Fun", role: "Snacks partner" },
-    { name: "Creative Juniors", role: "Robotics partner" },
-    { name: "Polar Ice Cream", role: "Ice cream partner" },
-    { name: "Global Brand", role: "Gaming partner" },
-    { name: "khobor", role: "Online media partner" },
-    { name: "The Front Page", role: "Online media partner" },
-    { name: "The Daily Ittefaq", role: "Print media partner" },
-    { name: "Bangladesh Chess Federation", role: "Chess partner" },
-    { name: "Sunquick", role: "Refreshment partner" },
-    { name: "Banglar Math", role: "Academic partner" },
-    { name: "ESN BD", role: "Gaming promotional partner" },
-    { name: "Somokal", role: "Print media partner" },
-    { name: "Bangladesh Gamers Summit", role: "Broadcasting partner" },
-    { name: "GTV", role: "Television media partner" },
-    { name: "Sailor by Epyllion", role: "Outfit partner" },
-    { name: "Mono Space", role: "Logistic partner" },
-    { name: "ATN Bangla", role: "Television media partner" },
-    { name: "Premia Education", role: "Stationery partner" },
-    { name: "Udvash", role: "Academic partner" },
-    { name: "Channel 24", role: "Television media partner" },
-    { name: "Jaijaidin", role: "Print media partner" },
-    { name: "Radio Today 89.6 FM", role: "Radio partner" },
+    {
+      name: "ACI Fun",
+      role: "Snacks partner",
+      logo: partnerArtwork("aci-fun", "ACI Fun"),
+    },
+    {
+      name: "Creative Juniors",
+      role: "Robotics partner",
+      logo: partnerArtwork("creative-juniors", "Creative Juniors"),
+    },
+    {
+      name: "Polar Ice Cream",
+      role: "Ice cream partner",
+      logo: partnerArtwork("polar-ice-cream", "Polar Ice Cream"),
+    },
+    {
+      name: "Global Brand",
+      role: "Gaming partner",
+      logo: partnerArtwork("global-brand", "Global Brand"),
+    },
+    {
+      name: "khobor",
+      role: "Online media partner",
+      logo: partnerArtwork("khobor", "khobor"),
+    },
+    {
+      name: "The Front Page",
+      role: "Online media partner",
+      logo: partnerArtwork("the-front-page", "The Front Page"),
+    },
+    {
+      name: "The Daily Ittefaq",
+      role: "Print media partner",
+      logo: partnerArtwork("daily-ittefaq", "The Daily Ittefaq", 1380, 1080),
+    },
+    {
+      name: "Bangladesh Chess Federation",
+      role: "Chess partner",
+      logo: partnerArtwork(
+        "bangladesh-chess-federation",
+        "Bangladesh Chess Federation",
+      ),
+    },
+    {
+      name: "Sunquick",
+      role: "Refreshment partner",
+      logo: partnerArtwork("sunquick", "Sunquick"),
+    },
+    {
+      name: "Banglar Math",
+      role: "Academic partner",
+      logo: partnerArtwork("banglar-math", "Banglar Math", 1380, 1080),
+    },
+    {
+      name: "ESN BD",
+      role: "Gaming promotional partner",
+      logo: partnerArtwork("esn-bd", "ESN BD"),
+    },
+    {
+      name: "Somokal",
+      role: "Print media partner",
+      logo: partnerArtwork("somokal", "Somokal", 1380, 1080),
+    },
+    {
+      name: "Bangladesh Gamers Summit",
+      role: "Broadcasting partner",
+      logo: partnerArtwork(
+        "bangladesh-gamers-summit",
+        "Bangladesh Gamers Summit",
+        2048,
+        1603,
+      ),
+    },
+    {
+      name: "GTV",
+      role: "Television media partner",
+      logo: partnerArtwork("gtv", "GTV", 1380, 1080),
+    },
+    {
+      name: "Sailor by Epyllion",
+      role: "Outfit partner",
+      logo: partnerArtwork("sailor-epyllion", "Sailor by Epyllion"),
+    },
+    {
+      name: "Mono Space",
+      role: "Logistic partner",
+      logo: partnerArtwork("mono-space", "Mono Space", 2048, 1603),
+    },
+    {
+      name: "ATN Bangla",
+      role: "Television media partner",
+      logo: partnerArtwork("atn-bangla", "ATN Bangla", 2048, 1603),
+    },
+    {
+      name: "Premia Education",
+      role: "Stationery partner",
+      logo: partnerArtwork(
+        "premia-education",
+        "Premia Education",
+        2048,
+        1603,
+      ),
+    },
+    {
+      name: "Udvash",
+      role: "Academic partner",
+      logo: partnerArtwork("udvash", "Udvash"),
+    },
+    {
+      name: "Channel 24",
+      role: "Television media partner",
+      logo: partnerArtwork("channel-24", "Channel 24", 1380, 1080),
+    },
+    {
+      name: "Jaijaidin",
+      role: "Print media partner",
+      logo: partnerArtwork("jaijaidin", "Jaijaidin", 1380, 1080),
+    },
+    {
+      name: "Radio Today 89.6 FM",
+      role: "Radio partner",
+      logo: partnerArtwork("radio-today", "Radio Today 89.6 FM", 1380, 1080),
+    },
   ],
   gallery: [latestFestivalPoster],
 };
@@ -157,6 +316,11 @@ type HistoricalFestivalSeed = {
   endDate: string;
   dateLabel: string;
   titleSponsor: string;
+  summary?: string;
+  description?: readonly string[];
+  venue?: string;
+  venueAddress?: string;
+  segmentSource?: Festival["segmentSource"];
   sponsors?: readonly FestivalOrganization[];
   partners?: readonly FestivalOrganization[];
   image: ContentImage;
@@ -178,16 +342,21 @@ function historicalFestival(seed: HistoricalFestivalSeed): Festival {
     year: seed.year,
     edition: `${seed.edition} edition`,
     theme: seed.theme,
-    summary: `A poster-backed record of the ${seed.edition} DRMC national science programme, held ${seed.dateLabel}.`,
-    description: [
-      `The supplied event poster records the ${seed.edition} edition, its dates and the theme “${seed.theme}”. The artwork is reproduced here as the primary archive source.`,
-      "Segment names below are transcribed from the poster. Full schedules, result sheets, eligibility rules, venue records and downloadable documents will be added only after the club verifies its historical archive.",
-    ],
+    summary:
+      seed.summary ??
+      `A poster-backed record of the ${seed.edition} DRMC national science programme, held ${seed.dateLabel}.`,
+    description: seed.description
+      ? [...seed.description]
+      : [
+          `The supplied event poster records the ${seed.edition} edition, its dates and the theme “${seed.theme}”. The artwork is reproduced here as the primary archive source.`,
+          "Segment names below are transcribed from the poster. Full schedules, result sheets, eligibility rules, venue records and downloadable documents will be added only after the club verifies its historical archive.",
+        ],
     startDate: seed.startDate,
     endDate: seed.endDate,
     dateLabel: seed.dateLabel,
-    venue: "Archive venue to be verified",
-    venueAddress: "The supplied poster does not specify a venue address.",
+    venue: seed.venue ?? "Archive venue to be verified",
+    venueAddress:
+      seed.venueAddress ?? "The supplied poster does not specify a venue address.",
     status: "completed",
     recordStatus: "poster-verified",
     featured: false,
@@ -197,6 +366,7 @@ function historicalFestival(seed: HistoricalFestivalSeed): Festival {
       label: "Archived edition",
       note: "This edition has concluded. Historical registration details have not yet been verified for publication.",
     },
+    segmentSource: seed.segmentSource ?? "supplied-artwork",
     segments: seed.segments.map((segment, index) => ({
       ...segment,
       slug: slugifySegment(segment.title, index),
@@ -225,38 +395,161 @@ const historicalFestivalSeeds: readonly HistoricalFestivalSeed[] = [
     shortTitle: "16th Science Carnival",
     year: 2025,
     edition: "16th",
-    theme: "Orbis Scientiae, Vita Astrorum",
+    theme: "Orbis Scientiae Vita Astrorum",
     startDate: "2025-05-01",
     endDate: "2025-05-03",
     dateLabel: "1–3 May 2025",
     titleSponsor: "eduCare",
+    summary:
+      "The preserved record of DRMC's 16th National Science Carnival, held 1–3 May 2025 under the theme “Orbis Scientiae Vita Astrorum”.",
+    description: [
+      "The official artwork verifies the edition, dates and theme, with eduCare as title sponsor, Leadswin in the powered-by position, and bKash as silver sponsor.",
+      "A contemporaneous published programme records 44 segments across exhibitions, olympiads, quizzes, robotics, gaming and skill challenges. The supplied announcement cards preserve 22 sponsor and partner acknowledgements; a verified day-by-day timetable and result sheets were not supplied for this archive.",
+    ],
+    venue: "Dhaka Residential Model College",
+    venueAddress: "Mirpur Road, Mohammadpur, Dhaka 1207, Bangladesh",
+    segmentSource: "published-programme",
     sponsors: [
-      { name: "eduCare", role: "Title sponsor" },
-      { name: "Leadswin", role: "Powered by" },
-      { name: "bKash", role: "Silver sponsor" },
+      {
+        name: "eduCare",
+        role: "Title sponsor · powered by Leadswin",
+        logo: archivedPartnerArtwork("educare-leadswin", "eduCare and Leadswin"),
+      },
+      {
+        name: "bKash",
+        role: "Silver sponsor",
+        logo: archivedPartnerArtwork("bkash", "bKash"),
+      },
     ],
     partners: [
-      { name: "Polar Ice Cream", role: "Ice cream partner" },
-      { name: "Jamuna TV", role: "Television media partner" },
+      {
+        name: "Polar Ice Cream",
+        role: "Ice cream partner",
+        logo: archivedPartnerArtwork("polar-ice-cream", "Polar Ice Cream", 1017),
+      },
+      {
+        name: "Jamuna TV",
+        role: "Television media partner",
+        logo: archivedPartnerArtwork("jamuna-tv", "Jamuna TV", 1026),
+      },
       {
         name: "DRMC Film and Photography Club",
         role: "Photography partner",
+        logo: archivedPartnerArtwork(
+          "drmc-film-photography-club",
+          "DRMC Film and Photography Club",
+          1023,
+        ),
       },
-      { name: "Lecture Publications", role: "Outfit partner" },
-      { name: "The Daily Ittefaq", role: "Print media partner" },
-      { name: "Kaler Kantho", role: "Print media partner" },
-      { name: "Prothom Alo", role: "Print media partner" },
-      { name: "Speedcubing Bangladesh", role: "Rubik’s Cube partner" },
-      { name: "Bombay Sweets", role: "Refreshment partner" },
-      { name: "PRAN", role: "Beverage partner" },
-      { name: "Ekattor TV", role: "Television media partner" },
-      { name: "GTV", role: "Television media partner" },
-      { name: "Bangladesh Chess Federation", role: "Chess partner" },
-      { name: "Masud English Academy", role: "Production partner" },
-      { name: "MSI", role: "Gaming partner" },
-      { name: "Net Heads", role: "Connectivity partner" },
-      { name: "Cudy", role: "Connectivity partner" },
-      { name: "Habibi’s Game Shop", role: "Gaming accounts partner" },
+      {
+        name: "Lecture Publications Ltd.",
+        role: "Outfit partner",
+        logo: archivedPartnerArtwork(
+          "lecture-publications",
+          "Lecture Publications Ltd.",
+          1015,
+        ),
+      },
+      {
+        name: "The Daily Ittefaq",
+        role: "Print media partner",
+        logo: archivedPartnerArtwork("daily-ittefaq", "The Daily Ittefaq"),
+      },
+      {
+        name: "Kaler Kantho",
+        role: "Print media partner",
+        logo: archivedPartnerArtwork("kaler-kantho", "Kaler Kantho", 1021),
+      },
+      {
+        name: "Jugantor",
+        role: "Print media partner",
+        logo: archivedPartnerArtwork("jugantor", "Jugantor"),
+      },
+      {
+        name: "Speedcubing Bangladesh",
+        role: "Rubik’s Cube partner",
+        logo: archivedPartnerArtwork(
+          "speedcubing-bangladesh",
+          "Speedcubing Bangladesh",
+          1021,
+        ),
+      },
+      {
+        name: "Bombay Sweets",
+        role: "Refreshment partner",
+        logo: archivedPartnerArtwork("bombay-sweets", "Bombay Sweets", 1013),
+      },
+      {
+        name: "PRAN",
+        role: "Beverage partner",
+        logo: archivedPartnerArtwork("pran", "PRAN", 1023),
+      },
+      {
+        name: "Ekattor TV",
+        role: "Television media partner",
+        logo: archivedPartnerArtwork("ekattor-tv", "Ekattor TV"),
+      },
+      {
+        name: "GTV",
+        role: "Television media partner",
+        logo: archivedPartnerArtwork("gtv", "GTV"),
+      },
+      {
+        name: "Bangladesh Chess Federation",
+        role: "Chess partner",
+        logo: archivedPartnerArtwork(
+          "bangladesh-chess-federation",
+          "Bangladesh Chess Federation",
+          1023,
+        ),
+      },
+      {
+        name: "Masud English Academy",
+        role: "Production partner",
+        logo: archivedPartnerArtwork(
+          "masud-english-academy",
+          "Masud English Academy",
+          1023,
+        ),
+      },
+      {
+        name: "MSI",
+        role: "Gaming partner",
+        logo: archivedPartnerArtwork("msi", "MSI", 1025),
+      },
+      {
+        name: "The Net Heads",
+        role: "Connectivity partner",
+        logo: archivedPartnerArtwork("the-net-heads", "The Net Heads", 1031),
+      },
+      {
+        name: "Cudy",
+        role: "Connectivity partner",
+        logo: archivedPartnerArtwork("cudy", "Cudy", 1032),
+      },
+      {
+        name: "Habibi’s Game Shop",
+        role: "Accounts partner",
+        logo: archivedPartnerArtwork(
+          "habibis-game-shop",
+          "Habibi’s Game Shop",
+          1022,
+        ),
+      },
+      {
+        name: "Tachyon",
+        role: "Knowledge partner",
+        logo: archivedPartnerArtwork("tachyon", "Tachyon", 1039),
+      },
+      {
+        name: "Knowledge partner",
+        role: "Organization name not printed on supplied artwork",
+        logo: archivedPartnerArtwork(
+          "knowledge-partner",
+          "the unnamed knowledge partner emblem",
+          1037,
+        ),
+      },
     ],
     image: festivalImage(
       "/images/festivals/archive/16th-national-science-carnival-2025.jpg",
@@ -264,7 +557,58 @@ const historicalFestivalSeeds: readonly HistoricalFestivalSeed[] = [
       2048,
       1072,
     ),
-    segments: [],
+    segments: [
+      { title: "Project Display Competition", category: "Exhibition" },
+      { title: "Website Display Exhibition", category: "Exhibition" },
+      { title: "Wall Magazine Exhibition", category: "Exhibition" },
+      { title: "Scrapbook Exhibition", category: "Exhibition" },
+      { title: "Poster Presentation", category: "Exhibition" },
+      { title: "DSLR Photography Exhibition", category: "Photography" },
+      { title: "Mobile Photography Exhibition", category: "Photography" },
+      {
+        title: "Science-Based Illustration Exhibition",
+        category: "Creative exhibition",
+      },
+      { title: "Math Olympiad", category: "Olympiad" },
+      { title: "Biology Olympiad", category: "Olympiad" },
+      { title: "Chemistry Olympiad", category: "Olympiad" },
+      { title: "Physics Olympiad", category: "Olympiad" },
+      { title: "Astronomy Olympiad", category: "Olympiad" },
+      { title: "Agriculture Olympiad", category: "Olympiad" },
+      { title: "IQ Test", category: "Challenge" },
+      { title: "Sci-Fi Crossword Matching", category: "Olympiad" },
+      { title: "Junior Science Olympiad", category: "Olympiad" },
+      { title: "Circuit Solving Olympiad", category: "Olympiad" },
+      { title: "Criminal Case Investigation", category: "Challenge" },
+      { title: "Flash Calculation Challenge", category: "Mathematics" },
+      { title: "Star Mapping", category: "Astronomy" },
+      { title: "52 Acre Challenge", category: "Challenge" },
+      { title: "Solo Quiz", category: "Quiz" },
+      { title: "Team-Based Quiz", category: "Quiz" },
+      { title: "Mega Quiz", category: "Quiz" },
+      { title: "Sci-Fi Book-Based Quiz", category: "Quiz" },
+      { title: "Marvel vs DC Quiz", category: "Quiz" },
+      { title: "Spot the Difference", category: "Challenge" },
+      { title: "Pin Point on Map", category: "Challenge" },
+      { title: "Capture the Flag", category: "Challenge" },
+      { title: "FC 24", category: "Gaming" },
+      { title: "PUBG Mobile", category: "Gaming" },
+      {
+        title: "Need for Speed: Most Wanted Black Edition",
+        category: "Gaming",
+      },
+      { title: "E-Football Mobile", category: "Gaming" },
+      { title: "Valorant", category: "Gaming" },
+      { title: "Line Follower Robot", category: "Robotics" },
+      { title: "Soccer Bot", category: "Robotics" },
+      { title: "Drag Race", category: "Robotics" },
+      { title: "Mini Sumo", category: "Robotics" },
+      { title: "Tag Battle", category: "Robotics" },
+      { title: "Drone Racing", category: "Robotics" },
+      { title: "Chess Showdown", category: "Skill competition" },
+      { title: "Rubik’s Cube Solving", category: "Skill competition" },
+      { title: "Integration Bee", category: "Mathematics" },
+    ],
   },
   {
     slug: "15th-national-science-codeavour-international-carnival-2024",
