@@ -2,12 +2,13 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { ScheduledNotificationBar } from "@/components/layout/scheduled-notification-bar";
 import { MotionController } from "@/components/ui/motion-controller";
-import { getActiveNotices, notices } from "@/data";
+import { getActiveNotification, getNotifications } from "@/lib/content";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
-export default function PublicLayout({ children }: { children: React.ReactNode }) {
-  const initialNotice = getActiveNotices()[0];
+export default async function PublicLayout({ children }: { children: React.ReactNode }) {
+  const notices = await getNotifications();
+  const initialNotice = getActiveNotification(notices);
 
   return (
     <MotionController>

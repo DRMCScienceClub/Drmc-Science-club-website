@@ -38,8 +38,8 @@ export function ScheduledNotificationBar({
       notice={{
         label: notice.title,
         message: notice.message,
-        href: notice.link?.href ?? "/activities",
-        action: notice.link?.label ?? "Learn more",
+        href: notice.link?.href,
+        action: notice.link?.label,
       }}
     />
   );

@@ -14,6 +14,7 @@ import type {
   ExecutivePanel,
   Festival,
   MagazineIssue,
+  Notice,
 } from "@/types/content";
 
 type ContentTable =
@@ -21,7 +22,8 @@ type ContentTable =
   | "activities"
   | "achievements"
   | "magazines"
-  | "executive_panels";
+  | "executive_panels"
+  | "notifications";
 
 type ContentRow = {
   id: string;
@@ -164,6 +166,38 @@ function executivePanelFromRow(row: ContentRow): ExecutivePanel {
   };
 }
 
+function notificationFromRow(row: ContentRow): Notice {
+  const tone = row.tone;
+  const linkUrl = typeof row.link_url === "string" ? row.link_url : "";
+  const linkLabel =
+    typeof row.link_label === "string" && row.link_label.trim()
+      ? row.link_label
+      : "Learn more";
+
+  return {
+    id: row.id,
+    title: row.title,
+    message: typeof row.message === "string" ? row.message : "",
+    startsAt:
+      typeof row.starts_at === "string" ? row.starts_at : row.published_at,
+    endsAt:
+      typeof row.ends_at === "string"
+        ? row.ends_at
+        : "9999-12-31T23:59:59.999Z",
+    tone:
+      tone === "announcement" || tone === "urgent" ? tone : "info",
+    ...(linkUrl
+      ? {
+          link: {
+            label: linkLabel,
+            href: linkUrl,
+            external: /^https?:\/\//i.test(linkUrl),
+          },
+        }
+      : {}),
+  };
+}
+
 function fallbackAchievement(record: Achievement): PublicAchievement {
   return {
     ...record,
@@ -249,6 +283,23 @@ export async function getMagazine(
 export async function getExecutivePanels(): Promise<ExecutivePanel[]> {
   if (!isPublicContentDatabaseConfigured) return [...fallbackExecutivePanels];
   return (await queryRows("executive_panels")).map(executivePanelFromRow);
+}
+
+export async function getNotifications(): Promise<Notice[]> {
+  if (!isPublicContentDatabaseConfigured) return [];
+  return (await queryRows("notifications")).map(notificationFromRow);
+}
+
+export function getActiveNotification(
+  notices: readonly Notice[],
+  referenceDate: Date = new Date(),
+) {
+  const timestamp = referenceDate.getTime();
+  return notices.find((notice) => {
+    const startsAt = new Date(notice.startsAt).getTime();
+    const endsAt = new Date(notice.endsAt).getTime();
+    return timestamp >= startsAt && timestamp <= endsAt;
+  });
 }
 
 export function getCurrentPanel(panels: readonly ExecutivePanel[]) {
