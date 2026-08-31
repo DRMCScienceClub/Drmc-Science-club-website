@@ -18,7 +18,7 @@ export default async function NewCmsRecordPage({ params }: { params: Promise<{ r
   return (
     <AdminShell identity={identity} active={resource.key}>
       <div className="mx-auto max-w-[1380px]">
-        <AdminPageHeader eyebrow={resource.label} title={`Create ${resource.singular}`} description="Start with the verified essentials, keep unconfirmed details out, and save as a draft until the record is ready for publication." />
+        <AdminPageHeader eyebrow={resource.label} title={`Create ${resource.singular}`} description="Build the page with visual fields and repeaters, keep unconfirmed details out, and save as a draft until it is ready for publication." />
         <CmsEditorForm resource={resource} record={null} role={identity.role} media={media} />
       </div>
     </AdminShell>

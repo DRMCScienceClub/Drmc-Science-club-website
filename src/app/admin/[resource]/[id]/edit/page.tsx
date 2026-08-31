@@ -28,7 +28,7 @@ export default async function EditCmsRecordPage({ params }: { params: Promise<{ 
   return (
     <AdminShell identity={identity} active={resource.key}>
       <div className="mx-auto max-w-[1380px]">
-        <AdminPageHeader eyebrow={resource.label} title={`Edit ${resource.singular}`} description={`Update “${record.title}”. Existing structured data is preserved unless you deliberately edit its advanced JSON fields.`} />
+        <AdminPageHeader eyebrow={resource.label} title={`Edit ${resource.singular}`} description={`Update “${record.title}” using the visual content sections below. Existing metadata is preserved until you change or remove it.`} />
         <CmsEditorForm resource={resource} record={record} role={identity.role} media={media} />
       </div>
     </AdminShell>

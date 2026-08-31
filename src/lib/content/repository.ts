@@ -154,7 +154,14 @@ function magazineFromRow(row: ContentRow): MagazineIssue {
 
 function executivePanelFromRow(row: ContentRow): ExecutivePanel {
   const data = (row.data ?? {}) as unknown as ExecutivePanel;
-  return { ...data, title: row.title, summary: row.summary };
+  return {
+    ...data,
+    title: row.title,
+    summary: row.summary,
+    groupImage:
+      imageWithSource(data.groupImage, row.cover_image_url, row.title) ??
+      data.groupImage,
+  };
 }
 
 function fallbackAchievement(record: Achievement): PublicAchievement {
@@ -255,4 +262,3 @@ export function getFeaturedFestivalRecord(festivals: readonly Festival[]) {
 export function getFeaturedMagazineRecord(magazines: readonly MagazineIssue[]) {
   return magazines.find((magazine) => magazine.featured) ?? magazines[0];
 }
-

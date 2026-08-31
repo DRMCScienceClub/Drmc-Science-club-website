@@ -170,6 +170,7 @@ function publicDataFor(
         recordStatus: data.recordStatus ?? "official-document",
         title,
         summary,
+        groupImage: imageValue(data.groupImage, coverUrl, title),
       };
     }
     default:

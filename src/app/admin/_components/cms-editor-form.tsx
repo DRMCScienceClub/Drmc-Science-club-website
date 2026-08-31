@@ -5,6 +5,12 @@ import Image from "next/image";
 import { useActionState, useState } from "react";
 import { saveCmsRecordAction, type CmsFormResult } from "@/app/admin/actions";
 import { FestivalOrganizationsField } from "@/app/admin/_components/festival-organizations-field";
+import {
+  FestivalResultsField,
+  FestivalScheduleField,
+  FestivalSegmentsField,
+} from "@/app/admin/_components/festival-programme-fields";
+import { VisualStructuredDataField } from "@/app/admin/_components/visual-structured-data-field";
 import { Icon } from "@/components/ui/icon";
 import type { AdminRole } from "@/lib/auth";
 import type { CmsRecord, PublishedMediaChoice } from "@/lib/cms/admin-repository";
@@ -155,6 +161,14 @@ export function CmsEditorForm({
                 media={media}
                 errors={state.fieldErrors?.[field.name]}
               />
+            ) : field.name === "segments_json" ? (
+              <FestivalSegmentsField key={field.name} initialValue={valueFor(field, record)} errors={state.fieldErrors?.[field.name]} />
+            ) : field.name === "schedule_json" ? (
+              <FestivalScheduleField key={field.name} initialValue={valueFor(field, record)} errors={state.fieldErrors?.[field.name]} />
+            ) : field.name === "results_json" ? (
+              <FestivalResultsField key={field.name} initialValue={valueFor(field, record)} errors={state.fieldErrors?.[field.name]} />
+            ) : field.name === "data_json" ? (
+              <VisualStructuredDataField key={field.name} resource={resource.key} initialValue={valueFor(field, record)} media={media} errors={state.fieldErrors?.[field.name]} />
             ) : <EditorField key={field.name} field={field} record={record} errors={state.fieldErrors?.[field.name]} media={media} />)}
           </div>
         </section>

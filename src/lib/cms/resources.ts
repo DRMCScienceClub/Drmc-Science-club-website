@@ -67,10 +67,10 @@ const commonFields: readonly CmsField[] = [
 
 const advancedDataField: CmsField = {
   name: "data_json",
-  label: "Structured page data",
+  label: "Additional page details",
   type: "json",
   fullWidth: true,
-  help: "Advanced: edit the complete page model as JSON. This includes galleries, descriptions, links, and other presentation details.",
+  help: "Edit descriptions, galleries, highlights, people, and other presentation details using visual controls.",
 };
 
 export const cmsResources: readonly CmsResource[] = [
