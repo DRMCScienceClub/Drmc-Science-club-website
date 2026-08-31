@@ -35,7 +35,7 @@ function OrganizationPreview({ data, title }: { data: Record<string, unknown>; t
           return (
             <article key={`${String(organization.name)}-${index}`} className="flex min-h-28 items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4">
               <div className="relative grid size-16 shrink-0 place-items-center overflow-hidden rounded-xl bg-slate-50">
-                {src?.startsWith("/") ? <Image src={src} alt={String(logo?.alt ?? `${organization.name} logo`)} fill sizes="64px" className="object-contain p-2" /> : <Icon name="globe" className="text-slate-400" />}
+                {src ? <Image src={src} alt={String(logo?.alt ?? `${organization.name} logo`)} fill sizes="64px" className="object-contain p-2" /> : <Icon name="globe" className="text-slate-400" />}
               </div>
               <div className="min-w-0"><p className="font-extrabold text-navy-950">{String(organization.name ?? "Unnamed organization")}</p><p className="mt-1 text-xs font-bold uppercase tracking-[0.08em] text-science-700">{String(organization.role ?? title.slice(0, -1))}</p></div>
             </article>
@@ -68,7 +68,7 @@ export default async function CmsPreviewPage({ params }: { params: Promise<{ res
         <article className="mt-7 overflow-hidden rounded-[1.75rem] border border-slate-200 bg-[#f8fbfc] shadow-soft">
           {image && (
             <div className="relative min-h-64 overflow-hidden bg-navy-950 sm:min-h-96">
-              {image.startsWith("/") ? <Image src={image} alt="" fill sizes="(max-width: 1180px) 100vw, 1180px" className="object-cover opacity-80" priority /> : <div className="grid min-h-96 place-items-center px-6 text-center text-sm font-bold text-slate-300">Remote media preview becomes available after its Supabase Storage host is configured.</div>}
+              <Image src={image} alt="" fill sizes="(max-width: 1180px) 100vw, 1180px" className="object-cover opacity-80" priority />
               <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/10 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-9"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-teal-300">{resource.singular}</p><h2 className="mt-3 max-w-4xl font-display text-3xl font-extrabold tracking-[-0.04em] sm:text-5xl">{record.title}</h2></div>
             </div>

@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useActionState, useState } from "react";
 import { saveCmsRecordAction, type CmsFormResult } from "@/app/admin/actions";
+import { FestivalOrganizationsField } from "@/app/admin/_components/festival-organizations-field";
 import { Icon } from "@/components/ui/icon";
 import type { AdminRole } from "@/lib/auth";
-import type { CmsRecord } from "@/lib/cms/admin-repository";
+import type { CmsRecord, PublishedMediaChoice } from "@/lib/cms/admin-repository";
 import { slugify, type CmsField, type CmsResource } from "@/lib/cms/resources";
 
 const initialState: CmsFormResult = { ok: false, message: "" };
@@ -42,7 +44,34 @@ function FieldError({ messages }: { messages?: string[] }) {
   return <>{messages.map((message) => <p key={message} className="mt-1.5 text-xs font-bold text-red-700">{message}</p>)}</>;
 }
 
-function EditorField({ field, record, errors }: { field: CmsField; record: CmsRecord | null; errors?: string[] }) {
+function MediaUrlField({ field, record, errors, media }: { field: CmsField; record: CmsRecord | null; errors?: string[]; media: PublishedMediaChoice[] }) {
+  const [url, setUrl] = useState(valueFor(field, record));
+  const previewable = url.startsWith("/") || /^https?:\/\//.test(url);
+  return (
+    <div>
+      <label htmlFor="cms-cover-image" className="text-sm font-extrabold text-navy-900">{field.label}</label>
+      <div className="mt-2 grid gap-3 sm:grid-cols-[6rem_minmax(0,1fr)]">
+        <div className="relative grid aspect-video place-items-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50 sm:aspect-square">
+          {previewable ? <Image src={url} alt="Selected cover preview" fill sizes="96px" className="object-contain p-2" /> : <Icon name="download" className="size-7 text-slate-300" />}
+        </div>
+        <div className="space-y-2">
+          <input id="cms-cover-image" name={field.name} type="text" value={url} onChange={(event) => setUrl(event.target.value)} placeholder="https://… or an approved asset path" className="min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 font-mono text-xs font-semibold text-navy-950 shadow-sm" />
+          <select value="" onChange={(event) => { const asset = media.find((item) => item.id === event.target.value); if (asset?.public_url) setUrl(asset.public_url); }} className="min-h-10 w-full rounded-xl border border-slate-300 bg-white px-3 text-xs font-bold text-slate-700">
+            <option value="">Choose from published media…</option>
+            {media.map((asset) => <option key={asset.id} value={asset.id}>{asset.original_name} — {asset.alt_text}</option>)}
+          </select>
+        </div>
+      </div>
+      {field.help && <p className="mt-1.5 text-xs leading-5 text-slate-500">{field.help}</p>}
+      <FieldError messages={errors} />
+    </div>
+  );
+}
+
+function EditorField({ field, record, errors, media }: { field: CmsField; record: CmsRecord | null; errors?: string[]; media: PublishedMediaChoice[] }) {
+  if (field.name === "cover_image_url") {
+    return <MediaUrlField field={field} record={record} errors={errors} media={media} />;
+  }
   if (field.type === "checkbox") {
     return (
       <label className="flex min-h-12 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4">
@@ -77,10 +106,12 @@ export function CmsEditorForm({
   resource,
   record,
   role,
+  media,
 }: {
   resource: CmsResource;
   record: CmsRecord | null;
   role: AdminRole;
+  media: PublishedMediaChoice[];
 }) {
   const [state, action, pending] = useActionState(saveCmsRecordAction, initialState);
   const initialTitle = record?.title ?? "";
@@ -115,7 +146,16 @@ export function CmsEditorForm({
                 <p className="mt-1.5 text-xs leading-5 text-slate-500">Generated from the title; you can edit it before saving.</p>
                 <FieldError messages={state.fieldErrors?.slug} />
               </div>
-            ) : <EditorField key={field.name} field={field} record={record} errors={state.fieldErrors?.[field.name]} />)}
+            ) : (field.name === "sponsors_json" || field.name === "partners_json") ? (
+              <FestivalOrganizationsField
+                key={field.name}
+                name={field.name}
+                label={field.name === "sponsors_json" ? "Sponsors" : "Partners"}
+                initialValue={valueFor(field, record)}
+                media={media}
+                errors={state.fieldErrors?.[field.name]}
+              />
+            ) : <EditorField key={field.name} field={field} record={record} errors={state.fieldErrors?.[field.name]} media={media} />)}
           </div>
         </section>
 

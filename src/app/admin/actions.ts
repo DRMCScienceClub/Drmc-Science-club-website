@@ -7,6 +7,7 @@ import { requireAdmin, requireRole, type AdminRole } from "@/lib/auth";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getCmsResource, slugify, type CmsResource, type PublicationStatus } from "@/lib/cms/resources";
 import { parseJsonField, validateCmsForm, type CmsFormResult } from "@/lib/cms/validation";
+import { validateMediaBytes } from "@/lib/media/validation";
 
 export type { CmsFormResult } from "@/lib/cms/validation";
 
@@ -515,7 +516,56 @@ export async function updateMediaStatusAction(formData: FormData) {
   const status = statusSchema.safeParse(formData.get("status"));
   if (!z.uuid().safeParse(id).success || !status.success) throw new Error("Invalid media update.");
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.from("media_assets").update({ status: status.data, updated_by: identity.id }).eq("id", id);
+  const { data: asset, error: readError } = await supabase
+    .from("media_assets")
+    .select("id,bucket,object_path,original_name,mime_type")
+    .eq("id", id)
+    .single();
+  if (readError) throw new Error(`Media could not be loaded: ${readError.message}`);
+
+  let changes: Record<string, unknown> = {
+    status: status.data,
+    updated_by: identity.id,
+  };
+
+  if (status.data === "published" && asset.bucket === "cms-staging") {
+    const { data: stagedFile, error: downloadError } = await supabase.storage
+      .from("cms-staging")
+      .download(asset.object_path);
+    if (downloadError || !stagedFile) {
+      throw new Error(`The staged file could not be validated: ${downloadError?.message ?? "File missing."}`);
+    }
+
+    const bytes = new Uint8Array(await stagedFile.arrayBuffer());
+    const validated = validateMediaBytes(bytes, asset.mime_type);
+    const publicPath = `media/${crypto.randomUUID()}.${validated.extension}`;
+    const { error: publicUploadError } = await supabase.storage
+      .from("cms-public")
+      .upload(publicPath, bytes, {
+        cacheControl: "31536000",
+        contentType: validated.mimeType,
+        upsert: false,
+      });
+    if (publicUploadError) {
+      throw new Error(`The validated file could not be published: ${publicUploadError.message}`);
+    }
+
+    const publicUrl = supabase.storage.from("cms-public").getPublicUrl(publicPath).data.publicUrl;
+    changes = {
+      ...changes,
+      bucket: "cms-public",
+      object_path: publicPath,
+      public_url: publicUrl,
+    };
+  }
+
+  const { error } = await supabase.from("media_assets").update(changes).eq("id", id);
   if (error) throw new Error(`Media status could not be updated: ${error.message}`);
+
+  if (status.data === "published" && asset.bucket === "cms-staging") {
+    // Cleanup is best-effort because older installations may not yet have a
+    // staging delete policy. The published object and metadata are immutable.
+    await supabase.storage.from("cms-staging").remove([asset.object_path]);
+  }
   revalidatePath("/admin/media");
 }

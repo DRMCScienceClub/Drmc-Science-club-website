@@ -83,6 +83,11 @@ The baseline migration is
 tables, administrator profiles and roles, audit records, Row Level Security,
 and Storage buckets.
 
+The follow-up migration
+`supabase/migrations/202608310002_media_workflow_hardening.sql` enables safe
+staging cleanup and prevents contributors from publishing media metadata. Apply
+both migrations in filename order before using the browser Media Library.
+
 Applied migrations are immutable. Correct a deployed schema with a new
 forward-only migration; do not edit an already applied file.
 
@@ -122,8 +127,10 @@ signature, dimensions, size, malware/document safety, rights, and alternative
 text, then promote an immutable UUID-named object to `cms-public` during the
 publish operation. Do not overwrite a published path.
 
-Before production, verify that contributors cannot upload directly to
-`cms-public`; enforce promotion through an editor/super-admin server operation.
+The admin Media Library now performs file-signature validation, uploads to the
+private staging bucket, and lets an editor or super administrator promote an
+immutable UUID-named copy to `cms-public`. Before production, verify that
+contributors cannot upload directly to `cms-public` or publish media metadata.
 
 ## 5. Import the Phase 1 content
 

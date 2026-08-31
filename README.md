@@ -38,7 +38,9 @@ restricted to authorised roles.
 
 The migration also creates private `cms-staging` and public `cms-public`
 Storage buckets. Unreviewed files belong in staging; only validated and approved
-assets may be promoted to the public bucket.
+assets may be promoted to the public bucket. The admin Media Library validates
+file signatures, records accessible descriptions and credits, shows upload
+progress, and exposes published images to the festival sponsor/partner editor.
 
 Operational entry points:
 

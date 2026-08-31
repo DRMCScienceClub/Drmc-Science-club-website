@@ -25,6 +25,32 @@ export type CmsListOptions = {
   direction?: string;
 };
 
+export type AdminMediaAsset = {
+  id: string;
+  bucket: "cms-staging" | "cms-public";
+  object_path: string;
+  original_name: string;
+  mime_type: string;
+  byte_size: number;
+  width: number | null;
+  height: number | null;
+  alt_text: string;
+  caption: string;
+  credit: string;
+  status: PublicationStatus;
+  public_url: string | null;
+  preview_url: string | null;
+  uploaded_by: string;
+  updated_by: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type PublishedMediaChoice = Pick<
+  AdminMediaAsset,
+  "id" | "original_name" | "mime_type" | "width" | "height" | "alt_text" | "public_url"
+>;
+
 function cleanSearch(value: string) {
   return value.replace(/[%_,()]/g, " ").replace(/\s+/g, " ").trim().slice(0, 100);
 }
@@ -185,5 +211,33 @@ export async function listMediaAssets() {
     .order("created_at", { ascending: false })
     .limit(100);
   if (error) throw new Error(`Unable to load media: ${error.message}`);
-  return data ?? [];
+  const assets = (data ?? []) as Omit<AdminMediaAsset, "preview_url">[];
+  return Promise.all(assets.map(async (asset): Promise<AdminMediaAsset> => {
+    if (asset.bucket === "cms-public") {
+      const publicUrl = asset.public_url || supabase.storage
+        .from("cms-public")
+        .getPublicUrl(asset.object_path).data.publicUrl;
+      return { ...asset, public_url: publicUrl, preview_url: publicUrl };
+    }
+
+    const { data: signed } = await supabase.storage
+      .from("cms-staging")
+      .createSignedUrl(asset.object_path, 60 * 60);
+    return { ...asset, preview_url: signed?.signedUrl ?? null };
+  }));
+}
+
+export async function listPublishedMediaChoices(): Promise<PublishedMediaChoice[]> {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("media_assets")
+    .select("id,original_name,mime_type,width,height,alt_text,public_url")
+    .eq("bucket", "cms-public")
+    .eq("status", "published")
+    .like("mime_type", "image/%")
+    .not("public_url", "is", null)
+    .order("created_at", { ascending: false })
+    .limit(200);
+  if (error) throw new Error(`Unable to load published media choices: ${error.message}`);
+  return (data ?? []) as PublishedMediaChoice[];
 }
