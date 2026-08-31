@@ -42,6 +42,11 @@ anonymous table inserts, and a pseudonymous database rate limit provide basic
 abuse protection. Authorised editors and super administrators review the
 records from `/admin/submissions`.
 
+Editors and super administrators can update the public location, email,
+telephone, office hours, map URL, and official social profiles from
+`/admin/settings/contact`. Public pages read only the narrowly exposed
+`public_contact` setting and retain reviewed fallback values during setup.
+
 The migration also creates private `cms-staging` and public `cms-public`
 Storage buckets. Unreviewed files belong in staging; only validated and approved
 assets may be promoted to the public bucket. The admin Media Library validates

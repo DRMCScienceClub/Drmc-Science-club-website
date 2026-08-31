@@ -30,9 +30,10 @@ export async function getPublicContactSettings(): Promise<PublicContactSettings>
       headers: { apikey: config.publishableKey, Authorization: `Bearer ${config.publishableKey}`, Accept: "application/json" },
       next: { revalidate: 300, tags: ["settings:public_contact"] },
     });
-    if (!response.ok) throw new Error(`Unable to load public contact settings (${response.status}).`);
-    const rows = await response.json() as SettingsRow[];
-    value = rows[0]?.value ?? {};
+    if (response.ok) {
+      const rows = await response.json() as SettingsRow[];
+      value = rows[0]?.value ?? {};
+    }
   }
 
   const fallbackFacebook = socialLinks.find((item) => item.platform === "Facebook")!;

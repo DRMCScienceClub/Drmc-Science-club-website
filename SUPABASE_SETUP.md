@@ -94,6 +94,11 @@ direct anonymous submission-table inserts with validated Contact and Join RPCs
 and a pseudonymous five-submissions-per-hour rate limit. Apply it before
 enabling the public forms.
 
+The contact-settings migration
+`supabase/migrations/202608310004_public_contact_settings.sql` creates the
+editable public contact record and permits anonymous visitors to read only that
+single setting. Apply it before using `/admin/settings/contact`.
+
 Applied migrations are immutable. Correct a deployed schema with a new
 forward-only migration; do not edit an already applied file.
 
