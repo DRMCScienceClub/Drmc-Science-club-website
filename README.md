@@ -36,6 +36,12 @@ records. Every exposed table has Row Level Security. Anonymous database clients
 may read only published content; private submissions and administrator data are
 restricted to authorised roles.
 
+Public Contact and Join forms submit through server actions into dedicated
+private tables. A honeypot, Zod and database validation, removal of direct
+anonymous table inserts, and a pseudonymous database rate limit provide basic
+abuse protection. Authorised editors and super administrators review the
+records from `/admin/submissions`.
+
 The migration also creates private `cms-staging` and public `cms-public`
 Storage buckets. Unreviewed files belong in staging; only validated and approved
 assets may be promoted to the public bucket. The admin Media Library validates

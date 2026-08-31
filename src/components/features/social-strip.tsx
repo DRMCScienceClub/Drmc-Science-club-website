@@ -1,8 +1,9 @@
 import { Container } from "@/components/ui/container";
 import { Icon } from "@/components/ui/icon";
-import { socialLinks } from "@/data";
+import { getPublicContactSettings } from "@/lib/content";
 
-export function SocialStrip() {
+export async function SocialStrip() {
+  const { socialLinks } = await getPublicContactSettings();
   return (
     <section className="border-y border-paper-200 bg-paper-50 py-10">
       <Container className="grid gap-4 lg:grid-cols-[1fr_1.5fr] lg:items-center">

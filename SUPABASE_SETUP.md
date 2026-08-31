@@ -88,6 +88,12 @@ The follow-up migration
 staging cleanup and prevents contributors from publishing media metadata. Apply
 both migrations in filename order before using the browser Media Library.
 
+The public-form migration
+`supabase/migrations/202608310003_secure_public_submissions.sql` replaces
+direct anonymous submission-table inserts with validated Contact and Join RPCs
+and a pseudonymous five-submissions-per-hour rate limit. Apply it before
+enabling the public forms.
+
 Applied migrations are immutable. Correct a deployed schema with a new
 forward-only migration; do not edit an already applied file.
 
@@ -262,8 +268,9 @@ backup or archive the specifically reviewed seeded rows.
 - Prove contributors cannot mutate normalized festival or executive child rows.
 - Prove only editors/super admins can promote objects to `cms-public`.
 - Confirm `site_settings` changes create an audit entry keyed by `key`.
-- Add abuse protection and rate limiting before enabling public contact/join
-  writes in production.
+- Verify the public Contact and Join rate limit from the deployed environment,
+  and add a managed CAPTCHA if traffic or abuse levels require stronger bot
+  resistance.
 - Confirm backup/restore, admin recovery, media consent, and data-retention
   owners in writing.
 

@@ -128,7 +128,7 @@ export const contactDetails: ContactDetails = {
   institution: "Dhaka Residential Model College",
   clubName: "DRMC Science Club",
   addressLines: [
-    "Science Building, Dhaka Residential Model College",
+    "Academic Building 3, Dhaka Residential Model College",
     "Mirpur Road, Mohammadpur",
     "Dhaka 1207, Bangladesh",
   ],

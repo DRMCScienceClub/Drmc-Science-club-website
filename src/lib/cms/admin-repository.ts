@@ -192,6 +192,19 @@ export async function listAdminProfiles() {
   return data ?? [];
 }
 
+export async function getPublicContactSetting() {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("site_settings")
+    .select("value")
+    .eq("key", "public_contact")
+    .maybeSingle();
+  if (error) throw new Error(`Unable to load contact settings: ${error.message}`);
+  return data?.value && typeof data.value === "object"
+    ? data.value as Record<string, unknown>
+    : {};
+}
+
 export async function listAuditLogs() {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase

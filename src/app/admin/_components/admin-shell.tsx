@@ -20,6 +20,7 @@ const adminNav: ReadonlyArray<{
   { label: "Notifications", href: "/admin/notifications", key: "notifications", icon: "calendar" },
   { label: "Media library", href: "/admin/media", key: "media", icon: "download" },
   { label: "Submissions", href: "/admin/submissions", key: "submissions", icon: "mail", minimumRole: "editor" },
+  { label: "Contact settings", href: "/admin/settings/contact", key: "settings", icon: "location", minimumRole: "editor" },
   { label: "Administrators", href: "/admin/users", key: "users", icon: "shield", minimumRole: "super_admin" },
   { label: "Audit history", href: "/admin/audit", key: "audit", icon: "clock", minimumRole: "editor" },
 ];

@@ -3,8 +3,12 @@ import { Logo } from "@/components/brand/logo";
 import { Container } from "@/components/ui/container";
 import { Icon } from "@/components/ui/icon";
 import { footerNavigation, siteConfig } from "@/lib/site";
+import { getPublicContactSettings } from "@/lib/content";
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const contact = await getPublicContactSettings();
+  const facebook = contact.socialLinks.find((item) => item.platform === "Facebook");
+  const instagram = contact.socialLinks.find((item) => item.platform === "Instagram");
   return (
     <footer className="dark-canvas text-white">
       <Container className="py-14 sm:py-16">
@@ -22,9 +26,9 @@ export function SiteFooter() {
             <h2 className="text-sm font-extrabold uppercase tracking-[0.13em] text-gold-200">Find us</h2>
             <address className="mt-5 not-italic">
               <ul className="grid gap-4 text-sm leading-6 text-slate-300">
-                <li className="flex gap-3"><Icon name="location" className="mt-0.5 size-4 text-teal-300" /><span>{siteConfig.address}</span></li>
-                <li className="flex gap-3"><Icon name="mail" className="mt-0.5 size-4 text-teal-300" /><a href={`mailto:${siteConfig.email}`} className="rounded-sm hover:text-white">{siteConfig.email}</a></li>
-                <li className="flex gap-3"><Icon name="clock" className="mt-0.5 size-4 text-teal-300" /><span>{siteConfig.officeHours}</span></li>
+                <li className="flex gap-3"><Icon name="location" className="mt-0.5 size-4 text-teal-300" /><span>{contact.addressLines.join(", ")}</span></li>
+                <li className="flex gap-3"><Icon name="mail" className="mt-0.5 size-4 text-teal-300" /><a href={`mailto:${contact.email}`} className="rounded-sm hover:text-white">{contact.email}</a></li>
+                <li className="flex gap-3"><Icon name="clock" className="mt-0.5 size-4 text-teal-300" /><span>{contact.officeHours}</span></li>
               </ul>
             </address>
           </div>
@@ -33,8 +37,8 @@ export function SiteFooter() {
         <div className="flex flex-col gap-5 pt-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} DRMC Science Club. A student organization of {siteConfig.college}.</p>
           <div className="flex items-center gap-3">
-            <a href={siteConfig.social.facebook} target="_blank" rel="noreferrer" aria-label="DRMC Science Club on Facebook" className="inline-flex size-9 items-center justify-center rounded-lg border border-white/15 text-slate-300 transition-colors hover:border-science-300/50 hover:text-white"><Icon name="facebook" className="size-4" /></a>
-            <a href={siteConfig.social.instagram} target="_blank" rel="noreferrer" aria-label="DRMC Science Club on Instagram" className="inline-flex size-9 items-center justify-center rounded-lg border border-white/15 text-slate-300 transition-colors hover:border-science-300/50 hover:text-white"><Icon name="instagram" className="size-4" /></a>
+            {facebook && <a href={facebook.href} target="_blank" rel="noreferrer" aria-label={facebook.label} className="inline-flex size-9 items-center justify-center rounded-lg border border-white/15 text-slate-300 transition-colors hover:border-science-300/50 hover:text-white"><Icon name="facebook" className="size-4" /></a>}
+            {instagram && <a href={instagram.href} target="_blank" rel="noreferrer" aria-label={instagram.label} className="inline-flex size-9 items-center justify-center rounded-lg border border-white/15 text-slate-300 transition-colors hover:border-science-300/50 hover:text-white"><Icon name="instagram" className="size-4" /></a>}
           </div>
         </div>
       </Container>

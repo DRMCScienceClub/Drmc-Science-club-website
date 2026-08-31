@@ -3,7 +3,8 @@ import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { PageHero } from "@/components/ui/page-hero";
-import { contactDetails, socialLinks } from "@/data";
+import { ContactSubmissionForm } from "@/app/(public)/_components/public-submission-form";
+import { getPublicContactSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -11,13 +12,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-const contactMethods: Array<{ label: string; value: string; href: string; icon: IconName; note: string }> = [
-  { label: "Email", value: contactDetails.email, href: `mailto:${contactDetails.email}`, icon: "mail", note: "Best for official and programme enquiries" },
-  { label: "Telephone", value: contactDetails.phone, href: `tel:${contactDetails.phone.replace(/\s/g, "")}`, icon: "phone", note: "Call during published college hours" },
-  { label: "Office hours", value: contactDetails.officeHours, href: "#visit", icon: "clock", note: "Hours may vary during holidays and examinations" },
-];
-
-export default function ContactPage() {
+export default async function ContactPage() {
+  const contactDetails = await getPublicContactSettings();
+  const contactMethods: Array<{ label: string; value: string; href: string; icon: IconName; note: string }> = [
+    { label: "Email", value: contactDetails.email, href: `mailto:${contactDetails.email}`, icon: "mail", note: "Best for official and programme enquiries" },
+    { label: "Telephone", value: contactDetails.phone, href: `tel:${contactDetails.phone.replace(/\s/g, "")}`, icon: "phone", note: "Call during published college hours" },
+    { label: "Office hours", value: contactDetails.officeHours, href: "#visit", icon: "clock", note: "Hours may vary during holidays and examinations" },
+  ];
   return (
     <main>
       <PageHero eyebrow="Contact" title="Let’s talk science." description="Reach the club for festival coordination, institutional invitations, publication questions, or information about student programmes." icon="mail" />
@@ -37,7 +38,21 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      <section id="visit" className="science-grid border-y border-slate-200 bg-slate-50 py-16 sm:py-20">
+      <section className="science-grid border-y border-slate-200 bg-slate-50 py-16 sm:py-20">
+        <Container className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-start">
+          <div className="lg:sticky lg:top-28">
+            <span className="eyebrow">Send an enquiry</span>
+            <h2 className="mt-4 text-balance font-display text-3xl font-extrabold tracking-tight text-navy-950 sm:text-4xl">Write to the club securely.</h2>
+            <p className="mt-5 leading-7 text-slate-600">Include the relevant programme, institution, contact person, and deadline where applicable. An authorised administrator will review your message.</p>
+            <div className="mt-6 rounded-2xl border border-science-200 bg-science-50 p-5"><p className="flex items-center gap-2 font-extrabold text-navy-950"><Icon name="shield" className="text-science-700" />Private by design</p><p className="mt-2 text-sm leading-6 text-slate-600">Submissions are not published and cannot be read by public visitors.</p></div>
+          </div>
+          <div className="surface-card rounded-[2rem] border border-surface-border p-6 shadow-card sm:p-8">
+            <ContactSubmissionForm />
+          </div>
+        </Container>
+      </section>
+
+      <section id="visit" className="site-surface py-16 sm:py-20">
         <Container className="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
           <div className="relative min-h-[390px] overflow-hidden rounded-[2rem] bg-navy-950 p-7 text-white shadow-soft sm:p-10">
             <div aria-hidden="true" className="absolute inset-0 science-grid-dark opacity-70" />
@@ -67,7 +82,7 @@ export default function ContactPage() {
               ))}
             </ul>
             <ButtonLink href={`mailto:${contactDetails.email}?subject=DRMC%20Science%20Club%20enquiry`} icon="mail" className="mt-8">Compose an email</ButtonLink>
-            <p className="mt-4 text-xs leading-5 text-slate-500">This Phase 1 prototype does not collect or store messages through a web form.</p>
+            <p className="mt-4 text-xs leading-5 text-slate-500">For sensitive or formal documents, contact the club before attaching or sharing private information.</p>
           </div>
         </Container>
       </section>
@@ -76,7 +91,7 @@ export default function ContactPage() {
         <Container className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-science-700">Social channels</p><h2 className="mt-2 text-2xl font-extrabold text-navy-950">Updates, photographs, and announcements.</h2></div>
           <div className="flex flex-wrap gap-3">
-            {socialLinks.map((social) => <ButtonLink key={social.platform} href={social.href} external variant="outline" icon={social.platform === "Facebook" ? "facebook" : "instagram"} iconPosition="left">{social.platform}</ButtonLink>)}
+            {contactDetails.socialLinks.map((social) => <ButtonLink key={social.platform} href={social.href} external variant="outline" icon={social.platform === "Facebook" ? "facebook" : "instagram"} iconPosition="left">{social.platform}</ButtonLink>)}
           </div>
         </Container>
       </section>

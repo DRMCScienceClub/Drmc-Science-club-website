@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/container";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { PageHero } from "@/components/ui/page-hero";
 import { membershipSteps } from "@/data";
+import { JoinSubmissionForm } from "@/app/(public)/_components/public-submission-form";
 
 export const metadata: Metadata = {
   title: "Join the Club",
@@ -63,6 +64,20 @@ export default function JoinPage() {
       </section>
 
       <section className="site-surface py-16 sm:py-20">
+        <Container className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-start">
+          <div className="lg:sticky lg:top-28">
+            <span className="eyebrow">Membership interest</span>
+            <h2 className="mt-4 text-balance font-display text-3xl font-extrabold tracking-tight text-navy-950 sm:text-4xl">Tell us where your curiosity leads.</h2>
+            <p className="mt-5 leading-7 text-slate-600">Current DRMC students can register their interest here. This helps the club plan orientation and understand which programmes students want to explore.</p>
+            <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5"><p className="font-extrabold text-navy-950">Interest form, not automatic admission</p><p className="mt-2 text-sm leading-6 text-slate-600">Membership remains subject to the approved intake process and confirmation by club authorities.</p></div>
+          </div>
+          <div className="surface-card rounded-[2rem] border border-surface-border p-6 shadow-card sm:p-8">
+            <JoinSubmissionForm />
+          </div>
+        </Container>
+      </section>
+
+      <section className="science-grid border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
         <Container>
           <div className="science-grid-dark relative overflow-hidden rounded-[2rem] bg-navy-950 p-7 text-white sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:p-14">
             <div className="max-w-2xl"><span className="text-xs font-extrabold uppercase tracking-[0.14em] text-teal-300">Stay ready</span><h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">Want to know when intake opens?</h2><p className="mt-4 leading-7 text-slate-300">Follow the official channels for the next orientation notice, or email the club with a concise membership question.</p></div>

@@ -14,6 +14,27 @@ export type { CmsFormResult } from "@/lib/cms/validation";
 const statusSchema = z.enum(["draft", "published", "archived"]);
 const submissionStatusSchema = z.enum(["new", "in_review", "resolved", "spam", "archived"]);
 const roleSchema = z.enum(["super_admin", "editor", "contributor"]);
+const publicContactSchema = z.object({
+  institution: z.string().trim().min(2).max(160),
+  clubName: z.string().trim().min(2).max(160),
+  addressLine1: z.string().trim().min(2).max(180),
+  addressLine2: z.string().trim().max(180),
+  addressLine3: z.string().trim().max(180),
+  email: z.string().trim().email().max(254),
+  phone: z.string().trim().min(3).max(40),
+  officeHours: z.string().trim().min(2).max(180),
+  mapUrl: z.url().max(1000),
+  facebookUrl: z.url().max(1000),
+  facebookHandle: z.string().trim().min(1).max(100),
+  instagramUrl: z.url().max(1000),
+  instagramHandle: z.string().trim().min(1).max(100),
+});
+
+export type ContactSettingsFormResult = {
+  ok?: boolean;
+  message?: string;
+  fieldErrors?: Record<string, string[]>;
+};
 
 function nullable(value: unknown) {
   return typeof value === "string" && value.trim() ? value.trim() : null;
@@ -509,6 +530,45 @@ export async function updateAdminProfileAction(formData: FormData) {
   }).eq("id", id);
   if (error) throw new Error(`Administrator profile could not be updated: ${error.message}`);
   revalidatePath("/admin/users");
+}
+
+export async function savePublicContactSettingsAction(
+  _previous: ContactSettingsFormResult,
+  formData: FormData,
+): Promise<ContactSettingsFormResult> {
+  const identity = await requireRole(["super_admin", "editor"], "/admin/settings/contact");
+  const raw = Object.fromEntries([
+    "institution", "clubName", "addressLine1", "addressLine2", "addressLine3",
+    "email", "phone", "officeHours", "mapUrl", "facebookUrl",
+    "facebookHandle", "instagramUrl", "instagramHandle",
+  ].map((key) => [key, formData.get(key)]));
+  const parsed = publicContactSchema.safeParse(raw);
+  if (!parsed.success) {
+    return {
+      message: "Please correct the highlighted contact details.",
+      fieldErrors: z.flattenError(parsed.error).fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  const { addressLine1, addressLine2, addressLine3, ...settings } = parsed.data;
+  const value = {
+    ...settings,
+    addressLines: [addressLine1, addressLine2, addressLine3].filter(Boolean),
+  };
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.from("site_settings").upsert({
+    key: "public_contact",
+    value,
+    description: "Public contact, location, office hours, map, and social links.",
+    updated_by: identity.id,
+  }, { onConflict: "key" });
+  if (error) return { message: `Contact settings could not be saved: ${error.message}` };
+
+  revalidateTag("settings:public_contact", "max");
+  revalidatePath("/contact");
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/settings/contact");
+  return { ok: true, message: "Contact settings saved and published." };
 }
 
 export async function updateMediaStatusAction(formData: FormData) {
