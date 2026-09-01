@@ -198,6 +198,12 @@ The root layout provides shared metadata while each route supplies a meaningful 
 
 ## Environment and secrets
 
-Only variables prefixed with `NEXT_PUBLIC_` may be exposed to browser code. `SUPABASE_SERVICE_ROLE_KEY` is reserved for future server-only administration and must never be imported by a client component. Keep local values in `.env.local` and production values in the deployment provider's encrypted environment settings.
+Only variables prefixed with `NEXT_PUBLIC_` may be exposed to browser code. The
+`SUPABASE_SERVICE_ROLE_KEY` powers trusted server-only operations, including
+administrator invitations and controlled maintenance scripts, and must never be
+imported by a client component. Keep local values in `.env.local` and production
+values in the deployment provider's encrypted environment settings. Remove the
+temporary `INITIAL_ADMIN_*` values after the first administrator is bootstrapped,
+and keep `ALLOW_INITIAL_ADMIN_BOOTSTRAP` disabled thereafter.
 
 See [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) for database operations and [PROJECT_PLAN.md](./PROJECT_PLAN.md) for the route architecture and staged production plan.
