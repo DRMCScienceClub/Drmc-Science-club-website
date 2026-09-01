@@ -56,10 +56,6 @@ function valueFor(field: CmsField, record: CmsRecord | null) {
   };
   if (nestedKey[field.name]) return JSON.stringify(nestedData(record, nestedKey[field.name]) ?? [], null, 2);
   if (field.name === "recipients" && Array.isArray(record.recipients)) return record.recipients.join(", ");
-  if (field.name === "display_order") {
-    const displayOrder = nestedData(record, "displayOrder");
-    return typeof displayOrder === "number" ? String(displayOrder) : "";
-  }
   const value = record[field.name];
   if (field.type === "datetime-local" && typeof value === "string") return value.slice(0, 16);
   return typeof value === "string" || typeof value === "number" ? String(value) : "";

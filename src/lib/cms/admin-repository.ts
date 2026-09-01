@@ -253,3 +253,41 @@ export async function listPublishedMediaChoices(): Promise<PublishedMediaChoice[
   if (error) throw new Error(`Unable to load published media choices: ${error.message}`);
   return (data ?? []) as PublishedMediaChoice[];
 }
+
+export type ExecutivePanelOrderItem = {
+  id: string;
+  title: string;
+  session_label: string;
+  starts_year: number;
+  ends_year: number;
+  is_current: boolean;
+  status: PublicationStatus;
+  data: Record<string, unknown> | null;
+};
+
+function panelDisplayOrder(panel: ExecutivePanelOrderItem) {
+  const value = panel.data?.displayOrder;
+  return typeof value === "number" && Number.isFinite(value)
+    ? value
+    : Number.MAX_SAFE_INTEGER;
+}
+
+export function orderExecutivePanelItems(panels: ExecutivePanelOrderItem[]) {
+  return panels.toSorted((first, second) => {
+    if (first.is_current !== second.is_current) return first.is_current ? -1 : 1;
+    return panelDisplayOrder(first) - panelDisplayOrder(second)
+      || second.ends_year - first.ends_year
+      || second.starts_year - first.starts_year;
+  });
+}
+
+export async function listExecutivePanelOrder() {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("executive_panels")
+    .select("id,title,session_label,starts_year,ends_year,is_current,status,data")
+    .order("ends_year", { ascending: false })
+    .limit(100);
+  if (error) throw new Error(`Unable to load executive panel order: ${error.message}`);
+  return orderExecutivePanelItems((data ?? []) as ExecutivePanelOrderItem[]);
+}

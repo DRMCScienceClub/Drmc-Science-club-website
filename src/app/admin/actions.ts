@@ -7,6 +7,7 @@ import { requireAdmin, requireRole, type AdminRole } from "@/lib/auth";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getCmsResource, slugify, type CmsResource, type PublicationStatus } from "@/lib/cms/resources";
+import { orderExecutivePanelItems, type ExecutivePanelOrderItem } from "@/lib/cms/admin-repository";
 import { parseJsonField, validateCmsForm, type CmsFormResult } from "@/lib/cms/validation";
 import { safeOriginalName, validateMediaBytes } from "@/lib/media/validation";
 
@@ -519,6 +520,52 @@ export async function changePublicationStatusAction(formData: FormData) {
   }).eq("id", id);
   if (error) throw new Error(`Publication status could not be changed: ${error.message}`);
   invalidateResource(resource, current?.slug);
+}
+
+export async function moveExecutivePanelAction(formData: FormData) {
+  const identity = await requireRole(["super_admin", "editor"], "/admin/executives");
+  const id = String(formData.get("id") ?? "");
+  const direction = z.enum(["up", "down"]).safeParse(formData.get("direction"));
+  if (!z.uuid().safeParse(id).success || !direction.success) {
+    throw new Error("Invalid executive panel ordering request.");
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const { data, error: readError } = await supabase
+    .from("executive_panels")
+    .select("id,title,session_label,starts_year,ends_year,is_current,status,data")
+    .limit(100);
+  if (readError) throw new Error(`Executive panels could not be loaded: ${readError.message}`);
+
+  const panels = orderExecutivePanelItems((data ?? []) as ExecutivePanelOrderItem[]);
+  const currentIndex = panels.findIndex((panel) => panel.id === id);
+  if (currentIndex < 0) throw new Error("Executive panel not found.");
+  if (panels[currentIndex].is_current) {
+    revalidatePath("/admin/executives");
+    return;
+  }
+
+  const nextIndex = direction.data === "up" ? currentIndex - 1 : currentIndex + 1;
+  const firstMovableIndex = panels[0]?.is_current ? 1 : 0;
+  if (nextIndex < firstMovableIndex || nextIndex >= panels.length) {
+    revalidatePath("/admin/executives");
+    return;
+  }
+
+  [panels[currentIndex], panels[nextIndex]] = [panels[nextIndex], panels[currentIndex]];
+  for (const [index, panel] of panels.entries()) {
+    const existingData = panel.data && typeof panel.data === "object" ? panel.data : {};
+    const { error } = await supabase.from("executive_panels").update({
+      data: { ...existingData, displayOrder: index },
+      updated_by: identity.id,
+    }).eq("id", panel.id);
+    if (error) throw new Error(`Executive panel order could not be saved: ${error.message}`);
+  }
+
+  revalidateTag("content:executive_panels", "max");
+  revalidatePath("/admin/executives");
+  revalidatePath("/executives");
+  revalidatePath("/");
 }
 
 export async function deleteCmsRecordAction(formData: FormData) {

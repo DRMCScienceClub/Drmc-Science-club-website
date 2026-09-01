@@ -168,6 +168,7 @@ function executivePanelFromRow(row: ContentRow): ExecutivePanel {
 
 function orderExecutivePanels(panels: ExecutivePanel[]) {
   return panels.toSorted((first, second) => {
+    if (first.isCurrent !== second.isCurrent) return first.isCurrent ? -1 : 1;
     const firstOrder = typeof first.displayOrder === "number"
       ? first.displayOrder
       : Number.MAX_SAFE_INTEGER;

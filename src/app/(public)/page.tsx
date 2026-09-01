@@ -214,6 +214,18 @@ export default async function HomePage() {
                   <span className="text-sm font-semibold text-slate-500">{panelMemberCount} student officers</span>
                 </div>
                 <ButtonLink href="/executives" variant="outline" className="mt-7">Meet the full panel</ButtonLink>
+                {panels.length > 1 && (
+                  <div className="mt-7 border-t border-slate-200 pt-5">
+                    <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-slate-500">Panel sessions</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {panels.map((item) => (
+                        <Link key={item.session} href="/executives" className={`rounded-lg border px-3 py-1.5 text-xs font-extrabold transition ${item.isCurrent ? "border-teal-200 bg-teal-50 text-teal-800" : "border-slate-200 bg-white text-slate-600 hover:border-science-300 hover:text-science-700"}`}>
+                          {item.session}{item.isCurrent ? " · Current" : ""}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               <div data-reveal="from-right" className="surface-card rounded-3xl border border-surface-border p-5 shadow-soft sm:p-7">
                 <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.13em] text-slate-500">Club moderator</p>
