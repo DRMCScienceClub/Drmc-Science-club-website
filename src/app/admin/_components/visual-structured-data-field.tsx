@@ -32,12 +32,15 @@ const defaults: Partial<Record<CmsResourceKey, JsonObject>> = {
     tags: [],
     organizers: ["DRMC Science Club"],
     highlights: [],
+    organizerContacts: [],
+    externalLinks: [],
     relatedFestivalSlug: "",
   },
   achievements: {
     organizer: "",
     location: "",
     details: [""],
+    gallery: [],
   },
   magazines: {
     subtitle: "",
@@ -63,8 +66,8 @@ const defaults: Partial<Record<CmsResourceKey, JsonObject>> = {
 
 const visibleKeys: Partial<Record<CmsResourceKey, string[]>> = {
   festivals: ["shortTitle", "theme", "description", "dateLabel", "venueAddress", "status", "recordStatus", "registration", "segmentSource", "resultsNote", "gallery", "brochure", "rulebook"],
-  activities: ["recordStatus", "dateLabel", "body", "gallery", "tags", "organizers", "highlights", "registration", "relatedFestivalSlug"],
-  achievements: ["organizer", "location", "details"],
+  activities: ["recordStatus", "dateLabel", "body", "gallery", "tags", "organizers", "highlights", "organizerContacts", "externalLinks", "relatedFestivalSlug"],
+  achievements: ["organizer", "location", "details", "gallery"],
   magazines: ["subtitle", "publishedAt", "pages", "highlights"],
   executives: ["recordStatus", "moderator", "advisers", "institutionalLeadership", "departments"],
 };
@@ -114,6 +117,8 @@ function normalizedPath(path: Path) {
 function itemTemplate(path: Path): JsonValue {
   const normalized = normalizedPath(path);
   if (normalized.endsWith("gallery")) return { src: "", alt: "", width: 1600, height: 900 };
+  if (normalized.endsWith("organizerContacts")) return { name: "", role: "", email: "", phone: "" };
+  if (normalized.endsWith("externalLinks")) return { label: "", href: "", external: true };
   if (normalized.endsWith("departments")) return { name: "", description: "", members: [] };
   if (normalized.endsWith("members") || normalized.endsWith("advisers") || normalized.endsWith("institutionalLeadership")) {
     return {
@@ -145,7 +150,7 @@ function ImageEditor({ value, path, update, media }: { value: JsonObject; path: 
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Image URL<input value={src} onChange={(event) => update([...path, "src"], event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 font-mono text-xs font-semibold" /></label>
-        <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Choose published media<select value="" onChange={(event) => { const asset = media.find((item) => item.id === event.target.value); if (!asset?.public_url) return; update(path, { ...value, src: asset.public_url, alt: asset.alt_text, width: asset.width ?? 1600, height: asset.height ?? 900 }); }} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold"><option value="">Select image…</option>{media.map((asset) => <option key={asset.id} value={asset.id}>{asset.original_name} — {asset.alt_text}</option>)}</select></label>
+        <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Choose published media<select value="" onChange={(event) => { const asset = media.find((item) => item.id === event.target.value); if (!asset?.public_url) return; update(path, { ...value, src: asset.public_url, alt: asset.alt_text, width: asset.width ?? 1600, height: asset.height ?? 900 }); }} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold"><option value="">Select image…</option>{media.filter((asset) => asset.mime_type.startsWith("image/")).map((asset) => <option key={asset.id} value={asset.id}>{asset.original_name} — {asset.alt_text}</option>)}</select></label>
         <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Alternative text<input value={String(value.alt ?? "")} onChange={(event) => update([...path, "alt"], event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" /></label>
         <label className="text-xs font-extrabold text-navy-900">Width<input type="number" min="1" value={Number(value.width ?? 1600)} onChange={(event) => update([...path, "width"], Number(event.target.value))} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" /></label>
         <label className="text-xs font-extrabold text-navy-900">Height<input type="number" min="1" value={Number(value.height ?? 900)} onChange={(event) => update([...path, "height"], Number(event.target.value))} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" /></label>

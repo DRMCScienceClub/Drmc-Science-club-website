@@ -63,6 +63,11 @@ function imageValue(current: unknown, url: unknown, title: string) {
   };
 }
 
+function publicLink(label: string, url: unknown, options: { external?: boolean; download?: boolean } = {}) {
+  const href = nullable(url);
+  return href ? { label, href, ...options } : undefined;
+}
+
 function publicDataFor(
   resource: CmsResource,
   values: Record<string, unknown>,
@@ -115,6 +120,8 @@ function publicDataFor(
         sponsors: parseJsonField(values.sponsors_json, data.sponsors ?? []),
         partners: parseJsonField(values.partners_json, data.partners ?? []),
         gallery: Array.isArray(data.gallery) ? data.gallery : [],
+        brochure: publicLink("Download brochure", values.brochure_url, { download: true }),
+        rulebook: publicLink("Download rulebook", values.rulebook_url, { download: true }),
       };
     }
     case "activities": {
@@ -138,6 +145,9 @@ function publicDataFor(
         tags: Array.isArray(data.tags) ? data.tags : [],
         organizers: Array.isArray(data.organizers) ? data.organizers : ["DRMC Science Club"],
         highlights: Array.isArray(data.highlights) ? data.highlights : [],
+        registration: publicLink(String(values.registration_label || "Register now"), values.registration_url, { external: true }),
+        externalLinks: Array.isArray(data.externalLinks) ? data.externalLinks : [],
+        organizerContacts: Array.isArray(data.organizerContacts) ? data.organizerContacts : [],
       };
     }
     case "achievements":
@@ -150,6 +160,10 @@ function publicDataFor(
         year: numberOrNull(values.achievement_year) ?? undefined,
         details: Array.isArray(data.details) ? data.details : [summary],
         image: imageValue(data.image, coverUrl, title),
+        gallery: Array.isArray(data.gallery) ? data.gallery : [],
+        certificate: publicLink("View certificate or evidence", values.certificate_url, { download: true }),
+        externalNews: publicLink("Read related coverage", values.external_news_url, { external: true }),
+        externalVideo: publicLink("Watch related video", values.external_video_url, { external: true }),
         sourceOrder: typeof data.sourceOrder === "number" ? data.sourceOrder : Date.now(),
       };
     case "magazines": {
@@ -508,6 +522,22 @@ export async function updateSubmissionStatusAction(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.from(table).update({ status: status.data, admin_notes: notes }).eq("id", id);
   if (error) throw new Error(`Submission could not be updated: ${error.message}`);
+  revalidatePath("/admin/submissions");
+  revalidatePath("/admin");
+}
+
+export async function deleteSubmissionAction(formData: FormData) {
+  await requireRole(["super_admin"], "/admin/submissions");
+  const kindValue = String(formData.get("kind") ?? "");
+  const id = String(formData.get("id") ?? "");
+  if ((kindValue !== "contact" && kindValue !== "join") || !z.uuid().safeParse(id).success) {
+    throw new Error("Invalid submission delete request.");
+  }
+
+  const table = kindValue === "join" ? "join_submissions" : "contact_submissions";
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.from(table).delete().eq("id", id);
+  if (error) throw new Error(`Submission could not be deleted: ${error.message}`);
   revalidatePath("/admin/submissions");
   revalidatePath("/admin");
 }

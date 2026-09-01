@@ -166,6 +166,13 @@ export interface Activity {
   highlights: string[];
   registration?: ContentLink;
   relatedFestivalSlug?: string;
+  externalLinks?: ContentLink[];
+  organizerContacts?: Array<{
+    name: string;
+    role?: string;
+    email?: string;
+    phone?: string;
+  }>;
 }
 
 export interface Achievement {
@@ -178,6 +185,10 @@ export interface Achievement {
   location?: string;
   details: string[];
   image: ContentImage;
+  gallery?: ContentImage[];
+  certificate?: ContentLink;
+  externalNews?: ContentLink;
+  externalVideo?: ContentLink;
   /**
    * The numeric publication identifier from the supplied source artwork.
    * It provides a stable newest-first order when an exact event date is absent.

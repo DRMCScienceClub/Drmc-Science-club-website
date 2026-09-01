@@ -31,6 +31,22 @@ function valueFor(field: CmsField, record: CmsRecord | null) {
   }
 
   if (field.name === "data_json") return JSON.stringify(record.data ?? {}, null, 2);
+  const linkPaths: Record<string, string> = {
+    brochure_url: "brochure",
+    rulebook_url: "rulebook",
+    registration_url: "registration",
+    registration_label: "registration",
+    certificate_url: "certificate",
+    external_news_url: "externalNews",
+    external_video_url: "externalVideo",
+  };
+  if (linkPaths[field.name]) {
+    const link = nestedData(record, linkPaths[field.name]);
+    if (link && typeof link === "object") {
+      const value = link as Record<string, unknown>;
+      return String(field.name === "registration_label" ? value.label ?? "" : value.href ?? "");
+    }
+  }
   const nestedKey: Record<string, string> = {
     sponsors_json: "sponsors",
     partners_json: "partners",
@@ -50,21 +66,26 @@ function FieldError({ messages }: { messages?: string[] }) {
   return <>{messages.map((message) => <p key={message} className="mt-1.5 text-xs font-bold text-red-700">{message}</p>)}</>;
 }
 
-function MediaUrlField({ field, record, errors, media }: { field: CmsField; record: CmsRecord | null; errors?: string[]; media: PublishedMediaChoice[] }) {
+const documentFields = new Set(["pdf_url", "brochure_url", "rulebook_url", "certificate_url"]);
+
+function MediaUrlField({ field, record, resource, errors, media }: { field: CmsField; record: CmsRecord | null; resource: CmsResource; errors?: string[]; media: PublishedMediaChoice[] }) {
   const [url, setUrl] = useState(valueFor(field, record));
-  const previewable = url.startsWith("/") || /^https?:\/\//.test(url);
+  const documentField = documentFields.has(field.name);
+  const choices = media.filter((asset) => field.name === "certificate_url" || (documentField ? asset.mime_type === "application/pdf" : asset.mime_type.startsWith("image/")));
+  const previewable = !documentField && (url.startsWith("/") || /^https?:\/\//.test(url));
+  const label = field.name === "cover_image_url" && resource.key === "activities" ? "Activity poster image" : field.label;
   return (
     <div>
-      <label htmlFor="cms-cover-image" className="text-sm font-extrabold text-navy-900">{field.label}</label>
+      <label htmlFor={`cms-media-${field.name}`} className="text-sm font-extrabold text-navy-900">{label}</label>
       <div className="mt-2 grid gap-3 sm:grid-cols-[6rem_minmax(0,1fr)]">
         <div className="relative grid aspect-video place-items-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50 sm:aspect-square">
           {previewable ? <Image src={url} alt="Selected cover preview" fill sizes="96px" className="object-contain p-2" /> : <Icon name="download" className="size-7 text-slate-300" />}
         </div>
         <div className="space-y-2">
-          <input id="cms-cover-image" name={field.name} type="text" value={url} onChange={(event) => setUrl(event.target.value)} placeholder="https://… or an approved asset path" className="min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 font-mono text-xs font-semibold text-navy-950 shadow-sm" />
+          <input id={`cms-media-${field.name}`} name={field.name} type="text" value={url} onChange={(event) => setUrl(event.target.value)} placeholder="https://… or an approved asset path" className="min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 font-mono text-xs font-semibold text-navy-950 shadow-sm" />
           <select value="" onChange={(event) => { const asset = media.find((item) => item.id === event.target.value); if (asset?.public_url) setUrl(asset.public_url); }} className="min-h-10 w-full rounded-xl border border-slate-300 bg-white px-3 text-xs font-bold text-slate-700">
-            <option value="">Choose from published media…</option>
-            {media.map((asset) => <option key={asset.id} value={asset.id}>{asset.original_name} — {asset.alt_text}</option>)}
+            <option value="">Choose published {documentField ? "document" : "image"}…</option>
+            {choices.map((asset) => <option key={asset.id} value={asset.id}>{asset.original_name} — {asset.alt_text}</option>)}
           </select>
         </div>
       </div>
@@ -74,9 +95,9 @@ function MediaUrlField({ field, record, errors, media }: { field: CmsField; reco
   );
 }
 
-function EditorField({ field, record, errors, media }: { field: CmsField; record: CmsRecord | null; errors?: string[]; media: PublishedMediaChoice[] }) {
-  if (field.name === "cover_image_url") {
-    return <MediaUrlField field={field} record={record} errors={errors} media={media} />;
+function EditorField({ field, record, resource, errors, media }: { field: CmsField; record: CmsRecord | null; resource: CmsResource; errors?: string[]; media: PublishedMediaChoice[] }) {
+  if (field.name === "cover_image_url" || documentFields.has(field.name)) {
+    return <MediaUrlField field={field} record={record} resource={resource} errors={errors} media={media} />;
   }
   if (field.type === "checkbox") {
     return (
@@ -169,7 +190,7 @@ export function CmsEditorForm({
               <FestivalResultsField key={field.name} initialValue={valueFor(field, record)} errors={state.fieldErrors?.[field.name]} />
             ) : field.name === "data_json" ? (
               <VisualStructuredDataField key={field.name} resource={resource.key} initialValue={valueFor(field, record)} media={media} errors={state.fieldErrors?.[field.name]} />
-            ) : <EditorField key={field.name} field={field} record={record} errors={state.fieldErrors?.[field.name]} media={media} />)}
+            ) : <EditorField key={field.name} field={field} record={record} resource={resource} errors={state.fieldErrors?.[field.name]} media={media} />)}
           </div>
         </section>
 

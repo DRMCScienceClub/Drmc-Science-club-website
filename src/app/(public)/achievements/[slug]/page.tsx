@@ -109,11 +109,27 @@ export default async function AchievementDetailPage({
             <dl className="h-fit space-y-5 rounded-3xl border border-surface-border bg-slate-50 p-6 shadow-card">
               {achievement.organizer && <div><dt className="text-xs font-extrabold uppercase tracking-wider text-slate-500">Organizer</dt><dd className="mt-2 font-semibold text-navy-950">{achievement.organizer}</dd></div>}
               {achievement.location && <div><dt className="text-xs font-extrabold uppercase tracking-wider text-slate-500">Location</dt><dd className="mt-2 font-semibold text-navy-950">{achievement.location}</dd></div>}
+              {(achievement.certificate || achievement.externalNews || achievement.externalVideo) && <div className="grid gap-2 border-t border-slate-200 pt-5">
+                {achievement.certificate && <ButtonLink href={achievement.certificate.href} external variant="outline" icon="download">{achievement.certificate.label}</ButtonLink>}
+                {achievement.externalNews && <ButtonLink href={achievement.externalNews.href} external variant="outline" icon="external">{achievement.externalNews.label}</ButtonLink>}
+                {achievement.externalVideo && <ButtonLink href={achievement.externalVideo.href} external variant="outline" icon="external">{achievement.externalVideo.label}</ButtonLink>}
+              </div>}
               <ButtonLink href="/achievements" variant="outline" icon="arrow-left" iconPosition="left">All achievements</ButtonLink>
             </dl>
           </Container>
         </section>
       </article>
+
+      {Boolean(achievement.gallery?.length) && (
+        <section aria-label="Achievement gallery" className="science-grid border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
+          <Container>
+            <SectionHeading eyebrow="Supporting evidence" title="Additional approved photographs" />
+            <div className="mt-9 grid gap-5 md:grid-cols-2">
+              {achievement.gallery?.map((image, index) => <figure key={`${image.src}-${index}`} className="surface-card overflow-hidden rounded-3xl border border-surface-border shadow-card"><div className="flex min-h-64 items-center justify-center bg-navy-950"><Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes="(min-width: 768px) 50vw, 100vw" className="h-auto max-h-[52rem] w-full object-contain" /></div><figcaption className="px-5 py-4 text-sm leading-6 text-slate-600">{image.alt}</figcaption></figure>)}
+            </div>
+          </Container>
+        </section>
+      )}
 
       {related.length > 0 && (
         <section className="science-grid border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
@@ -128,4 +144,3 @@ export default async function AchievementDetailPage({
     </main>
   );
 }
-

@@ -247,7 +247,6 @@ export async function listPublishedMediaChoices(): Promise<PublishedMediaChoice[
     .select("id,original_name,mime_type,width,height,alt_text,public_url")
     .eq("bucket", "cms-public")
     .eq("status", "published")
-    .like("mime_type", "image/%")
     .not("public_url", "is", null)
     .order("created_at", { ascending: false })
     .limit(200);

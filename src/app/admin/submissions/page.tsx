@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { AdminShell } from "@/app/admin/_components/admin-shell";
 import { AdminPageHeader } from "@/app/admin/_components/admin-page-header";
+import { ConfirmSubmitButton } from "@/app/admin/_components/confirm-submit-button";
 import { NotAuthorized } from "@/app/admin/_components/not-authorized";
-import { updateSubmissionStatusAction } from "@/app/admin/actions";
+import { deleteSubmissionAction, updateSubmissionStatusAction } from "@/app/admin/actions";
 import { requireAdmin } from "@/lib/auth";
 import { listSubmissions } from "@/lib/cms/admin-repository";
 
@@ -51,6 +52,18 @@ export default async function SubmissionsPage({ searchParams }: SubmissionPagePr
                 <label className="sr-only" htmlFor={`notes-${record.id}`}>Private notes</label><input id={`notes-${record.id}`} name="admin_notes" defaultValue={text(record.admin_notes)} placeholder="Private follow-up note…" className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-sm font-semibold text-navy-950" />
                 <button className="min-h-11 rounded-xl bg-navy-950 px-5 text-sm font-extrabold text-white">Save</button>
               </form>
+              {identity.role === "super_admin" && (
+                <form action={deleteSubmissionAction} className="mt-3 flex justify-end">
+                  <input type="hidden" name="kind" value={kind} />
+                  <input type="hidden" name="id" value={text(record.id)} />
+                  <ConfirmSubmitButton
+                    message={`Permanently remove this ${kind === "join" ? "join request" : "contact message"}? This cannot be undone.`}
+                    className="min-h-10 rounded-xl border border-red-200 px-4 text-sm font-extrabold text-red-700 transition hover:bg-red-50"
+                  >
+                    Remove submission
+                  </ConfirmSubmitButton>
+                </form>
+              )}
             </article>
           ))}
           {!records.length && <div className="rounded-2xl border border-slate-200 bg-white px-6 py-16 text-center shadow-card"><p className="font-display text-lg font-extrabold text-navy-950">No submissions found</p><p className="mt-2 text-sm text-slate-500">There are no records matching this view.</p></div>}

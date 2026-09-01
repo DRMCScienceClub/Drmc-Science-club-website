@@ -127,9 +127,9 @@ export default async function MagazineDetailPage({
                     Phase 1 publication note
                   </h3>
                   <p className="mt-2 text-sm leading-6 text-slate-600">
-                    The cover, contents, online reader, and PDF destination are
-                    realistic prototype material. Final issues will be uploaded
-                    only after editorial and institutional approval.
+                    Covers, reader links, and PDF files are published only after
+                    editorial and institutional approval. Administrators can
+                    replace these resources without changing this page layout.
                   </p>
                 </div>
               </div>
@@ -183,7 +183,7 @@ export default async function MagazineDetailPage({
                 className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-navy-900 transition-colors hover:border-science-300 hover:bg-science-50"
               >
                 <Icon name="download" className="size-4" />
-                PDF download · Prototype
+                {issue.downloadPdf.label}
               </a>
             </div>
           </aside>

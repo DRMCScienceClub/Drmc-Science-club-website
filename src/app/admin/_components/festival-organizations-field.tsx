@@ -64,6 +64,7 @@ export function FestivalOrganizationsField({
   media: PublishedMediaChoice[];
   errors?: string[];
 }) {
+  const imageMedia = media.filter((asset) => asset.mime_type.startsWith("image/"));
   const [organizations, setOrganizations] = useState(() => initialOrganizations(initialValue));
 
   function update(index: number, changes: Partial<OrganizationValue>) {
@@ -151,7 +152,7 @@ export function FestivalOrganizationsField({
                 <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Choose published logo
                   <select value="" onChange={(event) => chooseMedia(index, event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold">
                     <option value="">Select from media library…</option>
-                    {media.map((asset) => <option key={asset.id} value={asset.id}>{asset.original_name} — {asset.alt_text}</option>)}
+                  {imageMedia.map((asset) => <option key={asset.id} value={asset.id}>{asset.original_name} — {asset.alt_text}</option>)}
                   </select>
                 </label>
                 <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Logo URL

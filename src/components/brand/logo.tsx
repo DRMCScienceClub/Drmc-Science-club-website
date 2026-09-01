@@ -56,9 +56,9 @@ export function Logo({ compact = false, href = "/", inverse = false, className }
     >
       <LogoMark className="transition-transform duration-300 group-hover:scale-[1.03]" />
       {!compact && (
-        <span className="leading-none">
-          <span className={cn("block font-display text-[0.96rem] font-extrabold tracking-[-0.02em] sm:text-base", inverse ? "text-white" : "text-navy-950")}>DRMC Science Club</span>
-          <span className={cn("mt-1 block text-[0.62rem] font-bold uppercase tracking-[0.18em]", inverse ? "text-teal-200" : "text-teal-700")}>Explore · Experiment · Excel</span>
+        <span className="min-w-0 leading-none">
+          <span className={cn("block whitespace-nowrap font-display text-[0.96rem] font-extrabold tracking-[-0.02em] sm:text-base", inverse ? "text-white" : "text-navy-950")}>DRMC Science Club</span>
+          <span className={cn("mt-1.5 block whitespace-nowrap text-[0.55rem] font-extrabold uppercase tracking-[0.105em]", inverse ? "text-teal-200" : "text-teal-700")}>Explore · Experiment · Excel</span>
         </span>
       )}
     </Link>

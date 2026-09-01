@@ -193,7 +193,10 @@ export default async function ActivityDetailPage({ params }: ActivityPageProps) 
                     </li>
                   ))}
                 </ul>
+                {Boolean(activity.organizerContacts?.length) && <div className="mt-5 space-y-3 border-t border-slate-200 pt-5">{activity.organizerContacts?.map((contact, index) => <div key={`${contact.name}-${index}`} className="rounded-xl bg-white p-3 text-sm"><p className="font-extrabold text-navy-950">{contact.name}</p>{contact.role && <p className="mt-1 text-xs font-semibold text-slate-500">{contact.role}</p>}<div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">{contact.email && <a href={`mailto:${contact.email}`} className="font-bold text-science-700 hover:underline">{contact.email}</a>}{contact.phone && <a href={`tel:${contact.phone.replace(/\s/g, "")}`} className="font-bold text-science-700 hover:underline">{contact.phone}</a>}</div></div>)}</div>}
               </section>
+
+              {Boolean(activity.externalLinks?.length) && <section className="surface-card rounded-3xl border border-surface-border p-6 shadow-card"><h2 className="text-sm font-extrabold uppercase tracking-[0.12em] text-navy-950">Related links</h2><div className="mt-4 grid gap-2">{activity.externalLinks?.filter((link) => link.href && link.label).map((link, index) => <ButtonLink key={`${link.href}-${index}`} href={link.href} external={link.external ?? /^https?:\/\//i.test(link.href)} variant="outline" icon="external">{link.label}</ButtonLink>)}</div></section>}
 
               <section className="surface-card rounded-3xl border border-surface-border p-6 shadow-card">
                 <h2 className="text-sm font-extrabold uppercase tracking-[0.12em] text-navy-950">Topics</h2>
