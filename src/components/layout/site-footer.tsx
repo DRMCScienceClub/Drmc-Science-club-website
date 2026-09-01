@@ -35,7 +35,12 @@ export async function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-5 pt-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} DRMC Science Club. A student organization of {siteConfig.college}.</p>
+          <div className="space-y-2">
+            <p>© {new Date().getFullYear()} DRMC Science Club. A student organization of {siteConfig.college}.</p>
+            <p className="text-slate-500">
+              Website designed and developed by <span className="font-bold text-teal-300">Shadab Hasan Khan</span>.
+            </p>
+          </div>
           <div className="flex items-center gap-3">
             {facebook && <a href={facebook.href} target="_blank" rel="noreferrer" aria-label={facebook.label} className="inline-flex size-9 items-center justify-center rounded-lg border border-white/15 text-slate-300 transition-colors hover:border-science-300/50 hover:text-white"><Icon name="facebook" className="size-4" /></a>}
             {instagram && <a href={instagram.href} target="_blank" rel="noreferrer" aria-label={instagram.label} className="inline-flex size-9 items-center justify-center rounded-lg border border-white/15 text-slate-300 transition-colors hover:border-science-300/50 hover:text-white"><Icon name="instagram" className="size-4" /></a>}
