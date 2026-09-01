@@ -454,6 +454,12 @@ export async function saveCmsRecordAction(
     return { ok: false, message: "Contributors can save drafts but cannot publish or archive records." };
   }
 
+  // A draft is editorial work, not the panel currently representing the club.
+  // Keeping this false also avoids colliding with the single active current panel.
+  if (resource.key === "executives" && requestedStatus !== "published") {
+    values.is_current = false;
+  }
+
   const supabase = await createSupabaseServerClient();
   const id = typeof values.id === "string" && values.id ? values.id : null;
   let existingData: Record<string, unknown> = {};
@@ -483,10 +489,20 @@ export async function saveCmsRecordAction(
   let savedId = id;
   if (id) {
     const { error } = await supabase.from(resource.table).update(row).eq("id", id);
-    if (error) return { ok: false, message: `The ${resource.singular} could not be saved: ${error.message}` };
+    if (error) {
+      const message = resource.key === "executives" && error.code === "23505" && Boolean(values.is_current)
+        ? "Another executive panel is already marked as current. Uncheck Current panel, or update the existing current panel first."
+        : `The ${resource.singular} could not be saved: ${error.message}`;
+      return { ok: false, message };
+    }
   } else {
     const { data, error } = await supabase.from(resource.table).insert(row).select("id").single();
-    if (error) return { ok: false, message: `The ${resource.singular} could not be created: ${error.message}` };
+    if (error) {
+      const message = resource.key === "executives" && error.code === "23505" && Boolean(values.is_current)
+        ? "Another executive panel is already marked as current. Save this panel as a draft, or update the existing current panel first."
+        : `The ${resource.singular} could not be created: ${error.message}`;
+      return { ok: false, message };
+    }
     savedId = data.id;
   }
 

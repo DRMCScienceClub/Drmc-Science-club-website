@@ -195,7 +195,7 @@ export function CmsEditorForm({
         </section>
 
         {state.message && (
-          <div role={state.ok ? "status" : "alert"} className={`rounded-xl border px-4 py-3 text-sm font-bold ${state.ok ? "border-teal-200 bg-teal-50 text-teal-800" : "border-red-200 bg-red-50 text-red-900"}`}>{state.message}</div>
+          <div role={state.ok ? "status" : "alert"} className={`rounded-xl border px-4 py-3 text-sm font-bold xl:hidden ${state.ok ? "border-teal-200 bg-teal-50 text-teal-800" : "border-red-200 bg-red-50 text-red-900"}`}>{state.message}</div>
         )}
       </div>
 
@@ -216,6 +216,11 @@ export function CmsEditorForm({
         </section>
 
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card">
+          {state.message && (
+            <div role={state.ok ? "status" : "alert"} className={`mb-4 hidden rounded-xl border px-3.5 py-3 text-xs font-bold leading-5 xl:block ${state.ok ? "border-teal-200 bg-teal-50 text-teal-800" : "border-red-200 bg-red-50 text-red-900"}`}>
+              {state.message}
+            </div>
+          )}
           <button disabled={pending} className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-navy-950 px-5 text-sm font-extrabold text-white transition-colors hover:bg-navy-800 disabled:cursor-wait disabled:bg-slate-400">
             {pending ? "Saving…" : record ? "Save changes" : "Create draft"}
             {!pending && <Icon name="check" className="size-4" />}

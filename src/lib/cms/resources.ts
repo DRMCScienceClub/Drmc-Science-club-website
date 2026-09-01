@@ -230,7 +230,12 @@ export const cmsResources: readonly CmsResource[] = [
       { name: "session_label", label: "Session", type: "text", required: true },
       { name: "starts_year", label: "Starts year", type: "number", required: true },
       { name: "ends_year", label: "Ends year", type: "number", required: true },
-      { name: "is_current", label: "Current panel", type: "checkbox" },
+      {
+        name: "is_current",
+        label: "Current panel",
+        type: "checkbox",
+        help: "Only a published panel can be current. Drafts are saved as non-current until they are published.",
+      },
       advancedDataField,
     ],
   },
