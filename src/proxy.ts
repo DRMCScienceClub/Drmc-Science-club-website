@@ -24,13 +24,10 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (isLogin && isAuthenticated) {
-    const adminUrl = request.nextUrl.clone();
-    adminUrl.pathname = safeReturnPath(request.nextUrl.searchParams.get("returnTo"));
-    adminUrl.search = "";
-    return NextResponse.redirect(adminUrl);
-  }
-
+  // A valid Supabase session does not necessarily belong to an active
+  // administrator. Keep the login route reachable so the server-side login
+  // action can verify the profile and sign out inactive or unauthorized users
+  // instead of bouncing them between /admin and /admin/login.
   return response;
 }
 
