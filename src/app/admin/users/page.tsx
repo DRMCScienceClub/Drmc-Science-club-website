@@ -1,9 +1,11 @@
 import { AdminShell } from "@/app/admin/_components/admin-shell";
 import { AdminPageHeader } from "@/app/admin/_components/admin-page-header";
+import { AdminInviteForm } from "@/app/admin/_components/admin-invite-form";
 import { NotAuthorized } from "@/app/admin/_components/not-authorized";
 import { updateAdminProfileAction } from "@/app/admin/actions";
 import { requireAdmin } from "@/lib/auth";
 import { listAdminProfiles } from "@/lib/cms/admin-repository";
+import { isSupabaseAdminConfigured } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +18,12 @@ export default async function AdminUsersPage() {
     <AdminShell identity={identity} active="users">
       <div className="mx-auto max-w-[1180px]">
         <AdminPageHeader title="Administrators" description="Activate invited Supabase Auth accounts and assign the least privilege required. New accounts are inactive contributors until a super administrator approves them." />
+        <section className="mt-7 rounded-2xl border border-slate-200 bg-white p-5 shadow-card sm:p-6">
+          <h2 className="font-display text-lg font-extrabold text-navy-950">Invite an administrator</h2>
+          <p className="mt-1 text-sm leading-6 text-slate-600">The recipient receives a one-time email link, creates their own password, and signs in with the role selected here.</p>
+          {!isSupabaseAdminConfigured() && <p role="alert" className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-bold text-amber-950">Add the server-only SUPABASE_SERVICE_ROLE_KEY environment variable to enable invitations.</p>}
+          <AdminInviteForm configured={isSupabaseAdminConfigured()} />
+        </section>
         <div className="mt-7 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card">
           <div className="overflow-x-auto"><table className="w-full min-w-[840px] border-collapse text-left">
             <thead><tr className="border-b border-slate-200 bg-slate-50/80 text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-slate-500"><th className="px-6 py-3.5">Account</th><th className="px-4 py-3.5">Display name</th><th className="px-4 py-3.5">Role</th><th className="px-4 py-3.5">Active</th><th className="px-6 py-3.5 text-right">Save</th></tr></thead>

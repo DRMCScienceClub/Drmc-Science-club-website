@@ -47,6 +47,11 @@ telephone, office hours, map URL, and official social profiles from
 `/admin/settings/contact`. Public pages read only the narrowly exposed
 `public_contact` setting and retain reviewed fallback values during setup.
 
+Super administrators can invite additional administrators from `/admin/users`.
+Invitations use the server-only Supabase administrative key, a token-hash email
+confirmation route, an initial password screen, and explicit role activation;
+public account registration remains disabled.
+
 The migration also creates private `cms-staging` and public `cms-public`
 Storage buckets. Unreviewed files belong in staging; only validated and approved
 assets may be promoted to the public bucket. The admin Media Library validates

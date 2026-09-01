@@ -55,10 +55,11 @@ Trusted server scripts additionally need:
 SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
 ```
 
-The service-role key bypasses Row Level Security. It must remain server-only,
-must never receive a `NEXT_PUBLIC_` prefix, and must not be logged, committed,
-or exposed to a browser bundle. Use the deployment platform's encrypted secret
-store outside local development.
+The service-role key bypasses Row Level Security. It is used by the guarded
+first-admin script and the super-admin invitation action. It must remain
+server-only, must never receive a `NEXT_PUBLIC_` prefix, and must not be logged,
+committed, or exposed to a browser bundle. Store it only in `.env.local` and the
+deployment platform's encrypted server environment.
 
 ## 3. Apply migrations
 
@@ -181,6 +182,13 @@ Public registration must remain disabled. In **Authentication → Providers →
 Email**, disable open sign-up. Future administrators should be invited or
 created by authorised club leadership and then activated by a super admin.
 
+After the first super administrator exists, `/admin/users` can send an
+invitation, assign its initial role, and activate the generated profile. The
+recipient follows the one-time email link, creates a password at
+`/auth/set-password`, and then signs in at `/admin/login`. The invitation action
+requires `SUPABASE_SERVICE_ROLE_KEY` and `NEXT_PUBLIC_SITE_URL` in the running
+environment.
+
 For the first account only, set temporary local values:
 
 ```dotenv
@@ -231,17 +239,39 @@ editing normalized festival/panel relationships, or uploading directly into
 the public bucket. Re-test those negative cases with a real contributor session
 after every policy migration; do not rely on the dashboard hiding controls.
 
-## 8. Redirect URLs and MFA
+## 8. Invitation email, redirect URLs and MFA
 
 In **Authentication → URL Configuration** set:
 
 - local site URL: `http://localhost:3000`;
-- local redirect: `http://localhost:3000/auth/callback`;
+- local redirect: `http://localhost:3000/auth/invite`;
 - production site URL: the canonical HTTPS domain; and
-- production redirect: `https://YOUR_DOMAIN/auth/callback`.
+- production redirect: `https://YOUR_DOMAIN/auth/invite`.
 
 Add staging separately. Never use a wildcard broader than the deployment
 provider requires.
+
+The built-in Supabase invitation template works without customization. It
+verifies the invitation at Supabase and returns the one-time session to
+`/auth/invite`; that browser-only compatibility page removes the secret URL
+fragment immediately and redirects to `/auth/set-password`.
+
+After custom SMTP is configured, the more direct server-side token-hash flow is
+also available. In **Authentication → Emails → Invite user**, replace the
+invitation link target with:
+
+```html
+<a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=invite">
+  Accept administrator invitation
+</a>
+```
+
+This production template sends the token directly to the server-side
+verification route. Add local and production `/auth/confirm` URLs to the
+redirect allow list as well. Invitation links expire according to
+**Authentication → Rate Limits → Email OTP Expiration**; send a fresh
+invitation after expiration. Configure production SMTP before relying on
+invitations for operational access and deliverability.
 
 Supabase MFA can be enabled later without bypassing Auth. First add enrolment,
 challenge, recovery, and lost-device procedures; then require Authentication

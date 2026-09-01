@@ -18,7 +18,7 @@ const accessPrinciples = [
 ] as const;
 
 type LoginPageProps = {
-  searchParams: Promise<{ returnTo?: string; setup?: string }>;
+  searchParams: Promise<{ returnTo?: string; setup?: string; invite?: string }>;
 };
 
 function safeReturnPath(value: string | undefined) {
@@ -125,6 +125,17 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
               <div role="status" className="mt-6 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-bold leading-6 text-amber-950">
                 Supabase is not configured in this environment. Add the public
                 project URL and publishable (or anon) key to enable sign-in.
+              </div>
+            )}
+
+            {query.invite === "accepted" && (
+              <div role="status" className="mt-6 rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm font-bold leading-6 text-teal-900">
+                Your password is ready. Sign in to open the administrator workspace.
+              </div>
+            )}
+            {query.invite === "invalid" && (
+              <div role="alert" className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold leading-6 text-red-900">
+                This invitation link is invalid or has expired. Ask a super administrator to send a new invitation.
               </div>
             )}
 

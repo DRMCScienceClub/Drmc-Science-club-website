@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireAdmin, requireRole, type AdminRole } from "@/lib/auth";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getCmsResource, slugify, type CmsResource, type PublicationStatus } from "@/lib/cms/resources";
 import { parseJsonField, validateCmsForm, type CmsFormResult } from "@/lib/cms/validation";
 import { validateMediaBytes } from "@/lib/media/validation";
@@ -35,6 +36,18 @@ export type ContactSettingsFormResult = {
   message?: string;
   fieldErrors?: Record<string, string[]>;
 };
+
+export type InviteAdministratorFormState = {
+  ok?: boolean;
+  message?: string;
+  fieldErrors?: Record<string, string[]>;
+};
+
+const inviteAdministratorSchema = z.object({
+  display_name: z.string().trim().min(2, "Enter the administrator's name.").max(120),
+  email: z.string().trim().toLowerCase().email("Enter a valid email address.").max(254),
+  role: roleSchema,
+});
 
 function nullable(value: unknown) {
   return typeof value === "string" && value.trim() ? value.trim() : null;
@@ -560,6 +573,64 @@ export async function updateAdminProfileAction(formData: FormData) {
   }).eq("id", id);
   if (error) throw new Error(`Administrator profile could not be updated: ${error.message}`);
   revalidatePath("/admin/users");
+}
+
+export async function inviteAdministratorAction(
+  _previous: InviteAdministratorFormState,
+  formData: FormData,
+): Promise<InviteAdministratorFormState> {
+  await requireRole(["super_admin"], "/admin/users");
+  const parsed = inviteAdministratorSchema.safeParse({
+    display_name: formData.get("display_name"),
+    email: formData.get("email"),
+    role: formData.get("role"),
+  });
+  if (!parsed.success) {
+    return {
+      message: "Please correct the invitation details.",
+      fieldErrors: z.flattenError(parsed.error).fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  let confirmationUrl: string;
+  try {
+    if (!siteUrl) throw new Error();
+    confirmationUrl = new URL("/auth/invite", siteUrl).toString();
+  } catch {
+    return { message: "Set NEXT_PUBLIC_SITE_URL to the exact local or production website origin before sending invitations." };
+  }
+
+  let adminClient;
+  try {
+    adminClient = createSupabaseAdminClient();
+  } catch (error) {
+    return { message: error instanceof Error ? error.message : "The invitation service is not configured." };
+  }
+
+  const { data, error } = await adminClient.auth.admin.inviteUserByEmail(parsed.data.email, {
+    data: { full_name: parsed.data.display_name },
+    redirectTo: confirmationUrl,
+  });
+  if (error || !data.user) {
+    const detail = error?.message.toLowerCase().includes("already")
+      ? "That email already has a Supabase Auth account. Update it in the administrator list instead."
+      : `The invitation could not be sent${error?.message ? `: ${error.message}` : "."}`;
+    return { message: detail };
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const { error: profileError } = await supabase.from("profiles").update({
+    display_name: parsed.data.display_name,
+    role: parsed.data.role,
+    is_active: true,
+  }).eq("id", data.user.id);
+  if (profileError) {
+    return { message: `The invitation was sent, but the profile could not be activated: ${profileError.message}. Update the new account in the list below.` };
+  }
+
+  revalidatePath("/admin/users");
+  return { ok: true, message: `Invitation sent to ${parsed.data.email}. The link expires according to the Supabase email OTP setting.` };
 }
 
 export async function savePublicContactSettingsAction(
