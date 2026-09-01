@@ -575,6 +575,44 @@ export async function updateAdminProfileAction(formData: FormData) {
   revalidatePath("/admin/users");
 }
 
+export async function removeAdministratorAccessAction(formData: FormData) {
+  const current = await requireRole(["super_admin"], "/admin/users");
+  const id = String(formData.get("id") ?? "");
+  if (!z.uuid().safeParse(id).success) {
+    throw new Error("Invalid administrator removal request.");
+  }
+  if (id === current.id) {
+    throw new Error("You cannot remove your own super-administrator access.");
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const { data: target, error: targetError } = await supabase
+    .from("profiles")
+    .select("id,is_active")
+    .eq("id", id)
+    .maybeSingle();
+  if (targetError) {
+    throw new Error(`Administrator profile could not be loaded: ${targetError.message}`);
+  }
+  if (!target) {
+    throw new Error("Administrator profile not found.");
+  }
+  if (!target.is_active) {
+    revalidatePath("/admin/users");
+    return;
+  }
+
+  const { error } = await supabase
+    .from("profiles")
+    .update({ is_active: false })
+    .eq("id", id);
+  if (error) {
+    throw new Error(`Administrator access could not be removed: ${error.message}`);
+  }
+
+  revalidatePath("/admin/users");
+}
+
 export async function inviteAdministratorAction(
   _previous: InviteAdministratorFormState,
   formData: FormData,
