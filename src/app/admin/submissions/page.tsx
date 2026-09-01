@@ -38,7 +38,11 @@ export default async function SubmissionsPage({ searchParams }: SubmissionPagePr
           <form className="ml-auto flex gap-2"><input type="hidden" name="kind" value={kind} /><select name="status" defaultValue={query.status ?? ""} className="min-h-10 rounded-xl border border-slate-300 bg-white px-3 text-sm font-bold text-slate-700"><option value="">All states</option>{states.map((state) => <option key={state} value={state}>{state.replace("_", " ")}</option>)}</select><button className="rounded-xl border border-slate-300 bg-white px-4 text-sm font-extrabold text-slate-700">Filter</button></form>
         </div>
 
-        <div className="mt-6 grid gap-4">
+        <div
+          className="mt-6 grid max-h-[92rem] gap-4 overflow-y-auto overscroll-contain pr-1"
+          aria-label={`${kind === "join" ? "Join" : "Contact"} submissions`}
+          tabIndex={records.length > 5 ? 0 : undefined}
+        >
           {records.map((record) => (
             <article key={text(record.id)} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card sm:p-6">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">

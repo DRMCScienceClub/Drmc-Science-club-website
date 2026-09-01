@@ -45,7 +45,11 @@ export default async function MediaPage() {
           <span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-extrabold text-slate-600">{media.length} assets</span>
         </div>
 
-        <div className="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div
+          className="mt-5 grid max-h-[130rem] gap-5 overflow-y-auto overscroll-contain pr-1 sm:max-h-[78rem] sm:grid-cols-2 xl:max-h-[52rem] xl:grid-cols-3"
+          aria-label="Uploaded media assets"
+          tabIndex={media.length > 5 ? 0 : undefined}
+        >
           {media.map((asset) => (
             <article key={asset.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card">
               <div className="relative grid aspect-video place-items-center overflow-hidden bg-slate-100">

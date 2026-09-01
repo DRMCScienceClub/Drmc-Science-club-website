@@ -88,7 +88,11 @@ export default async function ResourceListPage({ params, searchParams }: Resourc
               </div>
               <span className="rounded-full bg-teal-50 px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.1em] text-teal-700">Current first</span>
             </div>
-            <ol className="mt-4 grid gap-2">
+            <ol
+              className="mt-4 grid max-h-[23.5rem] gap-2 overflow-y-auto overscroll-contain pr-1"
+              aria-label="Executive panel session order"
+              tabIndex={panelOrder.length > 5 ? 0 : undefined}
+            >
               {panelOrder.map((panel, index) => {
                 const firstMovableIndex = panelOrder[0]?.is_current ? 1 : 0;
                 return (
@@ -146,9 +150,9 @@ export default async function ResourceListPage({ params, searchParams }: Resourc
             <p className="text-xs font-bold text-slate-500">Page {result.page} of {result.totalPages}</p>
           </div>
           {result.records.length ? (
-            <div className="overflow-x-auto">
+            <div className="max-h-[31rem] overflow-auto overscroll-contain" tabIndex={result.records.length > 5 ? 0 : undefined}>
               <table className="w-full min-w-[820px] border-collapse text-left">
-                <thead><tr className="border-b border-slate-200 bg-slate-50/80 text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-slate-500">
+                <thead className="sticky top-0 z-10"><tr className="border-b border-slate-200 bg-slate-50 text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-slate-500 shadow-[0_1px_0_rgba(15,23,42,0.06)]">
                   <th className="px-6 py-3.5">Title</th><th className="px-4 py-3.5">State</th><th className="px-4 py-3.5">Featured</th><th className="px-4 py-3.5">Updated</th><th className="px-6 py-3.5 text-right">Actions</th>
                 </tr></thead>
                 <tbody>
