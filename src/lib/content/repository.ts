@@ -166,6 +166,20 @@ function executivePanelFromRow(row: ContentRow): ExecutivePanel {
   };
 }
 
+function orderExecutivePanels(panels: ExecutivePanel[]) {
+  return panels.toSorted((first, second) => {
+    const firstOrder = typeof first.displayOrder === "number"
+      ? first.displayOrder
+      : Number.MAX_SAFE_INTEGER;
+    const secondOrder = typeof second.displayOrder === "number"
+      ? second.displayOrder
+      : Number.MAX_SAFE_INTEGER;
+    return firstOrder - secondOrder
+      || second.endYear - first.endYear
+      || second.startYear - first.startYear;
+  });
+}
+
 function notificationFromRow(row: ContentRow): Notice {
   const tone = row.tone;
   const linkUrl = typeof row.link_url === "string" ? row.link_url : "";
@@ -281,8 +295,8 @@ export async function getMagazine(
 }
 
 export async function getExecutivePanels(): Promise<ExecutivePanel[]> {
-  if (!isPublicContentDatabaseConfigured) return [...fallbackExecutivePanels];
-  return (await queryRows("executive_panels")).map(executivePanelFromRow);
+  if (!isPublicContentDatabaseConfigured) return orderExecutivePanels([...fallbackExecutivePanels]);
+  return orderExecutivePanels((await queryRows("executive_panels")).map(executivePanelFromRow));
 }
 
 export async function getNotifications(): Promise<Notice[]> {

@@ -230,6 +230,7 @@ export const cmsResources: readonly CmsResource[] = [
       { name: "session_label", label: "Session", type: "text", required: true },
       { name: "starts_year", label: "Starts year", type: "number", required: true },
       { name: "ends_year", label: "Ends year", type: "number", required: true },
+      { name: "display_order", label: "Display order", type: "number", help: "Use 1 for the first session, 2 for the second, and so on. Sessions without a number appear afterward, newest first." },
       { name: "is_current", label: "Current panel", type: "checkbox" },
       advancedDataField,
     ],

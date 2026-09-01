@@ -231,6 +231,7 @@ export interface ExecutivePanel {
   session: string;
   startYear: number;
   endYear: number;
+  displayOrder?: number;
   isCurrent: boolean;
   recordStatus: "official-document" | "prototype";
   title: string;

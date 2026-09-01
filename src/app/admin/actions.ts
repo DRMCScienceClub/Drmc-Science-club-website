@@ -221,6 +221,7 @@ function publicDataFor(
         session: String(values.session_label ?? `${startsYear}–${endsYear}`),
         startYear: startsYear,
         endYear: endsYear,
+        displayOrder: numberOrNull(values.display_order) ?? (typeof data.displayOrder === "number" ? data.displayOrder : undefined),
         isCurrent: Boolean(values.is_current),
         recordStatus: data.recordStatus ?? "official-document",
         title,

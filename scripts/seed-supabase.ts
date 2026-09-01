@@ -82,11 +82,12 @@ function publicExecutiveMember(member: ExecutiveMember) {
  * future notice-only phone, college-number, shift, or signature fields out of
  * the database even if they are later added to an internal source type.
  */
-function publicExecutivePanel(panel: ExecutivePanel) {
+function publicExecutivePanel(panel: ExecutivePanel, displayOrder: number) {
   return {
     session: panel.session,
     startYear: panel.startYear,
     endYear: panel.endYear,
+    displayOrder,
     isCurrent: panel.isCurrent,
     recordStatus: panel.recordStatus,
     title: panel.title,
@@ -204,8 +205,8 @@ const magazineRows = magazines.map((magazine) => ({
   published_at: null,
 }));
 
-const executivePanelRows = executivePanels.map((panel) => {
-  const publicPanel = publicExecutivePanel(panel);
+const executivePanelRows = executivePanels.map((panel, index) => {
+  const publicPanel = publicExecutivePanel(panel, index + 1);
   assertNoPrivateCommitteeFields(publicPanel);
 
   return {

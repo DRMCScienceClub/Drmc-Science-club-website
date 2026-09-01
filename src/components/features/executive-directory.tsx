@@ -25,7 +25,7 @@ export function ExecutiveDirectory({ panels }: { panels: readonly ExecutivePanel
           <div>
             <p className="text-xs font-extrabold uppercase tracking-[0.13em] text-science-700">Panel directory</p>
             <h2 className="mt-2 font-display text-2xl font-extrabold tracking-tight text-navy-950">Choose a session</h2>
-            <p className="mt-2 text-sm text-slate-600">The current panel is displayed first; select any archived session to explore its team.</p>
+            <p className="mt-2 text-sm text-slate-600">The current panel opens by default; sessions follow the order configured in the CMS.</p>
           </div>
           <div role="group" aria-label="Select executive panel session" className="flex flex-wrap gap-2">
             {panels.map((item) => (
