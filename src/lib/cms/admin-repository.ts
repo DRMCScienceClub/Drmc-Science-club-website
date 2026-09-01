@@ -40,7 +40,7 @@ export type AdminMediaAsset = {
   status: PublicationStatus;
   public_url: string | null;
   preview_url: string | null;
-  uploaded_by: string;
+  uploaded_by: string | null;
   updated_by: string | null;
   created_at: string;
   updated_at: string;

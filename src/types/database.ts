@@ -107,7 +107,7 @@ export type MediaAssetRow = {
   credit: string;
   status: PublicationStatus;
   public_url: string | null;
-  uploaded_by: string;
+  uploaded_by: string | null;
   updated_by: string | null;
   created_at: string;
   updated_at: string;

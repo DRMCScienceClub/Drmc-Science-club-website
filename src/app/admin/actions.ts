@@ -575,7 +575,7 @@ export async function updateAdminProfileAction(formData: FormData) {
   revalidatePath("/admin/users");
 }
 
-export async function removeAdministratorAccessAction(formData: FormData) {
+export async function removeAdministratorAction(formData: FormData) {
   const current = await requireRole(["super_admin"], "/admin/users");
   const id = String(formData.get("id") ?? "");
   if (!z.uuid().safeParse(id).success) {
@@ -588,7 +588,7 @@ export async function removeAdministratorAccessAction(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   const { data: target, error: targetError } = await supabase
     .from("profiles")
-    .select("id,is_active")
+    .select("id,email,display_name,role,is_active")
     .eq("id", id)
     .maybeSingle();
   if (targetError) {
@@ -597,17 +597,34 @@ export async function removeAdministratorAccessAction(formData: FormData) {
   if (!target) {
     throw new Error("Administrator profile not found.");
   }
-  if (!target.is_active) {
-    revalidatePath("/admin/users");
-    return;
+
+  let adminClient;
+  try {
+    adminClient = createSupabaseAdminClient();
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : "The administrator removal service is not configured.",
+    );
   }
 
-  const { error } = await supabase
-    .from("profiles")
-    .update({ is_active: false })
-    .eq("id", id);
-  if (error) {
-    throw new Error(`Administrator access could not be removed: ${error.message}`);
+  const { error: deleteError } = await adminClient.auth.admin.deleteUser(id);
+  if (deleteError) {
+    throw new Error(`Administrator account could not be removed: ${deleteError.message}`);
+  }
+
+  const { error: auditError } = await adminClient.from("audit_logs").insert({
+    actor_id: current.id,
+    actor_email: current.email,
+    action: "remove_administrator",
+    entity_type: "profiles",
+    entity_id: id,
+    before_data: target,
+    after_data: null,
+  });
+  if (auditError) {
+    console.error(`Administrator was removed, but the audit entry failed: ${auditError.message}`);
   }
 
   revalidatePath("/admin/users");
