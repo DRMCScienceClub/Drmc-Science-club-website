@@ -8,13 +8,20 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getCmsResource, slugify, type CmsResource, type PublicationStatus } from "@/lib/cms/resources";
 import { parseJsonField, validateCmsForm, type CmsFormResult } from "@/lib/cms/validation";
-import { validateMediaBytes } from "@/lib/media/validation";
+import { safeOriginalName, validateMediaBytes } from "@/lib/media/validation";
 
 export type { CmsFormResult } from "@/lib/cms/validation";
 
 const statusSchema = z.enum(["draft", "published", "archived"]);
 const submissionStatusSchema = z.enum(["new", "in_review", "resolved", "spam", "archived"]);
 const roleSchema = z.enum(["super_admin", "editor", "contributor"]);
+const mediaMetadataSchema = z.object({
+  id: z.uuid(),
+  original_name: z.string().trim().min(1).max(180),
+  alt_text: z.string().trim().max(240),
+  caption: z.string().trim().max(500),
+  credit: z.string().trim().max(240),
+});
 const publicContactSchema = z.object({
   institution: z.string().trim().min(2).max(160),
   clubName: z.string().trim().min(2).max(160),
@@ -784,5 +791,46 @@ export async function updateMediaStatusAction(formData: FormData) {
     // staging delete policy. The published object and metadata are immutable.
     await supabase.storage.from("cms-staging").remove([asset.object_path]);
   }
+  revalidatePath("/admin/media");
+}
+
+export async function updateMediaMetadataAction(formData: FormData) {
+  const identity = await requireAdmin("/admin/media");
+  const parsed = mediaMetadataSchema.safeParse({
+    id: formData.get("id"),
+    original_name: formData.get("original_name"),
+    alt_text: formData.get("alt_text"),
+    caption: formData.get("caption"),
+    credit: formData.get("credit"),
+  });
+  if (!parsed.success) throw new Error("Enter valid media details within the stated limits.");
+
+  const supabase = await createSupabaseServerClient();
+  const { data: asset, error: readError } = await supabase
+    .from("media_assets")
+    .select("id,bucket,status,mime_type,uploaded_by")
+    .eq("id", parsed.data.id)
+    .single();
+  if (readError) throw new Error(`Media could not be loaded: ${readError.message}`);
+
+  const contributorCanEdit = asset.uploaded_by === identity.id
+    && asset.bucket === "cms-staging"
+    && asset.status === "draft";
+  if (identity.role === "contributor" && !contributorCanEdit) {
+    throw new Error("Contributors can edit only their own unpublished staging uploads.");
+  }
+  if (asset.mime_type.startsWith("image/") && parsed.data.alt_text.length < 3) {
+    throw new Error("Add useful alternative text for this image.");
+  }
+
+  const { error } = await supabase.from("media_assets").update({
+    original_name: safeOriginalName(parsed.data.original_name),
+    alt_text: parsed.data.alt_text,
+    caption: parsed.data.caption,
+    credit: parsed.data.credit,
+    updated_by: identity.id,
+  }).eq("id", parsed.data.id);
+  if (error) throw new Error(`Media details could not be saved: ${error.message}`);
+
   revalidatePath("/admin/media");
 }

@@ -3,7 +3,7 @@ import { AdminShell } from "@/app/admin/_components/admin-shell";
 import { AdminPageHeader } from "@/app/admin/_components/admin-page-header";
 import { CopyMediaUrlButton } from "@/app/admin/_components/copy-media-url-button";
 import { MediaUploadForm } from "@/app/admin/_components/media-upload-form";
-import { updateMediaStatusAction } from "@/app/admin/actions";
+import { updateMediaMetadataAction, updateMediaStatusAction } from "@/app/admin/actions";
 import { Icon } from "@/components/ui/icon";
 import { requireAdmin } from "@/lib/auth";
 import { listMediaAssets } from "@/lib/cms/admin-repository";
@@ -62,6 +62,35 @@ export default async function MediaPage() {
                 <p className="mt-1 text-xs font-semibold text-slate-500">{asset.mime_type} · {Math.ceil(Number(asset.byte_size) / 1024)} KB{asset.width && asset.height ? ` · ${asset.width}×${asset.height}` : ""}</p>
                 <p className="mt-3 min-h-12 text-sm leading-6 text-slate-700">{asset.alt_text || "Alternative text not supplied."}</p>
                 {asset.credit && <p className="mt-2 text-xs font-semibold text-slate-500">Credit: {asset.credit}</p>}
+
+                {(identity.role !== "contributor" || (asset.uploaded_by === identity.id && asset.bucket === "cms-staging" && asset.status === "draft")) && (
+                  <details className="group mt-4 overflow-hidden rounded-xl border border-slate-200">
+                    <summary className="flex min-h-10 cursor-pointer list-none items-center justify-between gap-3 bg-slate-50 px-3.5 text-xs font-extrabold text-navy-900 transition hover:bg-slate-100">
+                      Edit asset details
+                      <span aria-hidden className="text-base text-science-600 transition-transform group-open:rotate-45">+</span>
+                    </summary>
+                    <form action={updateMediaMetadataAction} className="grid gap-3 border-t border-slate-200 p-3.5">
+                      <input type="hidden" name="id" value={asset.id} />
+                      <label className="grid gap-1.5 text-xs font-extrabold text-navy-900">
+                        Display filename
+                        <input name="original_name" required maxLength={180} defaultValue={asset.original_name} className="min-h-10 rounded-lg border border-slate-300 px-3 text-sm font-semibold" />
+                      </label>
+                      <label className="grid gap-1.5 text-xs font-extrabold text-navy-900">
+                        {asset.mime_type.startsWith("image/") ? "Alternative text" : "Document description"}
+                        <textarea name="alt_text" required={asset.mime_type.startsWith("image/")} maxLength={240} rows={3} defaultValue={asset.alt_text} className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold leading-5" />
+                      </label>
+                      <label className="grid gap-1.5 text-xs font-extrabold text-navy-900">
+                        Caption
+                        <textarea name="caption" maxLength={500} rows={3} defaultValue={asset.caption} className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold leading-5" />
+                      </label>
+                      <label className="grid gap-1.5 text-xs font-extrabold text-navy-900">
+                        Credit/source
+                        <input name="credit" maxLength={240} defaultValue={asset.credit} className="min-h-10 rounded-lg border border-slate-300 px-3 text-sm font-semibold" />
+                      </label>
+                      <button className="min-h-10 rounded-lg bg-science-700 px-4 text-xs font-extrabold text-white transition hover:bg-science-800">Save asset details</button>
+                    </form>
+                  </details>
+                )}
 
                 {asset.status === "published" && asset.public_url && (
                   <div className="mt-4 flex flex-wrap gap-2 border-t border-slate-200 pt-4">
