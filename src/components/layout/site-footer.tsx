@@ -17,6 +17,9 @@ export async function SiteFooter() {
             <Logo inverse />
             <p className="mt-5 text-sm leading-7 text-slate-300">{siteConfig.description}</p>
             <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-teal-300">Established {siteConfig.established}</p>
+            <p className="mt-3 text-xs leading-5 text-slate-400">
+              Website designed and developed by <span className="font-bold text-white">Shadab Hasan Khan</span>.
+            </p>
           </div>
 
           <FooterColumn title="Explore" links={footerNavigation.explore} />
@@ -35,12 +38,7 @@ export async function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-5 pt-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-2">
-            <p>© {new Date().getFullYear()} DRMC Science Club. A student organization of {siteConfig.college}.</p>
-            <p className="text-slate-500">
-              Website designed and developed by <span className="font-bold text-teal-300">Shadab Hasan Khan</span>.
-            </p>
-          </div>
+          <p>© {new Date().getFullYear()} DRMC Science Club. A student organization of {siteConfig.college}.</p>
           <div className="flex items-center gap-3">
             {facebook && <a href={facebook.href} target="_blank" rel="noreferrer" aria-label={facebook.label} className="inline-flex size-9 items-center justify-center rounded-lg border border-white/15 text-slate-300 transition-colors hover:border-science-300/50 hover:text-white"><Icon name="facebook" className="size-4" /></a>}
             {instagram && <a href={instagram.href} target="_blank" rel="noreferrer" aria-label={instagram.label} className="inline-flex size-9 items-center justify-center rounded-lg border border-white/15 text-slate-300 transition-colors hover:border-science-300/50 hover:text-white"><Icon name="instagram" className="size-4" /></a>}
