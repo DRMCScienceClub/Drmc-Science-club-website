@@ -1,7 +1,7 @@
 import "server-only";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import type { CmsResource, PublicationStatus } from "@/lib/cms/resources";
+import { publicationStatuses, type CmsResource, type PublicationStatus } from "@/lib/cms/resources";
 
 export type CmsRecord = Record<string, unknown> & {
   id: string;
@@ -50,6 +50,14 @@ export type PublishedMediaChoice = Pick<
   AdminMediaAsset,
   "id" | "original_name" | "mime_type" | "width" | "height" | "alt_text" | "public_url"
 >;
+
+export type MediaListOptions = {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+  status?: string;
+  kind?: string;
+};
 
 function cleanSearch(value: string) {
   return value.replace(/[%_,()]/g, " ").replace(/\s+/g, " ").trim().slice(0, 100);
@@ -216,16 +224,31 @@ export async function listAuditLogs() {
   return data ?? [];
 }
 
-export async function listMediaAssets() {
+export async function listMediaAssets(options: MediaListOptions = {}) {
   const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase
+  const pageSize = Math.min(Math.max(options.pageSize ?? 25, 1), 50);
+  const page = Math.max(options.page ?? 1, 1);
+  const start = (page - 1) * pageSize;
+  let query = supabase
     .from("media_assets")
-    .select("*")
+    .select("*", { count: "exact" });
+
+  const search = cleanSearch(options.search ?? "");
+  if (search) {
+    query = query.or(`original_name.ilike.%${search}%,alt_text.ilike.%${search}%,caption.ilike.%${search}%,credit.ilike.%${search}%`);
+  }
+  if (options.status && publicationStatuses.includes(options.status as PublicationStatus)) {
+    query = query.eq("status", options.status);
+  }
+  if (options.kind === "images") query = query.like("mime_type", "image/%");
+  if (options.kind === "documents") query = query.eq("mime_type", "application/pdf");
+
+  const { data, count, error } = await query
     .order("created_at", { ascending: false })
-    .limit(100);
+    .range(start, start + pageSize - 1);
   if (error) throw new Error(`Unable to load media: ${error.message}`);
   const assets = (data ?? []) as Omit<AdminMediaAsset, "preview_url">[];
-  return Promise.all(assets.map(async (asset): Promise<AdminMediaAsset> => {
+  const records = await Promise.all(assets.map(async (asset): Promise<AdminMediaAsset> => {
     if (asset.bucket === "cms-public") {
       const publicUrl = asset.public_url || supabase.storage
         .from("cms-public")
@@ -238,6 +261,13 @@ export async function listMediaAssets() {
       .createSignedUrl(asset.object_path, 60 * 60);
     return { ...asset, preview_url: signed?.signedUrl ?? null };
   }));
+  return {
+    records,
+    count: count ?? 0,
+    page,
+    pageSize,
+    totalPages: Math.max(1, Math.ceil((count ?? 0) / pageSize)),
+  };
 }
 
 export async function listPublishedMediaChoices(): Promise<PublishedMediaChoice[]> {
