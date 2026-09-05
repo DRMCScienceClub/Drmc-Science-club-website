@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
+import { MediaChoicePicker } from "@/app/admin/_components/media-choice-picker";
 import type { PublishedMediaChoice } from "@/lib/cms/admin-repository";
 
 type OrganizationLogo = {
@@ -86,8 +87,7 @@ export function FestivalOrganizationsField({
     }));
   }
 
-  function chooseMedia(index: number, id: string) {
-    const asset = media.find((item) => item.id === id);
+  function chooseMedia(index: number, asset: PublishedMediaChoice) {
     if (!asset?.public_url) return;
     const organization = organizations[index];
     update(index, {
@@ -149,12 +149,12 @@ export function FestivalOrganizationsField({
                 <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Website URL
                   <input type="url" value={organization.href ?? ""} onChange={(event) => update(index, { href: event.target.value })} placeholder="https://…" className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" />
                 </label>
-                <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Choose published logo
-                  <select value="" onChange={(event) => chooseMedia(index, event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold">
-                    <option value="">Select from media library…</option>
-                  {imageMedia.map((asset) => <option key={asset.id} value={asset.id}>{asset.original_name} — {asset.alt_text}</option>)}
-                  </select>
-                </label>
+                <div className="sm:col-span-2">
+                  <p className="text-xs font-extrabold text-navy-900">Choose published logo</p>
+                  <div className="mt-1.5">
+                    <MediaChoicePicker choices={imageMedia} selectedUrl={organization.logo?.src} onSelect={(asset) => chooseMedia(index, asset)} />
+                  </div>
+                </div>
                 <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Logo URL
                   <input value={organization.logo?.src ?? ""} onChange={(event) => updateLogo(index, { src: event.target.value })} placeholder="Select media above or enter an approved path" className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 font-mono text-xs font-semibold" />
                 </label>

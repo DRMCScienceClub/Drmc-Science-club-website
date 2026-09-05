@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
+import { MediaChoicePicker } from "@/app/admin/_components/media-choice-picker";
 import type { PublishedMediaChoice } from "@/lib/cms/admin-repository";
 import type { CmsResourceKey } from "@/lib/cms/resources";
 
@@ -150,7 +151,17 @@ function ImageEditor({ value, path, update, media }: { value: JsonObject; path: 
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Image URL<input value={src} onChange={(event) => update([...path, "src"], event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 font-mono text-xs font-semibold" /></label>
-        <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Choose published media<select value="" onChange={(event) => { const asset = media.find((item) => item.id === event.target.value); if (!asset?.public_url) return; update(path, { ...value, src: asset.public_url, alt: asset.alt_text, width: asset.width ?? 1600, height: asset.height ?? 900 }); }} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold"><option value="">Select image…</option>{media.filter((asset) => asset.mime_type.startsWith("image/")).map((asset) => <option key={asset.id} value={asset.id}>{asset.original_name} — {asset.alt_text}</option>)}</select></label>
+        <div className="sm:col-span-2">
+          <p className="text-xs font-extrabold text-navy-900">Choose published media</p>
+          <div className="mt-1.5">
+            <MediaChoicePicker
+              choices={media.filter((asset) => asset.mime_type.startsWith("image/"))}
+              selectedUrl={src}
+              placeholder="Select image…"
+              onSelect={(asset) => { if (asset.public_url) update(path, { ...value, src: asset.public_url, alt: asset.alt_text, width: asset.width ?? 1600, height: asset.height ?? 900 }); }}
+            />
+          </div>
+        </div>
         <label className="text-xs font-extrabold text-navy-900 sm:col-span-2">Alternative text<input value={String(value.alt ?? "")} onChange={(event) => update([...path, "alt"], event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" /></label>
         <label className="text-xs font-extrabold text-navy-900">Width<input type="number" min="1" value={Number(value.width ?? 1600)} onChange={(event) => update([...path, "width"], Number(event.target.value))} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" /></label>
         <label className="text-xs font-extrabold text-navy-900">Height<input type="number" min="1" value={Number(value.height ?? 900)} onChange={(event) => update([...path, "height"], Number(event.target.value))} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" /></label>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useActionState, useState } from "react";
 import { saveCmsRecordAction, type CmsFormResult } from "@/app/admin/actions";
 import { FestivalOrganizationsField } from "@/app/admin/_components/festival-organizations-field";
+import { MediaChoicePicker } from "@/app/admin/_components/media-choice-picker";
 import {
   FestivalResultsField,
   FestivalScheduleField,
@@ -83,10 +84,12 @@ function MediaUrlField({ field, record, resource, errors, media }: { field: CmsF
         </div>
         <div className="space-y-2">
           <input id={`cms-media-${field.name}`} name={field.name} type="text" value={url} onChange={(event) => setUrl(event.target.value)} placeholder="https://… or an approved asset path" className="min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 font-mono text-xs font-semibold text-navy-950 shadow-sm" />
-          <select value="" onChange={(event) => { const asset = media.find((item) => item.id === event.target.value); if (asset?.public_url) setUrl(asset.public_url); }} className="min-h-10 w-full rounded-xl border border-slate-300 bg-white px-3 text-xs font-bold text-slate-700">
-            <option value="">Choose published {documentField ? "document" : "image"}…</option>
-            {choices.map((asset) => <option key={asset.id} value={asset.id}>{asset.original_name} — {asset.alt_text}</option>)}
-          </select>
+          <MediaChoicePicker
+            choices={choices}
+            selectedUrl={url}
+            placeholder={`Choose published ${documentField ? "document" : "image"}…`}
+            onSelect={(asset) => { if (asset.public_url) setUrl(asset.public_url); }}
+          />
         </div>
       </div>
       {field.help && <p className="mt-1.5 text-xs leading-5 text-slate-500">{field.help}</p>}
