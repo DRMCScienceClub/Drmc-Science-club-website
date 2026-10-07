@@ -5,6 +5,7 @@ import { Icon, type IconName } from "@/components/ui/icon";
 import { PageHero } from "@/components/ui/page-hero";
 import { ContactSubmissionForm } from "@/app/(public)/_components/public-submission-form";
 import { getPublicContactSettings } from "@/lib/content";
+import { JoinClubSection } from "@/components/features/join-club-section";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -27,7 +28,7 @@ export default async function ContactPage() {
         <Container>
           <div className="grid gap-5 lg:grid-cols-3">
             {contactMethods.map((method) => (
-              <a key={method.label} href={method.href} className="surface-card group rounded-3xl border border-surface-border p-6 shadow-card transition-transform hover:-translate-y-0.5">
+              <a key={method.label} href={method.href} className="surface-card group min-w-0 rounded-3xl border border-surface-border p-6 shadow-card transition-transform hover:-translate-y-0.5">
                 <span className="inline-flex size-11 items-center justify-center rounded-xl bg-science-50 text-science-700"><Icon name={method.icon} /></span>
                 <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.13em] text-slate-500">{method.label}</p>
                 <p className="mt-2 break-words font-display text-lg font-extrabold text-navy-950 group-hover:text-science-700">{method.value}</p>
@@ -51,6 +52,8 @@ export default async function ContactPage() {
           </div>
         </Container>
       </section>
+
+      <JoinClubSection />
 
       <section id="visit" className="site-surface py-16 sm:py-20">
         <Container className="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">

@@ -207,3 +207,9 @@ temporary `INITIAL_ADMIN_*` values after the first administrator is bootstrapped
 and keep `ALLOW_INITIAL_ADMIN_BOOTSTRAP` disabled thereafter.
 
 See [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) for database operations and [PROJECT_PLAN.md](./PROJECT_PLAN.md) for the route architecture and staged production plan.
+
+## Club membership applications
+
+The Contact page and `/join` offer online applications and separate official offline instructions. Active editors and super admins review the private applications under **Membership Applications** in the dashboard. Contributors cannot access them.
+
+Apply the new `202610070006_science_club_applications.sql` migration once before using online applications. See [membership setup and verification](./docs/membership-applications.md) for exact Supabase steps, permissions, routes, and the future blank-form download.

@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/container";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { PageHero } from "@/components/ui/page-hero";
 import { membershipSteps } from "@/data";
-import { JoinSubmissionForm } from "@/app/(public)/_components/public-submission-form";
+import { JoinClubSection } from "@/components/features/join-club-section";
 
 export const metadata: Metadata = {
   title: "Join the Club",
@@ -63,19 +63,7 @@ export default function JoinPage() {
         </Container>
       </section>
 
-      <section className="site-surface py-16 sm:py-20">
-        <Container className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-start">
-          <div className="lg:sticky lg:top-28">
-            <span className="eyebrow">Membership interest</span>
-            <h2 className="mt-4 text-balance font-display text-3xl font-extrabold tracking-tight text-navy-950 sm:text-4xl">Tell us where your curiosity leads.</h2>
-            <p className="mt-5 leading-7 text-slate-600">Current DRMC students can register their interest here. This helps the club plan orientation and understand which programmes students want to explore.</p>
-            <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5"><p className="font-extrabold text-navy-950">Interest form, not automatic admission</p><p className="mt-2 text-sm leading-6 text-slate-600">Membership remains subject to the approved intake process and confirmation by club authorities.</p></div>
-          </div>
-          <div className="surface-card rounded-[2rem] border border-surface-border p-6 shadow-card sm:p-8">
-            <JoinSubmissionForm />
-          </div>
-        </Container>
-      </section>
+      <JoinClubSection />
 
       <section className="science-grid border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
         <Container>
