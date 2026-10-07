@@ -9,6 +9,7 @@ The Contact page and `/join` offer separate online and offline application metho
 3. Ensure Vercel has the existing `NEXT_PUBLIC_SUPABASE_URL`, public Supabase key, and **server-only** `SUPABASE_SERVICE_ROLE_KEY`. Never prefix the service key with `NEXT_PUBLIC_`.
 4. Deploy the code. If environment variables changed, redeploy after saving them.
 5. Submit one clearly identified test application at `/contact#apply-online`. Verify the reference appears and the application appears at `/admin/applications`. Change its status and private notes, and confirm the reviewer and review time update.
+6. To enable deletion, open a **new query** in Supabase SQL Editor, paste `supabase/migrations/202610070007_application_deletion.sql`, and run it once. Do not rerun migration 006. Redeploy the updated site code afterward.
 
 This migration adds `science_club_applications`, its indexes, two reviewer RLS policies, a review-attribution trigger, and a service-role-only submission function. It does not change or delete existing student data.
 
@@ -16,6 +17,7 @@ This migration adds `science_club_applications`, its indexes, two reviewer RLS p
 
 - Public visitors submit through a validated Next.js Server Action. They cannot invoke the database submission function directly, or read, insert, update, or delete application rows.
 - Active editors and super admins can list/read applications and update only `status` and `admin_notes`. This matches existing private-submission permissions.
+- Only active super admins can permanently delete applications, after a confirmation prompt. The dedicated deletion migration adds a database RLS policy as well as the server-side role check. Existing Contact and legacy Join submissions already have super-admin-only removal on `/admin/submissions`.
 - Contributors, inactive admins, and users without admin profiles cannot read or review applications. Both server authorization and database RLS enforce this.
 - Review author and time are set by the database. Review names are retained if an administrator is later removed.
 - Public responses contain a random `SC-` reference, not database IDs or private notes.

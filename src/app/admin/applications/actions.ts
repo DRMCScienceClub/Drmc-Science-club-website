@@ -1,6 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { z } from "zod";
 import { requireRole } from "@/lib/auth";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { listApplications, type ApplicationList } from "@/lib/membership/repository";
@@ -20,4 +22,23 @@ export async function reviewApplication(_state: { message?: string; success?: bo
   revalidatePath("/admin/applications");
   revalidatePath(`/admin/applications/${parsed.data.id}`);
   return { success: true, message: "Application review saved." };
+}
+
+export async function deleteApplication(_state: { message?: string }, form: FormData): Promise<{ message?: string }> {
+  await requireRole(["super_admin"], "/admin/applications");
+  const id = z.uuid().safeParse(form.get("id"));
+  if (!id.success) return { message: "Invalid application. Refresh the page and try again." };
+
+  const client = await createSupabaseServerClient();
+  const { data, error } = await client.from("science_club_applications")
+    .delete()
+    .eq("id", id.data)
+    .select("id")
+    .maybeSingle();
+  if (error) return { message: "The application could not be deleted. Check that the application deletion migration has been applied." };
+  if (!data) return { message: "This application no longer exists." };
+
+  revalidatePath("/admin/applications");
+  revalidatePath(`/admin/applications/${id.data}`);
+  redirect("/admin/applications?deleted=1");
 }
