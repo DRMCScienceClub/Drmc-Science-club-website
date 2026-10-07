@@ -25,7 +25,7 @@ export function ActivityCard({ activity, featured = false }: { activity: Activit
         />
         <div className="absolute left-4 top-4"><StatusBadge tone={activity.status === "upcoming" ? "teal" : "slate"}>{activity.status}</StatusBadge></div>
       </Link>
-      <div className={cn("flex flex-col p-6", featured && "justify-center sm:p-8")}>
+      <div className={cn("flex flex-col p-5 sm:p-6", featured && "justify-center sm:p-8")}>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold text-slate-500">
           <span className="text-science-700">{activity.category}</span>
           <span className="inline-flex items-center gap-1.5"><Icon name="calendar" className="size-3.5" />{activity.dateLabel}</span>

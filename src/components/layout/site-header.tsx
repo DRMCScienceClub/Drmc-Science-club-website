@@ -60,8 +60,8 @@ export function SiteHeader() {
         </button>
       </div>
 
-      <div id="mobile-navigation" hidden={!open} className="mobile-menu-enter border-t border-paper-200 bg-paper-50 xl:hidden">
-        <nav aria-label="Mobile navigation" className="mx-auto grid max-w-[1240px] gap-1 px-5 py-5 sm:px-7 lg:px-10">
+      <div id="mobile-navigation" hidden={!open} className="mobile-menu-enter max-sm:max-h-[calc(100dvh-4.75rem)] max-sm:overflow-y-auto max-sm:overscroll-contain border-t border-paper-200 bg-paper-50 xl:hidden">
+        <nav aria-label="Mobile navigation" className="mx-auto grid max-w-[1240px] gap-1 px-5 py-3 sm:px-7 sm:py-5 lg:px-10">
           {standardNavigation.map((item) => (
             <Link
               key={item.href}

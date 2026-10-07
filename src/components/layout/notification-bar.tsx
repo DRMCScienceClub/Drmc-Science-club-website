@@ -12,7 +12,7 @@ export type SiteNotice = {
 export function NotificationBar({ notice }: { notice: SiteNotice }) {
   return (
     <div className="border-b border-white/10 bg-navy-950 text-white">
-      <Container className="flex min-h-10 items-center justify-center gap-2 py-2 text-center text-xs sm:text-sm">
+      <Container className="flex min-h-10 flex-wrap items-center justify-center gap-x-2 gap-y-0.5 py-2 text-center text-xs sm:flex-nowrap sm:text-sm">
         <span className="hidden rounded-full bg-gold-300 px-2.5 py-0.5 text-[0.65rem] font-black uppercase tracking-wider text-navy-950 sm:inline">{notice.label}</span>
         <span className="text-slate-200">{notice.message}</span>
         {notice.href && notice.action && (

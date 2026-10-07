@@ -50,7 +50,7 @@ export function FestivalCard({
           </>
         )}
       </Link>
-      <div className="p-6">
+      <div className="p-5 sm:p-6">
         {isArchivePoster && (
           <StatusBadge tone="slate">Poster archive</StatusBadge>
         )}

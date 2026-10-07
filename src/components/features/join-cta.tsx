@@ -4,9 +4,9 @@ import { Icon } from "@/components/ui/icon";
 
 export function JoinCta() {
   return (
-    <section className="bg-paper-100 py-16 sm:py-20">
+    <section className="bg-paper-100 py-12 sm:py-20">
       <Container>
-        <div data-reveal="scale" className="dark-canvas relative overflow-hidden rounded-[2rem] px-6 py-12 shadow-soft sm:px-10 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:px-14 lg:py-14">
+        <div data-reveal="scale" className="dark-canvas relative overflow-hidden rounded-[2rem] px-5 py-9 shadow-soft sm:px-10 sm:py-12 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:px-14 lg:py-14">
           <div aria-hidden="true" className="absolute -right-12 -top-12 size-52 rounded-full border border-gold-300/25" />
           <div aria-hidden="true" className="absolute -bottom-20 right-28 size-48 rounded-full border border-teal-300/20" />
           <div aria-hidden="true" className="absolute left-[46%] top-8 size-20 rounded-full border border-violet-300/15" />

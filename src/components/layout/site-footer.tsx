@@ -11,8 +11,8 @@ export async function SiteFooter() {
   const instagram = contact.socialLinks.find((item) => item.platform === "Instagram");
   return (
     <footer className="dark-canvas text-white">
-      <Container className="py-14 sm:py-16">
-        <div className="grid gap-12 border-b border-white/10 pb-12 sm:grid-cols-2 lg:grid-cols-[1.35fr_.7fr_.7fr_1fr]">
+      <Container className="py-10 sm:py-16">
+        <div className="grid gap-8 border-b border-white/10 pb-10 sm:grid-cols-2 sm:gap-12 sm:pb-12 lg:grid-cols-[1.35fr_.7fr_.7fr_1fr]">
           <div className="max-w-sm">
             <Logo inverse />
             <p className="mt-5 text-sm leading-7 text-slate-300">{siteConfig.description}</p>

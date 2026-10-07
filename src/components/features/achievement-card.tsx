@@ -32,7 +32,7 @@ export function AchievementCard({ achievement }: { achievement: Achievement & { 
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col p-6">
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
         <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-teal-700">
           {achievement.award}
         </p>

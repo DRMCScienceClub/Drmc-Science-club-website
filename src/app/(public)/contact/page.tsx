@@ -24,7 +24,7 @@ export default async function ContactPage() {
     <main>
       <PageHero eyebrow="Contact" title="Let’s talk science." description="Reach the club for festival coordination, institutional invitations, publication questions, or information about student programmes." icon="mail" />
 
-      <section className="site-surface py-16 sm:py-20">
+      <section className="site-surface py-12 sm:py-20">
         <Container>
           <div className="grid gap-5 lg:grid-cols-3">
             {contactMethods.map((method) => (
@@ -39,7 +39,7 @@ export default async function ContactPage() {
         </Container>
       </section>
 
-      <section className="science-grid border-y border-slate-200 bg-slate-50 py-16 sm:py-20">
+      <section className="science-grid border-y border-slate-200 bg-slate-50 py-12 sm:py-20">
         <Container className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-start">
           <div className="lg:sticky lg:top-28">
             <span className="eyebrow">Send an enquiry</span>
@@ -55,7 +55,7 @@ export default async function ContactPage() {
 
       <JoinClubSection />
 
-      <section id="visit" className="site-surface py-16 sm:py-20">
+      <section id="visit" className="site-surface py-12 sm:py-20">
         <Container className="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
           <div className="relative min-h-[390px] overflow-hidden rounded-[2rem] bg-navy-950 p-7 text-white shadow-soft sm:p-10">
             <div aria-hidden="true" className="absolute inset-0 science-grid-dark opacity-70" />
@@ -90,7 +90,7 @@ export default async function ContactPage() {
         </Container>
       </section>
 
-      <section className="site-surface py-14">
+      <section className="site-surface py-12 sm:py-14">
         <Container className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-science-700">Social channels</p><h2 className="mt-2 text-2xl font-extrabold text-navy-950">Updates, photographs, and announcements.</h2></div>
           <div className="flex flex-wrap gap-3">
