@@ -1,6 +1,6 @@
 # DRMC Science Club Website
 
-The official website for **Dhaka Residential Model College Science Club (DRMCSC)**. The approved Phase 1 public experience combines the club's supplied artwork and official records with a responsive information architecture and reusable design system. Phase 2 adds the Supabase CMS foundation, protected administration workflow, content import tooling, and operational documentation without replacing that public design.
+The official website for *Dhaka Residential Model College Science Club (DRMCSC)*. The approved Phase 1 public experience combines the club's supplied artwork and official records with a responsive information architecture and reusable design system. Phase 2 adds the Supabase CMS foundation, protected administration workflow, content import tooling, and operational documentation without replacing that public design.
 
 Public visitors never need an account. Administrator access is invitation-only; there is no public registration flow.
 
@@ -213,3 +213,5 @@ See [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) for database operations and [PROJEC
 The Contact page and `/join` offer online applications and separate official offline instructions. Active editors and super admins review the private applications under **Membership Applications** in the dashboard. Contributors cannot access them.
 
 Apply the new `202610070006_science_club_applications.sql` migration once before using online applications. See [membership setup and verification](./docs/membership-applications.md) for exact Supabase steps, permissions, routes, and the future blank-form download.
+
+
