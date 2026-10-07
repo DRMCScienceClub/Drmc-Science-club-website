@@ -63,13 +63,13 @@ export default async function HomePage() {
     <main>
       <section className="home-hero-motion dark-canvas relative overflow-hidden">
         <HeroBackdrop />
-        <Container className="relative grid items-center gap-8 py-12 sm:min-h-[720px] sm:gap-12 sm:py-24 lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,.92fr)] lg:gap-14 lg:py-28 xl:gap-20">
-          <div className="relative z-10 text-left">
-            <div data-reveal="from-top" data-reveal-delay="1" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-gold-100 backdrop-blur-md">
+        <Container className="relative grid items-center gap-12 py-12 max-sm:grid-cols-[minmax(0,1fr)_clamp(5.5rem,25vw,7rem)] max-sm:gap-x-3 max-sm:gap-y-5 sm:min-h-[720px] sm:py-24 lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,.92fr)] lg:gap-14 lg:py-28 xl:gap-20">
+          <div className="relative z-10 text-left max-sm:contents">
+            <div data-reveal="from-top" data-reveal-delay="1" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-gold-100 backdrop-blur-md max-sm:col-span-2 max-sm:justify-self-start">
               <span className="size-1.5 rounded-full bg-gold-300 shadow-[0_0_14px_rgba(229,191,98,.65)]" />
               The science community of DRMC
             </div>
-            <h1 className="hero-title-stage mt-5 max-w-3xl text-balance font-display text-[clamp(2.45rem,11vw,3.1rem)] font-black leading-[1.04] tracking-[-0.055em] text-white sm:mt-7 sm:text-6xl sm:leading-[1.01] sm:tracking-[-0.06em] lg:text-[4.25rem] xl:text-[4.9rem]">
+            <h1 className="hero-title-stage mt-0 max-w-3xl text-balance font-display text-[clamp(1.8rem,8vw,2.25rem)] font-black leading-[1.04] tracking-[-0.055em] text-white max-sm:col-start-1 max-sm:row-start-2 sm:mt-7 sm:text-6xl sm:leading-[1.01] sm:tracking-[-0.06em] lg:text-[4.25rem] xl:text-[4.9rem]">
               <span className="block overflow-hidden pb-2">
                 <span data-reveal="hero-title" data-reveal-delay="2" className="block">Ask better questions.</span>
               </span>
@@ -77,22 +77,22 @@ export default async function HomePage() {
                 <span data-reveal="hero-title" data-reveal-delay="3" className="accent-text block">Build what&apos;s next.</span>
               </span>
             </h1>
-            <p data-reveal="up" data-reveal-delay="4" className="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+            <p data-reveal="up" data-reveal-delay="4" className="mt-0 max-w-2xl text-base leading-8 text-slate-300 max-sm:col-span-2 sm:mt-6 sm:text-lg">
               We bring young scientists together to experiment, engineer, observe, and share ideas that matter—from our campus to communities across Bangladesh.
             </p>
-            <div data-reveal="scale" data-reveal-delay="5" className="mt-9 flex w-full max-w-md flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row">
+            <div data-reveal="scale" data-reveal-delay="5" className="mt-0 flex w-full max-w-md flex-col gap-3 max-sm:col-span-2 sm:mt-9 sm:w-auto sm:max-w-none sm:flex-row">
               <ButtonLink href="/join" variant="secondary">Join the Club</ButtonLink>
               <ButtonLink href="/activities" variant="light">Explore our work</ButtonLink>
             </div>
-            <dl data-reveal="up" data-reveal-delay="6" className="glass-panel mt-8 grid w-full max-w-3xl grid-cols-3 overflow-hidden rounded-2xl text-center sm:mt-11 sm:text-left">
+            <dl data-reveal="up" data-reveal-delay="6" className="glass-panel mt-1 grid w-full max-w-3xl grid-cols-3 overflow-hidden rounded-2xl text-center max-sm:col-span-2 sm:mt-11 sm:text-left">
               <div className="border-r border-white/10 px-1 py-3 sm:px-6 sm:py-5"><dt className="text-[0.6rem] font-extrabold uppercase tracking-[0.05em] text-slate-400 sm:text-[0.65rem] sm:tracking-[0.14em]">Established</dt><dd className="mt-1 font-display text-xl font-black text-white sm:text-2xl">{siteConfig.established}</dd></div>
               <div className="border-r border-white/10 px-1 py-3 sm:px-6 sm:py-5"><dt className="text-[0.6rem] font-extrabold uppercase tracking-[0.05em] text-slate-400 sm:text-[0.65rem] sm:tracking-[0.14em]">Festival edition</dt><dd className="mt-1 font-display text-xl font-black text-teal-200 sm:text-2xl">{festival?.edition.split(" ")[0] ?? "—"}</dd></div>
               <div className="px-1 py-3 sm:px-6 sm:py-5"><dt className="text-[0.6rem] font-extrabold uppercase tracking-[0.05em] text-slate-400 sm:text-[0.65rem] sm:tracking-[0.14em]">Aurora volume</dt><dd className="mt-1 font-display text-xl font-black text-gold-200 sm:text-2xl">{magazine?.volume.replace("Volume ", "") ?? "—"}</dd></div>
             </dl>
           </div>
 
-          <div data-reveal="scale" data-reveal-delay="3" className="relative mx-auto w-full max-w-[18rem] sm:max-w-[31rem] lg:mx-0 lg:max-w-[36rem] lg:justify-self-end">
-            <div aria-hidden="true" className="absolute -inset-5 rounded-[3rem] border border-dashed border-teal-300/15 sm:-inset-7" />
+          <div data-reveal="scale" data-reveal-delay="3" className="relative w-full max-sm:col-start-2 max-sm:row-start-2 max-sm:self-center sm:mx-auto sm:max-w-[31rem] lg:mx-0 lg:max-w-[36rem] lg:justify-self-end">
+            <div aria-hidden="true" className="absolute -inset-5 hidden rounded-[3rem] border border-dashed border-teal-300/15 sm:block sm:-inset-7" />
             <div className="glass-panel relative overflow-hidden rounded-[1.75rem] p-3 shadow-2xl shadow-black/25 sm:rounded-[2.5rem] sm:p-7 lg:p-8">
               <span aria-hidden="true" className="absolute -right-16 -top-20 size-56 rounded-full bg-science-400/10 blur-3xl" />
               <span aria-hidden="true" className="absolute -bottom-20 -left-16 size-52 rounded-full bg-teal-300/10 blur-3xl" />
