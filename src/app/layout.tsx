@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site";
+import { ThemeScript } from "@/components/theme/theme-script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -37,7 +38,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head><ThemeScript /></head>
       <body>{children}</body>
     </html>
   );

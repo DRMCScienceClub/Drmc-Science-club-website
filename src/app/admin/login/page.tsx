@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
 import { Icon } from "@/components/ui/icon";
 import { LoginForm } from "@/app/admin/login/login-form";
+import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export const metadata: Metadata = {
@@ -99,16 +100,11 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
         >
           <div className="mb-9 flex items-center justify-between gap-4 lg:hidden">
             <Logo compact />
-            <Link
-              href="/"
-              className="inline-flex min-h-10 items-center gap-2 rounded-xl px-3 text-xs font-extrabold text-science-700 transition-colors hover:bg-science-50"
-            >
-              Public site
-              <Icon name="external" className="size-3.5" />
-            </Link>
+            <div className="flex items-center gap-2"><ThemeSwitcher compact /><Link href="/" className="inline-flex min-h-10 items-center gap-2 rounded-xl px-3 text-xs font-extrabold text-science-700 transition-colors hover:bg-science-50">Public site<Icon name="external" className="size-3.5" /></Link></div>
           </div>
 
           <div className="mx-auto w-full max-w-md">
+            <div className="mb-6 hidden justify-end lg:flex"><ThemeSwitcher /></div>
             <p className="eyebrow">Restricted area</p>
             <h1
               id="login-heading"

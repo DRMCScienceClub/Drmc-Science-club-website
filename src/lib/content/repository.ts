@@ -54,6 +54,8 @@ export const isPublicContentDatabaseConfigured = Boolean(
   supabaseUrl && supabaseKey,
 );
 
+const shouldUseStaticFallback = !isPublicContentDatabaseConfigured;
+
 function imageWithSource(
   image: ContentImage | undefined,
   src: string | null,
@@ -224,71 +226,90 @@ function fallbackAchievement(record: Achievement): PublicAchievement {
   };
 }
 
+async function readPublishedRows(
+  table: ContentTable,
+  filters?: Record<string, string>,
+): Promise<ContentRow[] | undefined> {
+  try {
+    return await queryRows(table, filters);
+  } catch {
+    // Public pages keep their reviewed local records available during a temporary
+    // published-content outage. CMS writes and administrative reads are separate.
+    return undefined;
+  }
+}
+
 export async function getFestivals(): Promise<Festival[]> {
-  if (!isPublicContentDatabaseConfigured) return [...fallbackFestivals];
-  return (await queryRows("festivals")).map(festivalFromRow);
+  if (shouldUseStaticFallback) return [...fallbackFestivals];
+  const rows = await readPublishedRows("festivals");
+  return rows ? rows.map(festivalFromRow) : [...fallbackFestivals];
 }
 
 export async function getFestival(slug: string): Promise<Festival | undefined> {
-  if (!isPublicContentDatabaseConfigured) {
+  if (shouldUseStaticFallback) {
     return fallbackFestivals.find((record) => record.slug === slug);
   }
-  return (await queryRows("festivals", { slug: `eq.${slug}`, limit: "1" }))
-    .map(festivalFromRow)
-    .at(0);
+  const rows = await readPublishedRows("festivals", { slug: `eq.${slug}`, limit: "1" });
+  return rows?.map(festivalFromRow).at(0)
+    ?? fallbackFestivals.find((record) => record.slug === slug);
 }
 
 export async function getActivities(): Promise<Activity[]> {
-  if (!isPublicContentDatabaseConfigured) return [...fallbackActivities];
-  return (await queryRows("activities")).map(activityFromRow);
+  if (shouldUseStaticFallback) return [...fallbackActivities];
+  const rows = await readPublishedRows("activities");
+  return rows ? rows.map(activityFromRow) : [...fallbackActivities];
 }
 
 export async function getActivity(slug: string): Promise<Activity | undefined> {
-  if (!isPublicContentDatabaseConfigured) {
+  if (shouldUseStaticFallback) {
     return fallbackActivities.find((record) => record.slug === slug);
   }
-  return (await queryRows("activities", { slug: `eq.${slug}`, limit: "1" }))
-    .map(activityFromRow)
-    .at(0);
+  const rows = await readPublishedRows("activities", { slug: `eq.${slug}`, limit: "1" });
+  return rows?.map(activityFromRow).at(0)
+    ?? fallbackActivities.find((record) => record.slug === slug);
 }
 
 export async function getAchievements(): Promise<PublicAchievement[]> {
-  if (!isPublicContentDatabaseConfigured) {
+  if (shouldUseStaticFallback) {
     return fallbackAchievements.map(fallbackAchievement);
   }
-  return (await queryRows("achievements")).map(achievementFromRow);
+  const rows = await readPublishedRows("achievements");
+  return rows
+    ? rows.map(achievementFromRow)
+    : fallbackAchievements.map(fallbackAchievement);
 }
 
 export async function getAchievement(
   slug: string,
 ): Promise<PublicAchievement | undefined> {
-  if (!isPublicContentDatabaseConfigured) {
+  if (shouldUseStaticFallback) {
     return fallbackAchievements
       .map(fallbackAchievement)
       .find((record) => record.slug === slug);
   }
-  return (await queryRows("achievements", { slug: `eq.${slug}`, limit: "1" }))
-    .map(achievementFromRow)
-    .at(0);
+  const rows = await readPublishedRows("achievements", { slug: `eq.${slug}`, limit: "1" });
+  return rows?.map(achievementFromRow).at(0)
+    ?? fallbackAchievements.map(fallbackAchievement).find((record) => record.slug === slug);
 }
 
 export async function getMagazines(): Promise<MagazineIssue[]> {
-  if (!isPublicContentDatabaseConfigured) return [...fallbackMagazines];
-  return (await queryRows("magazines")).map(magazineFromRow);
+  if (shouldUseStaticFallback) return [...fallbackMagazines];
+  const rows = await readPublishedRows("magazines");
+  return rows ? rows.map(magazineFromRow) : [...fallbackMagazines];
 }
 
 export async function getMagazine(
   identifier: string | number,
 ): Promise<MagazineIssue | undefined> {
-  if (!isPublicContentDatabaseConfigured) {
+  if (shouldUseStaticFallback) {
     return fallbackMagazines.find(
       (record) =>
         record.slug === String(identifier) || record.year === Number(identifier),
     );
   }
-  const records = await queryRows("magazines");
+  const rows = await readPublishedRows("magazines");
+  const records = rows ? rows.map(magazineFromRow) : fallbackMagazines;
   return records
-    .map(magazineFromRow)
     .find(
       (record) =>
         record.slug === String(identifier) || record.year === Number(identifier),
@@ -296,13 +317,15 @@ export async function getMagazine(
 }
 
 export async function getExecutivePanels(): Promise<ExecutivePanel[]> {
-  if (!isPublicContentDatabaseConfigured) return orderExecutivePanels([...fallbackExecutivePanels]);
-  return orderExecutivePanels((await queryRows("executive_panels")).map(executivePanelFromRow));
+  if (shouldUseStaticFallback) return orderExecutivePanels([...fallbackExecutivePanels]);
+  const rows = await readPublishedRows("executive_panels");
+  return orderExecutivePanels(rows ? rows.map(executivePanelFromRow) : [...fallbackExecutivePanels]);
 }
 
 export async function getNotifications(): Promise<Notice[]> {
-  if (!isPublicContentDatabaseConfigured) return [];
-  return (await queryRows("notifications")).map(notificationFromRow);
+  if (shouldUseStaticFallback) return [];
+  const rows = await readPublishedRows("notifications");
+  return rows ? rows.map(notificationFromRow) : [];
 }
 
 export function getActiveNotification(

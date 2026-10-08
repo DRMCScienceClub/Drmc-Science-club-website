@@ -5,6 +5,9 @@ import { MotionController } from "@/components/ui/motion-controller";
 import { getActiveNotification, getNotifications } from "@/lib/content";
 
 export const revalidate = 300;
+// Published CMS records are read at request time. This keeps public pages live
+// while avoiding a build-time dependency on the external Supabase API.
+export const dynamic = "force-dynamic";
 
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {
   const notices = await getNotifications();

@@ -7,6 +7,7 @@ import { Logo } from "@/components/brand/logo";
 import { Icon } from "@/components/ui/icon";
 import { primaryNavigation } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 
 const standardNavigation = primaryNavigation.filter((item) => !item.highlighted);
 const highlightedNavigation = primaryNavigation.find((item) => item.highlighted);
@@ -46,6 +47,7 @@ export function SiteHeader() {
               <Icon name="arrow-right" className="size-4" />
             </Link>
           )}
+          <ThemeSwitcher className="ml-3" />
         </nav>
 
         <button
@@ -83,6 +85,7 @@ export function SiteHeader() {
               <Icon name="arrow-right" className="size-4" />
             </Link>
           )}
+          <div className="mt-3 border-t border-paper-200 pt-4"><p className="mb-2 text-xs font-extrabold uppercase tracking-[0.12em] text-slate-500">Appearance</p><ThemeSwitcher /></div>
         </nav>
       </div>
     </header>

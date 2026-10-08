@@ -3,6 +3,7 @@ import { Logo } from "@/components/brand/logo";
 import { Icon, type IconName } from "@/components/ui/icon";
 import type { AdminIdentity } from "@/lib/auth";
 import { logoutAction } from "@/app/admin/_components/logout-action";
+import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 
 const adminNav: ReadonlyArray<{
   label: string;
@@ -85,9 +86,13 @@ export function AdminShell({
       <header className="border-b border-slate-200 bg-white lg:hidden">
         <div className="flex min-h-20 items-center justify-between gap-4 px-4 sm:px-6">
           <Logo compact />
-          <div className="text-right">
+          <div className="flex items-center gap-3 text-right">
+            <ThemeSwitcher compact className="sm:hidden" />
+            <ThemeSwitcher className="hidden sm:flex" />
+            <div>
             <span className="block text-[0.65rem] font-extrabold uppercase tracking-[0.16em] text-science-700">Admin workspace</span>
             <span className="mt-0.5 block max-w-48 truncate text-xs font-semibold text-slate-500">{displayName}</span>
+            </div>
           </div>
         </div>
         <div className="overflow-x-auto"><AdminNavigation active={active} identity={identity} mobile /></div>
@@ -108,6 +113,7 @@ export function AdminShell({
           </div>
 
           <div className="mt-auto space-y-3 pt-8">
+            <ThemeSwitcher />
             <Link href="/" className="flex min-h-11 items-center justify-between rounded-xl border border-white/15 px-4 text-sm font-bold text-white transition-colors hover:bg-white/10">
               Public website
               <Icon name="external" className="size-4 text-science-300" />

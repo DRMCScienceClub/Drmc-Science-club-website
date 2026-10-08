@@ -163,6 +163,12 @@ The light interface is built around a pale teal page canvas rather than flat whi
 
 Public routes are wrapped by a shared transition boundary and progressive motion controller. Hero entrances, scroll reveals, subtle parallax, and the responsive menu use CSS animation or the Web Animations API without changing React-owned server markup before hydration. Content therefore remains visible without JavaScript, keyboard focus settles animated content immediately, detached animations are cleaned up, and `prefers-reduced-motion` removes non-essential movement.
 
+## Theme system
+
+The website supports Light, Dark, and System colour modes. The switcher appears in public navigation and the administrator workspace. A document-head script applies the saved preference before the page paints, while System follows the visitor’s operating-system preference and updates when it changes.
+
+Theme values live in `src/app/globals.css`. Adjust the `--theme-*` variables and the `html.theme-dark` rules there to refine shared page surfaces, borders, text, and focus colours. The existing Tailwind palette remains the source for DRMC identity accents; dark-mode overrides preserve the established content and CMS UI without changing data or Supabase logic.
+
 ## Supplied and verified content assets
 
 The shared `LogoMark` uses the newly supplied 4320-pixel transparent DRMC Science Club artwork, normalized without resizing or altering its visible pixels at `public/images/brand/drmc-science-club-logo.png`. It is statically imported so Next.js gives each revision a content-hashed URL, then delivered at the explicitly enabled 100-quality setting to avoid stale or visibly compressed brand artwork. The multi-size browser favicon and `/icon.png` are generated directly from that transparent source and retain a transparent canvas. The corresponding original high-resolution light-background source is retained byte-for-byte at `public/images/brand/drmc-science-club-logo.jpeg` and supplies the Apple touch icon and 192/512-pixel installable-app icons. The home hero uses a responsive editorial split—message and actions first on the left, prominent club mark on the right at desktop widths, and text before artwork on smaller screens. The real logo remains isolated behind reusable brand components so a later approved variant can be adopted without changing page layouts.
@@ -213,5 +219,3 @@ See [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) for database operations and [PROJEC
 The Contact page and `/join` offer online applications and separate official offline instructions. Active editors and super admins review the private applications under **Membership Applications** in the dashboard. Contributors cannot access them.
 
 Apply the new `202610070006_science_club_applications.sql` migration once before using online applications. See [membership setup and verification](./docs/membership-applications.md) for exact Supabase steps, permissions, routes, and the future blank-form download.
-
-

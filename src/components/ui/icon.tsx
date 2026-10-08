@@ -21,11 +21,14 @@ export type IconName =
   | "location"
   | "mail"
   | "menu"
+  | "monitor"
   | "microscope"
+  | "moon"
   | "phone"
   | "rocket"
   | "shield"
   | "sparkles"
+  | "sun"
   | "target"
   | "trophy"
   | "users";
@@ -78,8 +81,12 @@ function IconPaths({ name }: { name: IconName }) {
       return <><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></>;
     case "menu":
       return <><path d="M4 7h16M4 12h16M4 17h16"/></>;
+    case "monitor":
+      return <><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></>;
     case "microscope":
       return <><path d="m9 4 6 6M7 6l4-4 6 6-4 4zM8 12a5 5 0 0 0 8 4M5 21h14M12 17v4"/></>;
+    case "moon":
+      return <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8Z"/>;
     case "phone":
       return <path d="M21 16.9v3a2 2 0 0 1-2.2 2 19.7 19.7 0 0 1-8.6-3.1 19.3 19.3 0 0 1-6-6A19.7 19.7 0 0 1 1.1 4.2 2 2 0 0 1 3.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.4 2.1L7.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/>;
     case "rocket":
@@ -88,6 +95,8 @@ function IconPaths({ name }: { name: IconName }) {
       return <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/></>;
     case "sparkles":
       return <><path d="m12 3-1.3 3.7L7 8l3.7 1.3L12 13l1.3-3.7L17 8l-3.7-1.3L12 3Z"/><path d="m5 14-.8 2.2L2 17l2.2.8L5 20l.8-2.2L8 17l-2.2-.8L5 14ZM19 13l-.8 2.2L16 16l2.2.8L19 19l.8-2.2L22 16l-2.2-.8L19 13Z"/></>;
+    case "sun":
+      return <><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></>;
     case "target":
       return <><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></>;
     case "trophy":
