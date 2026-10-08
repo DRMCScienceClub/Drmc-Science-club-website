@@ -53,7 +53,7 @@ export default async function ContactPage() {
         </Container>
       </section>
 
-      <JoinClubSection />
+      <JoinClubSection showOnlineForm={false} />
 
       <section id="visit" className="site-surface py-12 sm:py-20">
         <Container className="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
