@@ -82,19 +82,8 @@ export default async function MediaPage({ searchParams }: { searchParams: Promis
           <form className="grid gap-3 lg:grid-cols-[minmax(14rem,1fr)_11rem_11rem_auto_auto]">
             <label className="sr-only" htmlFor="media-search">Search media</label>
             <input id="media-search" name="q" defaultValue={query.q} placeholder="Search filename, description, caption, or credit…" className="min-h-11 rounded-xl border border-slate-300 px-4 text-sm font-semibold text-navy-950" />
-            <label className="sr-only" htmlFor="media-status">Publication state</label>
-            <select id="media-status" name="status" defaultValue={query.status ?? ""} className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-sm font-bold text-slate-700">
-              <option value="">All states</option>
-              <option value="draft">Draft</option>
-              <option value="published">Published</option>
-              <option value="archived">Archived</option>
-            </select>
-            <label className="sr-only" htmlFor="media-kind">File type</label>
-            <select id="media-kind" name="kind" defaultValue={query.kind ?? ""} className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-sm font-bold text-slate-700">
-              <option value="">All file types</option>
-              <option value="images">Images</option>
-              <option value="documents">PDF documents</option>
-            </select>
+            <AdminSelect name="status" label="Publication state" defaultValue={query.status ?? ""} options={[{ value: "", label: "All states" }, { value: "draft", label: "Draft" }, { value: "published", label: "Published" }, { value: "archived", label: "Archived" }]} />
+            <AdminSelect name="kind" label="File type" defaultValue={query.kind ?? ""} options={[{ value: "", label: "All file types" }, { value: "images", label: "Images" }, { value: "documents", label: "PDF documents" }]} />
             <button className="min-h-11 rounded-xl bg-navy-950 px-5 text-sm font-extrabold text-white hover:bg-navy-800">Apply filters</button>
             <Link href="/admin/media" className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 px-4 text-sm font-extrabold text-slate-600 hover:bg-slate-50">Clear</Link>
           </form>
@@ -188,3 +177,4 @@ export default async function MediaPage({ searchParams }: { searchParams: Promis
     </AdminShell>
   );
 }
+import { AdminSelect } from "@/app/admin/_components/admin-select";

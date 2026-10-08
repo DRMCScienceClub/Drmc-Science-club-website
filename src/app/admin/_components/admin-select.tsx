@@ -23,7 +23,7 @@ export function AdminSelect({ name, label, defaultValue = "", options }: {
     trigger.current?.focus();
   }
 
-  return <div className="admin-select relative min-w-40" onBlur={(event) => {
+  return <div className="admin-select relative min-w-0" onBlur={(event) => {
     if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
   }}>
     <input type="hidden" name={name} value={value} />

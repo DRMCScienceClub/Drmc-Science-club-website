@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { AdminSelect } from "@/app/admin/_components/admin-select";
 import { useActionState } from "react";
 import { searchApplications } from "./actions";
 import type { ApplicationList } from "@/lib/membership/repository";
@@ -12,7 +13,7 @@ export function ApplicationsList({ initial }: { initial: ApplicationList }) {
   return <form action={action} className="mt-7 space-y-5" aria-busy={pending}>
     <div className="grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-2 xl:grid-cols-3">
       <label className="grid gap-2 text-xs font-bold">Name or College ID<input name="search" maxLength={120} placeholder="Search applications…" className={control} /></label>
-      {[{ name: "status", label: "Status", options: applicationStatuses.map((value) => ({ value, label: statusLabels[value] })) }, { name: "academicClass", label: "Class", options: applicationClasses.map((value) => ({ value, label: value })) }, { name: "shift", label: "Shift", options: applicationShifts.map((value) => ({ value, label: value })) }, { name: "interest", label: "Area of interest", options: applicationInterests.map((value) => ({ value, label: value })) }].map((filter) => <label key={filter.name} className="grid gap-2 text-xs font-bold">{filter.label}<select name={filter.name} className={control}><option value="">All</option>{filter.options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>)}
+      {[{ name: "status", label: "Status", options: applicationStatuses.map((value) => ({ value, label: statusLabels[value] })) }, { name: "academicClass", label: "Class", options: applicationClasses.map((value) => ({ value, label: value })) }, { name: "shift", label: "Shift", options: applicationShifts.map((value) => ({ value, label: value })) }, { name: "interest", label: "Area of interest", options: applicationInterests.map((value) => ({ value, label: value })) }].map((filter) => <div key={filter.name} className="grid gap-2 text-xs font-bold"><span>{filter.label}</span><AdminSelect name={filter.name} label={filter.label} options={[{ value: "", label: "All" }, ...filter.options]} /></div>)}
       <button name="page" value="1" disabled={pending} className="self-end rounded-xl bg-navy-950 px-5 py-3 text-sm font-bold text-white disabled:opacity-50">{pending ? "Loading…" : "Search / apply filters"}</button>
     </div>
     {result.message && <p role="alert" className="rounded-xl bg-red-50 p-4 text-red-800">{result.message}</p>}

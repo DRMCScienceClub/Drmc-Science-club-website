@@ -128,18 +128,9 @@ export default async function ResourceListPage({ params, searchParams }: Resourc
           <form className="grid gap-3 md:grid-cols-[minmax(14rem,1fr)_12rem_12rem_10rem_auto]">
             <label className="sr-only" htmlFor="content-search">Search {resource.label}</label>
             <input id="content-search" name="q" defaultValue={query.q} placeholder={`Search ${resource.label.toLowerCase()}…`} className="min-h-11 rounded-xl border border-slate-300 bg-white px-4 text-sm font-semibold text-navy-950" />
-            <label className="sr-only" htmlFor="status-filter">Publication state</label>
-            <select id="status-filter" name="status" defaultValue={query.status ?? ""} className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-sm font-bold text-slate-700">
-              <option value="">All states</option><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option>
-            </select>
-            <label className="sr-only" htmlFor="sort-filter">Sort by</label>
-            <select id="sort-filter" name="sort" defaultValue={query.sort ?? "updated_at"} className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-sm font-bold text-slate-700">
-              <option value="updated_at">Last updated</option><option value="created_at">Created date</option><option value="published_at">Published date</option><option value="title">Title</option>
-            </select>
-            <label className="sr-only" htmlFor="direction-filter">Direction</label>
-            <select id="direction-filter" name="direction" defaultValue={query.direction ?? "desc"} className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-sm font-bold text-slate-700">
-              <option value="desc">Newest first</option><option value="asc">Oldest first</option>
-            </select>
+            <AdminSelect name="status" label="Publication state" defaultValue={query.status ?? ""} options={[{ value: "", label: "All states" }, { value: "draft", label: "Draft" }, { value: "published", label: "Published" }, { value: "archived", label: "Archived" }]} />
+            <AdminSelect name="sort" label="Sort by" defaultValue={query.sort ?? "updated_at"} options={[{ value: "updated_at", label: "Last updated" }, { value: "created_at", label: "Created date" }, { value: "published_at", label: "Published date" }, { value: "title", label: "Title" }]} />
+            <AdminSelect name="direction" label="Direction" defaultValue={query.direction ?? "desc"} options={[{ value: "desc", label: "Newest first" }, { value: "asc", label: "Oldest first" }]} />
             <button className="inline-flex min-h-11 items-center justify-center rounded-xl bg-navy-950 px-5 text-sm font-extrabold text-white hover:bg-navy-800">Apply</button>
           </form>
         </section>
@@ -203,3 +194,4 @@ export default async function ResourceListPage({ params, searchParams }: Resourc
     </AdminShell>
   );
 }
+import { AdminSelect } from "@/app/admin/_components/admin-select";
