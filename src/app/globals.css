@@ -59,6 +59,10 @@
   --theme-ink-muted: #52657a;
   --theme-border: #c9e5df;
   --theme-focus: #1468d8;
+  --theme-gold-ink: #17130b;
+  --theme-gold-text: #805018;
+  --theme-gold-surface: #fffaf0;
+  --theme-gold-border: #d2a03d;
 }
 
 html {
@@ -86,6 +90,10 @@ html.theme-dark {
   --theme-ink-muted: #a9b9cb;
   --theme-border: #25364a;
   --theme-focus: #65c9ff;
+  --theme-gold-ink: #17130b;
+  --theme-gold-text: #f1d995;
+  --theme-gold-surface: #261e10;
+  --theme-gold-border: #806632;
 }
 
 .site-canvas {
@@ -153,6 +161,26 @@ html.theme-dark .text-amber-800 { color: #f7cf70 !important; }
 html.theme-dark .text-amber-950 { color: #ffe3a2 !important; }
 html.theme-dark .text-violet-700 { color: #d5c7ff !important; }
 html.theme-dark .text-red-700, html.theme-dark .text-red-800, html.theme-dark .text-red-900 { color: #ffacb2 !important; }
+
+/* Gold fills retain dark lettering in either theme, including badges and icons. */
+.bg-gold-100.text-navy-950,
+.bg-gold-200.text-navy-950,
+.bg-gold-300.text-navy-950,
+.bg-gold-400.text-navy-950,
+html.theme-dark .bg-gold-100.text-navy-950,
+html.theme-dark .bg-gold-200.text-navy-950,
+html.theme-dark .bg-gold-300.text-navy-950,
+html.theme-dark .bg-gold-400.text-navy-950 {
+  color: var(--theme-gold-ink) !important;
+}
+
+.text-gold-500,
+.text-gold-600 {
+  color: var(--theme-gold-text);
+}
+
+html.theme-dark .bg-gold-50 { background-color: var(--theme-gold-surface); }
+html.theme-dark .border-gold-200 { border-color: var(--theme-gold-border); }
 
 ::selection {
   background: #f1d995;
