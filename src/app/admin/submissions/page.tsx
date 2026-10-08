@@ -6,6 +6,7 @@ import { NotAuthorized } from "@/app/admin/_components/not-authorized";
 import { deleteSubmissionAction, updateSubmissionStatusAction } from "@/app/admin/actions";
 import { requireAdmin } from "@/lib/auth";
 import { listSubmissions } from "@/lib/cms/admin-repository";
+import { AdminSelect } from "@/app/admin/_components/admin-select";
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +36,7 @@ export default async function SubmissionsPage({ searchParams }: SubmissionPagePr
         <div className="mt-7 flex flex-wrap gap-2" aria-label="Submission type">
           <Link href={`/admin/submissions?kind=contact${query.status ? `&status=${query.status}` : ""}`} className={`rounded-xl px-4 py-2.5 text-sm font-extrabold ${kind === "contact" ? "bg-navy-950 text-white" : "border border-slate-200 bg-white text-slate-600"}`}>Contact messages</Link>
           <Link href={`/admin/submissions?kind=join${query.status ? `&status=${query.status}` : ""}`} className={`rounded-xl px-4 py-2.5 text-sm font-extrabold ${kind === "join" ? "bg-navy-950 text-white" : "border border-slate-200 bg-white text-slate-600"}`}>Join requests</Link>
-          <form className="ml-auto flex gap-2"><input type="hidden" name="kind" value={kind} /><select name="status" defaultValue={query.status ?? ""} className="min-h-10 rounded-xl border border-slate-300 bg-white px-3 text-sm font-bold text-slate-700"><option value="">All states</option>{states.map((state) => <option key={state} value={state}>{state.replace("_", " ")}</option>)}</select><button className="rounded-xl border border-slate-300 bg-white px-4 text-sm font-extrabold text-slate-700">Filter</button></form>
+          <form className="ml-auto flex gap-2"><input type="hidden" name="kind" value={kind} /><AdminSelect name="status" label="Filter by submission status" defaultValue={query.status ?? ""} options={[{ value: "", label: "All states" }, ...states.map((state) => ({ value: state, label: state === "in_review" ? "In review" : state.charAt(0).toUpperCase() + state.slice(1) }))]} /><button className="rounded-xl border border-slate-300 bg-white px-4 text-sm font-extrabold text-slate-700">Filter</button></form>
         </div>
 
         <div
@@ -52,7 +53,7 @@ export default async function SubmissionsPage({ searchParams }: SubmissionPagePr
               {kind === "contact" ? <><h2 className="mt-5 text-sm font-extrabold text-navy-950">{text(record.subject)}</h2><p className="mt-2 whitespace-pre-wrap text-sm leading-7 text-slate-700">{text(record.message)}</p></> : <><dl className="mt-5 grid gap-3 text-sm sm:grid-cols-3"><div><dt className="font-extrabold text-slate-500">Academic class</dt><dd className="mt-1 font-semibold text-navy-950">{text(record.academic_class)}</dd></div><div><dt className="font-extrabold text-slate-500">Phone</dt><dd className="mt-1 font-semibold text-navy-950">{text(record.phone) || "Not provided"}</dd></div><div><dt className="font-extrabold text-slate-500">Interests</dt><dd className="mt-1 font-semibold text-navy-950">{Array.isArray(record.interests) ? record.interests.join(", ") : "—"}</dd></div></dl><p className="mt-4 whitespace-pre-wrap text-sm leading-7 text-slate-700">{text(record.motivation)}</p></>}
               <form action={updateSubmissionStatusAction} className="mt-5 grid gap-3 border-t border-slate-200 pt-5 sm:grid-cols-[12rem_minmax(0,1fr)_auto]">
                 <input type="hidden" name="kind" value={kind} /><input type="hidden" name="id" value={text(record.id)} />
-                <label className="sr-only" htmlFor={`status-${record.id}`}>Status</label><select id={`status-${record.id}`} name="status" defaultValue={text(record.status)} className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-sm font-bold text-slate-700">{states.map((state) => <option key={state} value={state}>{state.replace("_", " ")}</option>)}</select>
+                <AdminSelect name="status" label="Submission status" defaultValue={text(record.status)} options={states.map((state) => ({ value: state, label: state === "in_review" ? "In review" : state.charAt(0).toUpperCase() + state.slice(1) }))} />
                 <label className="sr-only" htmlFor={`notes-${record.id}`}>Private notes</label><input id={`notes-${record.id}`} name="admin_notes" defaultValue={text(record.admin_notes)} placeholder="Private follow-up note…" className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-sm font-semibold text-navy-950" />
                 <button className="min-h-11 rounded-xl bg-navy-950 px-5 text-sm font-extrabold text-white">Save</button>
               </form>
