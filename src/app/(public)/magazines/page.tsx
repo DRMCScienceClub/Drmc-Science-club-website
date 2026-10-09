@@ -111,8 +111,8 @@ export default async function MagazinesPage() {
           ) : (
             <div className="mt-10">
               <EmptyState
-                title="Earlier issues are being digitised"
-                description="More annual volumes will appear here as archival copies are reviewed."
+                title="The magazine archive is being prepared"
+                description="Issues will appear here once their covers, publication details, and reading files are ready and approved."
                 icon="book"
               />
             </div>
@@ -133,7 +133,7 @@ export default async function MagazinesPage() {
                 Earlier volumes are being prepared for the digital shelf.
               </h3>
               <p className="mt-3 max-w-3xl leading-7 text-slate-600">
-                {auroraArchive.digitisedRange} are represented in this Phase 1 prototype. {auroraArchive.awaitingDigitisationRange} will be added only after their publication years, cover artwork, and reading files are verified from the club archive.
+                The magazines are still being prepared for online publication. Issues will appear here once their publication details, cover artwork, and reading files are ready and approved.
               </p>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default async function MagazinesPage() {
           <SectionHeading
             eyebrow="Editorial practice"
             title="From a promising idea to a useful page."
-            description="The magazine prototype is designed around a careful, faculty-guided editorial process."
+            description="Aurora brings student ideas to print through a careful, faculty-guided editorial process."
             align="center"
           />
           <ol className="mt-10 grid gap-px overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-200 md:grid-cols-3">

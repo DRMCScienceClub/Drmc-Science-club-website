@@ -124,12 +124,11 @@ export default async function MagazineDetailPage({
                 </span>
                 <div>
                   <h3 className="font-display text-xl font-extrabold text-navy-950">
-                    Phase 1 publication note
+                    Publication note
                   </h3>
                   <p className="mt-2 text-sm leading-6 text-slate-600">
                     Covers, reader links, and PDF files are published only after
-                    editorial and institutional approval. Administrators can
-                    replace these resources without changing this page layout.
+                    editorial and institutional approval.
                   </p>
                 </div>
               </div>
@@ -198,11 +197,11 @@ export default async function MagazineDetailPage({
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <SectionHeading
               eyebrow="Online reading"
-              title="A calm, accessible reader is next."
-              description="This Phase 1 panel demonstrates where the web reader will live; issue pages and navigation will be connected in a later development stage."
+              title="Explore the issue."
+              description="Preview the issue’s contents below. Full reading resources will be available once the approved digital edition is published."
             />
             <span className="inline-flex self-start rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.11em] text-amber-800">
-              Prototype reader
+              Contents preview
             </span>
           </div>
 
@@ -249,9 +248,8 @@ export default async function MagazineDetailPage({
                   {issue.subtitle}
                 </h2>
                 <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
-                  This preview establishes the typography, reading width, and
-                  keyboard-friendly controls for the future digital edition.
-                  Full magazine content is intentionally not embedded in Phase 1.
+                  Browse selected highlights from this issue. The full magazine
+                  is not available in this contents preview.
                 </p>
                 <ol className="mt-8 divide-y divide-slate-200 border-y border-slate-200">
                   {issue.highlights.slice(0, 3).map((highlight, index) => (
@@ -392,12 +390,11 @@ function MagazineHero({ issue }: { issue: MagazineIssue }) {
                 className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-navy-950 shadow-lg shadow-black/10 transition-colors hover:bg-science-50"
               >
                 <Icon name="download" className="size-4" />
-                PDF · Prototype
+                PDF · Preview
               </a>
             </div>
             <p className="mt-4 text-xs leading-5 text-slate-500">
-              Demonstration links only; no final issue file is distributed in
-              Phase 1.
+              Preview resources only; the final issue file is not yet available.
             </p>
           </div>
         </div>
