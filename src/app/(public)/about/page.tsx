@@ -236,7 +236,7 @@ export default async function AboutPage() {
                     {committeePreview.map((member, index) => (
                       <li
                         key={member.id}
-                        className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white/70 p-3.5"
+                        className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-100 p-3.5"
                       >
                         <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-xl bg-navy-950 text-xs font-black text-teal-300">
                           {String(index + 1).padStart(2, "0")}
