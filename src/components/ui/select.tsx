@@ -28,10 +28,12 @@ export function Select({ children, className, id, onChange, ...props }: SelectHT
   const value = props.value === undefined ? localValue : String(props.value);
   const [position, setPosition] = useState<{ left: number; top: number; width: number; maxHeight: number } | null>(null);
   const [active, setActive] = useState(0);
+  const [portalTarget, setPortalTarget] = useState<Element | null>(null);
   const open = position !== null;
 
   function show() {
     if (props.disabled || trigger.current?.matches(":disabled")) return;
+    setPortalTarget(trigger.current?.closest("dialog") ?? document.body);
     const rect = trigger.current!.getBoundingClientRect();
     const height = Math.min(256, options.length * 42 + 14);
     const below = window.innerHeight - rect.bottom - 16;
@@ -99,6 +101,6 @@ export function Select({ children, className, id, onChange, ...props }: SelectHT
       {options.map((option, index) => <li key={`${option.value}-${index}`} id={`${menuId}-${index}`} role="option" aria-selected={value === option.value} aria-disabled={option.disabled} onMouseDown={(event) => event.preventDefault()} onPointerMove={() => { if (!option.disabled) setActive(index); }} onClick={() => choose(index)} className={cn("select-option flex min-h-10 cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm font-semibold", active === index && "select-option-active", option.disabled && "cursor-not-allowed opacity-40")}>
         <span>{option.label}</span>{value === option.value && <Icon name="check" className="size-4 shrink-0" />}
       </li>)}
-    </ul>, document.body)}
+    </ul>, portalTarget ?? document.body)}
   </>;
 }

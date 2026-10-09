@@ -1,6 +1,7 @@
 "use client";
 
 import { Select } from "@/components/ui/select";
+import { DatePicker } from "@/components/ui/date-picker";
 import Link from "next/link";
 import Image from "next/image";
 import { useActionState, useState } from "react";
@@ -122,6 +123,8 @@ function EditorField({ field, record, resource, errors, media }: { field: CmsFie
           {!field.required && <option value="">Select…</option>}
           {field.options?.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
         </Select>
+      ) : field.type === "datetime-local" ? (
+        <DatePicker id={id} name={field.name} type="datetime-local" required={field.required} defaultValue={valueFor(field, record)} className={`mt-2 ${className}`} />
       ) : field.type === "textarea" || field.type === "json" ? (
         <textarea id={id} name={field.name} required={field.required} defaultValue={valueFor(field, record)} rows={field.type === "json" ? 10 : 4} spellCheck={field.type !== "json"} className={`mt-2 resize-y ${className} ${field.type === "json" ? "font-mono text-xs leading-5" : "leading-6"}`} />
       ) : (

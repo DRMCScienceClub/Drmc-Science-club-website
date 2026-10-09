@@ -1,6 +1,7 @@
 "use client";
 
 import { Select } from "@/components/ui/select";
+import { DatePicker } from "@/components/ui/date-picker";
 import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
 import { slugify } from "@/lib/cms/resources";
@@ -55,7 +56,7 @@ function TextInput({ value, onChange, label, type = "text", placeholder, classNa
 }) {
   return (
     <label className={`block text-xs font-extrabold text-navy-900 ${className}`}>{label}
-      <input type={type} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold" />
+      {type === "date" ? <DatePicker value={value} onValueChange={onChange} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold" /> : <input type={type} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold" />}
     </label>
   );
 }

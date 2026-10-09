@@ -1,6 +1,7 @@
 "use client";
 
 import { Select } from "@/components/ui/select";
+import { DatePicker } from "@/components/ui/date-picker";
 import Image from "next/image";
 import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
@@ -231,10 +232,12 @@ function ValueEditor({ value, path, label, resource, update, media }: {
         <Select value={String(value ?? "")} onChange={(event) => update(path, event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold">{options.map((option) => <option key={option} value={option}>{humanize(option)}</option>)}</Select>
       ) : typeof value === "number" ? (
         <input type="number" value={value} onChange={(event) => update(path, Number(event.target.value))} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" />
+      ) : key.toLowerCase().includes("date") ? (
+        <DatePicker value={String(value ?? "")} onValueChange={(next) => update(path, next)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" />
       ) : long ? (
         <textarea value={String(value ?? "")} onChange={(event) => update(path, event.target.value)} rows={3} className="mt-1.5 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold leading-6" />
       ) : (
-        <input type={key.toLowerCase().includes("date") ? "date" : "text"} value={String(value ?? "")} onChange={(event) => update(path, event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" />
+        <input type="text" value={String(value ?? "")} onChange={(event) => update(path, event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" />
       )}
     </label>
   );

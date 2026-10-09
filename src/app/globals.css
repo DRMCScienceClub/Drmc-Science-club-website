@@ -303,6 +303,18 @@ html:has(.admin-workspace)::-webkit-scrollbar-thumb:hover,
 }
 
 /* Shared dropdowns: portals inherit tokens from html in both public and admin UI. */
+.date-calendar {
+  background: var(--theme-surface);
+  color: var(--theme-ink);
+  border-color: var(--theme-border);
+  color-scheme: inherit;
+}
+.date-calendar::backdrop { background: rgb(3 9 18 / 70%); backdrop-filter: blur(4px); }
+.date-calendar-action:hover, .date-calendar-day:hover { background: var(--theme-highlight); }
+.date-calendar-day[aria-current="date"] { box-shadow: inset 0 0 0 1px var(--theme-focus); }
+.date-calendar-day[aria-pressed="true"], .date-calendar-confirm { background: var(--theme-focus); color: var(--theme-surface); }
+.date-calendar button:focus-visible { outline: 2px solid var(--theme-focus); outline-offset: 2px; }
+
 .select-native-value {
   position: absolute;
   width: 1px;
