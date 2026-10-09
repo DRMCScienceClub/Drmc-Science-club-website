@@ -1,5 +1,6 @@
 "use client";
 
+import { Select } from "@/components/ui/select";
 import { useActionState } from "react";
 import {
   inviteAdministratorAction,
@@ -26,11 +27,11 @@ export function AdminInviteForm({ configured }: { configured: boolean }) {
       </label>
       <label className="text-sm font-extrabold text-navy-900">
         Initial role
-        <select name="role" defaultValue="contributor" className={inputClass} disabled={!configured || pending}>
+        <Select name="role" defaultValue="contributor" className={inputClass} disabled={!configured || pending}>
           <option value="contributor">Contributor</option>
           <option value="editor">Editor</option>
           <option value="super_admin">Super admin</option>
-        </select>
+        </Select>
       </label>
       <button disabled={!configured || pending} className="min-h-11 rounded-xl bg-navy-950 px-5 text-sm font-extrabold text-white transition hover:bg-navy-800 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-600">
         {pending ? "Sending…" : "Send invitation"}

@@ -1,5 +1,6 @@
 "use client";
 
+import { Select } from "@/components/ui/select";
 import { useActionState, useEffect, useRef } from "react";
 import { Icon } from "@/components/ui/icon";
 import {
@@ -59,7 +60,7 @@ export function JoinSubmissionForm() {
         <label className="text-sm font-extrabold text-navy-900">Full name<span className="text-red-600"> *</span><input name="name" autoComplete="name" required maxLength={120} aria-invalid={Boolean(state.fieldErrors?.name)} className={inputClass} /><ErrorList errors={state.fieldErrors?.name} /></label>
         <label className="text-sm font-extrabold text-navy-900">Email address<span className="text-red-600"> *</span><input name="email" type="email" autoComplete="email" required maxLength={254} aria-invalid={Boolean(state.fieldErrors?.email)} className={inputClass} /><ErrorList errors={state.fieldErrors?.email} /></label>
         <label className="text-sm font-extrabold text-navy-900">Phone number<input name="phone" type="tel" autoComplete="tel" maxLength={40} className={inputClass} /></label>
-        <label className="text-sm font-extrabold text-navy-900">Current class<span className="text-red-600"> *</span><select name="academic_class" required defaultValue="" aria-invalid={Boolean(state.fieldErrors?.academicClass)} className={inputClass}><option value="" disabled>Select class</option>{Array.from({ length: 12 }, (_, index) => index + 1).map((value) => <option key={value} value={`Class ${value}`}>Class {value}</option>)}</select><ErrorList errors={state.fieldErrors?.academicClass} /></label>
+        <label className="text-sm font-extrabold text-navy-900">Current class<span className="text-red-600"> *</span><Select name="academic_class" required defaultValue="" aria-invalid={Boolean(state.fieldErrors?.academicClass)} className={inputClass}><option value="" disabled>Select class</option>{Array.from({ length: 12 }, (_, index) => index + 1).map((value) => <option key={value} value={`Class ${value}`}>Class {value}</option>)}</Select><ErrorList errors={state.fieldErrors?.academicClass} /></label>
       </div>
       <fieldset><legend className="text-sm font-extrabold text-navy-900">Areas of interest<span className="text-red-600"> *</span></legend><div className="mt-3 grid gap-3 sm:grid-cols-2">{interests.map((interest) => <label key={interest} className="flex min-h-12 items-center gap-3 rounded-xl border border-slate-300 bg-white px-4 text-sm font-bold text-slate-700"><input name="interests" type="checkbox" value={interest} className="size-4 accent-science-600" />{interest}</label>)}</div><ErrorList errors={state.fieldErrors?.interests} /></fieldset>
       <label className="text-sm font-extrabold text-navy-900">Why would you like to join?<span className="text-red-600"> *</span><textarea name="motivation" required minLength={10} maxLength={5000} rows={6} aria-invalid={Boolean(state.fieldErrors?.motivation)} className={`${inputClass} py-3`} /><ErrorList errors={state.fieldErrors?.motivation} /></label>

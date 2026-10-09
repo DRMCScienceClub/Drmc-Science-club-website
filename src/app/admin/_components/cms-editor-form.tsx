@@ -1,5 +1,6 @@
 "use client";
 
+import { Select } from "@/components/ui/select";
 import Link from "next/link";
 import Image from "next/image";
 import { useActionState, useState } from "react";
@@ -117,10 +118,10 @@ function EditorField({ field, record, resource, errors, media }: { field: CmsFie
     <div className={field.fullWidth ? "md:col-span-2" : undefined}>
       <label htmlFor={id} className="text-sm font-extrabold text-navy-900">{field.label}{field.required && <span className="ml-1 text-red-600" aria-hidden="true">*</span>}</label>
       {field.type === "select" ? (
-        <select id={id} name={field.name} required={field.required} defaultValue={valueFor(field, record)} className={`mt-2 ${className}`}>
+        <Select id={id} name={field.name} required={field.required} defaultValue={valueFor(field, record)} className={`mt-2 ${className}`}>
           {!field.required && <option value="">Select…</option>}
           {field.options?.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-        </select>
+        </Select>
       ) : field.type === "textarea" || field.type === "json" ? (
         <textarea id={id} name={field.name} required={field.required} defaultValue={valueFor(field, record)} rows={field.type === "json" ? 10 : 4} spellCheck={field.type !== "json"} className={`mt-2 resize-y ${className} ${field.type === "json" ? "font-mono text-xs leading-5" : "leading-6"}`} />
       ) : (
@@ -206,11 +207,11 @@ export function CmsEditorForm({
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card">
           <h2 className="font-display text-lg font-extrabold text-navy-950">Publication</h2>
           <label htmlFor="cms-status" className="mt-4 block text-sm font-extrabold text-navy-900">State</label>
-          <select id="cms-status" name="status" defaultValue={record?.status ?? "draft"} className="mt-2 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm font-bold text-slate-700">
+          <Select id="cms-status" name="status" defaultValue={record?.status ?? "draft"} className="mt-2 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm font-bold text-slate-700">
             <option value="draft">Draft</option>
             {canPublish && <option value="published">Published</option>}
             {canPublish && <option value="archived">Archived</option>}
-          </select>
+          </Select>
           {!canPublish && <p className="mt-2 text-xs leading-5 text-slate-500">Contributors can prepare drafts. An editor must publish or archive them.</p>}
           <label className="mt-4 flex items-start gap-3 rounded-xl bg-science-50 p-3.5">
             <input name="is_featured" type="checkbox" defaultChecked={Boolean(record?.is_featured)} className="mt-0.5 size-4 accent-science-600" />

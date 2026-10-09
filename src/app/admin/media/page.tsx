@@ -1,3 +1,4 @@
+import { Select } from "@/components/ui/select";
 import Image from "next/image";
 import Link from "next/link";
 import { AdminShell } from "@/app/admin/_components/admin-shell";
@@ -126,11 +127,11 @@ export default async function MediaPage({ searchParams }: { searchParams: Promis
                         {canApprove && (
                           <form action={updateMediaStatusAction} className="flex gap-2">
                             <input type="hidden" name="id" value={asset.id} />
-                            <select name="status" defaultValue={asset.status} aria-label={`Status for ${asset.original_name}`} className="min-h-9 rounded-lg border border-slate-300 bg-white px-2 text-xs font-bold">
+                            <Select name="status" defaultValue={asset.status} aria-label={`Status for ${asset.original_name}`} className="min-h-9 rounded-lg border border-slate-300 bg-white px-2 text-xs font-bold">
                               <option value="draft">Draft</option>
                               <option value="published">Published</option>
                               <option value="archived">Archived</option>
-                            </select>
+                            </Select>
                             <button className="min-h-9 rounded-lg bg-navy-950 px-3 text-xs font-extrabold text-white hover:bg-navy-800">Save</button>
                           </form>
                         )}

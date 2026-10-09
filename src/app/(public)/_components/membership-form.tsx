@@ -1,5 +1,6 @@
 "use client";
 
+import { Select } from "@/components/ui/select";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { submitApplication } from "@/app/(public)/membership-actions";
 import { applicationClasses, applicationInterests, applicationShifts, type ApplicationState } from "@/lib/membership/schema";
@@ -12,7 +13,7 @@ function ApplicationField({ name, label, state, required = false, maxLength = 12
   const error = state.fieldErrors?.[name];
   const props = { id: `application-${name}`, name, required, "aria-invalid": Boolean(error), "aria-describedby": error ? `application-${name}-error` : undefined, className: inputClass, defaultValue: state.values?.[name] ?? "" };
   return <div className="min-w-0"><label htmlFor={props.id} className="text-sm font-bold text-navy-950">{label}{required && " *"}</label>
-    {options ? <select {...props}><option value="">Select…</option>{options.map((option) => <option key={option}>{option}</option>)}</select> : multiline ? <textarea {...props} rows={4} maxLength={maxLength} /> : <input {...props} type={type} maxLength={maxLength} autoComplete={autoComplete} />}
+    {options ? <Select {...props}><option value="">Select…</option>{options.map((option) => <option key={option}>{option}</option>)}</Select> : multiline ? <textarea {...props} rows={4} maxLength={maxLength} /> : <input {...props} type={type} maxLength={maxLength} autoComplete={autoComplete} />}
     {multiline && <p className="mt-1 text-xs text-slate-500">Maximum {maxLength} characters.</p>}
     {error && <p id={`application-${name}-error`} className="mt-2 text-sm text-red-700">{error.join(" ")}</p>}
   </div>;

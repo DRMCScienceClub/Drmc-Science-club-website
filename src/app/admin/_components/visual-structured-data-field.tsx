@@ -1,5 +1,6 @@
 "use client";
 
+import { Select } from "@/components/ui/select";
 import Image from "next/image";
 import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
@@ -227,7 +228,7 @@ function ValueEditor({ value, path, label, resource, update, media }: {
   return (
     <label className="block text-xs font-extrabold text-navy-900">{label}
       {options ? (
-        <select value={String(value ?? "")} onChange={(event) => update(path, event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold">{options.map((option) => <option key={option} value={option}>{humanize(option)}</option>)}</select>
+        <Select value={String(value ?? "")} onChange={(event) => update(path, event.target.value)} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold">{options.map((option) => <option key={option} value={option}>{humanize(option)}</option>)}</Select>
       ) : typeof value === "number" ? (
         <input type="number" value={value} onChange={(event) => update(path, Number(event.target.value))} className="mt-1.5 min-h-10 w-full rounded-lg border border-slate-300 px-3 text-sm font-semibold" />
       ) : long ? (

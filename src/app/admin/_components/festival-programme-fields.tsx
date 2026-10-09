@@ -1,5 +1,6 @@
 "use client";
 
+import { Select } from "@/components/ui/select";
 import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
 import { slugify } from "@/lib/cms/resources";
@@ -182,7 +183,7 @@ export function FestivalResultsField({ initialValue, errors }: { initialValue: s
           <tbody>{results.map((result, index) => (
             <tr key={index} className="border-b border-slate-100 last:border-0">
               <td className="p-2"><input value={result.segment} onChange={(event) => update(index, { segment: event.target.value })} className="min-h-10 w-full min-w-36 rounded-lg border border-slate-300 px-3 text-sm font-semibold" /></td>
-              <td className="p-2"><select value={result.position} onChange={(event) => update(index, { position: event.target.value })} className="min-h-10 w-full min-w-40 rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold">{["Champion", "1st Runner-up", "2nd Runner-up", "Special Mention"].map((position) => <option key={position}>{position}</option>)}</select></td>
+              <td className="p-2"><Select value={result.position} onChange={(event) => update(index, { position: event.target.value })} className="min-h-10 w-full min-w-40 rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold">{["Champion", "1st Runner-up", "2nd Runner-up", "Special Mention"].map((position) => <option key={position}>{position}</option>)}</Select></td>
               <td className="p-2"><input value={result.recipient} onChange={(event) => update(index, { recipient: event.target.value })} className="min-h-10 w-full min-w-40 rounded-lg border border-slate-300 px-3 text-sm font-semibold" /></td>
               <td className="p-2"><input value={result.institution} onChange={(event) => update(index, { institution: event.target.value })} className="min-h-10 w-full min-w-40 rounded-lg border border-slate-300 px-3 text-sm font-semibold" /></td>
               <td className="p-2"><button type="button" title="Remove result row" onClick={() => setResults((current) => current.filter((_, itemIndex) => itemIndex !== index))} className="grid size-10 place-items-center rounded-lg text-red-700 hover:bg-red-50"><Icon name="close" className="size-4" /></button></td>
