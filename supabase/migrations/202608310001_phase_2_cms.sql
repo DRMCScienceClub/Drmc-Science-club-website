@@ -437,15 +437,36 @@ begin
   end loop;
 end $$;
 
-revoke all on all tables in schema public from anon, authenticated;
-grant usage on schema public to anon, authenticated;
-grant select on public.festivals, public.festival_segments, public.festival_schedule_items,
-  public.festival_results, public.organizations, public.festival_organizations,
-  public.activities, public.achievements, public.magazines, public.executive_panels,
-  public.executive_members, public.notifications, public.media_assets to anon, authenticated;
+-- Explicit Data API ACLs: table privileges permit operations; RLS restricts rows.
+-- Scope revocations to this application's tables, never unrelated public tables.
+revoke all on public.profiles, public.festivals, public.festival_segments, public.festival_schedule_items, public.festival_results, public.organizations, public.festival_organizations, public.activities, public.achievements, public.magazines, public.executive_panels, public.executive_members, public.notifications, public.media_assets, public.contact_submissions, public.join_submissions, public.site_settings, public.audit_logs from public, anon, authenticated, service_role;
+grant usage on schema public to anon, authenticated, service_role;
+
+-- Public content and normalized children remain filtered by publication policies.
+grant select on public.festivals, public.activities, public.achievements, public.magazines, public.executive_panels, public.notifications, public.festival_segments, public.festival_schedule_items, public.festival_results, public.organizations, public.festival_organizations, public.executive_members, public.media_assets to anon;
+grant select, insert, update, delete on public.festivals, public.activities, public.achievements, public.magazines, public.executive_panels, public.notifications, public.festival_segments, public.festival_schedule_items, public.festival_results, public.organizations, public.festival_organizations, public.executive_members, public.media_assets to authenticated;
+
+-- Profiles are created by the Auth trigger; only super admins may edit these fields.
+grant select on public.profiles to authenticated;
+grant update (display_name, role, is_active) on public.profiles to authenticated;
+-- Reviewers can read and triage; only super admins can delete (enforced by RLS).
+grant select, delete on public.contact_submissions, public.join_submissions to authenticated;
+grant update (status, admin_notes) on public.contact_submissions, public.join_submissions to authenticated;
+grant select, insert, update, delete on public.site_settings to authenticated;
+-- Audit entries are append-only to API clients and written by trusted code/triggers.
+grant select on public.audit_logs to authenticated;
+
+-- Trusted bootstrap/profile upsert, initial content importer and removal audit entry.
+-- Normal CMS CRUD uses the signed-in user's authenticated JWT, not service_role.
+grant select, insert, update on public.profiles to service_role;
+grant select, insert, update on public.festivals, public.activities, public.achievements, public.magazines, public.executive_panels to service_role;
+grant insert on public.audit_logs to service_role;
+-- The only identity/serial sequence in the project. Trigger inserts run as owner;
+-- authenticated/anon never insert audit rows and require no sequence access.
+revoke all on sequence public.audit_logs_id_seq from public, anon, authenticated, service_role;
+grant usage on sequence public.audit_logs_id_seq to service_role;
+-- Historical direct inserts: migration 003 revokes these and installs secure RPCs.
 grant insert on public.contact_submissions, public.join_submissions to anon, authenticated;
-grant select, insert, update, delete on all tables in schema public to authenticated;
-grant usage, select on all sequences in schema public to authenticated;
 
 -- Profiles: users can see themselves; super administrators manage the team.
 create policy "profiles_select_self_or_admin" on public.profiles for select to authenticated

@@ -100,8 +100,111 @@ The contact-settings migration
 editable public contact record and permits anonymous visitors to read only that
 single setting. Apply it before using `/admin/settings/contact`.
 
-Applied migrations are immutable. Correct a deployed schema with a new
-forward-only migration; do not edit an already applied file.
+Normally, applied migrations are immutable. For the October 2026 permission
+review, the table-creating migrations also record explicit, least-privilege
+ACLs so fresh installs do not rely on Supabase's former default grants.
+**Existing databases must apply only the new forward migration below**, not
+rerun the edited baseline or recreate existing policies.
+
+### October 30, 2026: explicit Data API permissions
+
+[Supabase's announced change](https://supabase.com/changelog/45329-breaking-change-tables-not-exposed-to-data-and-graphql-api-automatically)
+removes automatic API grants for newly created public tables. Existing grants
+are not a replacement for explicit permissions in replayable migrations.
+Apply `supabase/migrations/202610210008_explicit_data_api_permissions.sql`
+after migrations 001–007. If using the Dashboard SQL editor, create a **new SQL
+query**, paste the complete 008 file, and run it once. It changes ACLs only:
+no content deletion, policy replacement, Auth changes, or Storage changes.
+
+There are two independent permission checks:
+
+- **GRANT** allows a database role to attempt an operation on a table, column,
+  sequence, or function. Without it the Data API returns permission denied.
+- **RLS** then determines which rows that operation may read or change.
+  `authenticated` is a PostgreSQL role, not an editor authorization level:
+  policies consult the active profile's `super_admin`, `editor`, or
+  `contributor` role. Granting UPDATE does not let a contributor publish.
+
+Final explicit ACLs after all eight migrations (`S/I/U/D` mean
+SELECT/INSERT/UPDATE/DELETE):
+
+| Tables | anon | authenticated (also subject to RLS) | service_role |
+| --- | --- | --- | --- |
+| festivals, activities, achievements, magazines, executive_panels | S | S/I/U/D | S/I/U |
+| notifications | S | S/I/U/D | None |
+| festival_segments, festival_schedule_items, festival_results, organizations, festival_organizations, executive_members | S | S/I/U/D | None |
+| media_assets | S | S/I/U/D | None |
+| profiles | None | S; U of display_name, role, is_active only | S/I/U |
+| contact_submissions, join_submissions | None | S/D; U of status, admin_notes only | None |
+| science_club_applications | None | S/D; U of status, admin_notes only | None |
+| site_settings | S | S/I/U/D | None |
+| audit_logs | None | S | I |
+| submission_rate_limits | None | None | None |
+
+Why these permissions are necessary:
+
+- Anonymous content reads are limited to published, non-future root records;
+  normalized children/organizations require a published owning festival/panel.
+  Media metadata requires published status and `cms-public`. Settings expose
+  only `public_contact`. No private submissions, profiles or audit rows are
+  anonymously readable or writable.
+- Authenticated CMS operations remain governed by existing RLS: contributors
+  may create/edit drafts, editors may publish and manage normalized children,
+  and only super admins delete root content/media or manage profiles. Private
+  submissions are reviewer-readable/updatable and super-admin-deletable.
+  Audit logs are read-only for editors/super admins. Inactive/non-admin
+  accounts cannot gain editorial rights merely by signing in.
+- Contact/legacy Join submissions use `submit_public_contact` and
+  `submit_public_join` (EXECUTE for anon/authenticated), not direct INSERT.
+  Migration 003 intentionally revokes the baseline's historical INSERT grant.
+  Do not restore it: doing so bypasses the rate-limited entry points.
+- New membership applications use the server-only
+  `submit_science_club_application` RPC (EXECUTE for service_role only).
+  SECURITY DEFINER functions write submissions/rate limits as their owner,
+  so their callers need **no direct table grants**.
+- Explicit service-role table access is limited to first-admin profile
+  lookup/upsert, the five-table initial content importer (upsert plus returned
+  IDs), and appending bootstrap/removal audit records. Routine admin CRUD
+  continues using the administrator's JWT and RLS. The service role bypasses
+  RLS, so never use it to test editor/contributor restrictions.
+- `audit_logs.id` is the only serial/identity sequence. Only service_role gets
+  USAGE for trusted direct audit inserts; audit triggers run as owner and need
+  no anon/authenticated sequence grants. UUID-generated IDs need no sequences.
+
+No blanket `GRANT ... ON ALL TABLES/SEQUENCES` or new default privileges are
+installed. The forward repair revokes legacy/default ACLs only on these 20
+application tables and the audit identity sequence, leaving unrelated tables
+alone. Existing function EXECUTE permissions and every RLS policy are retained.
+
+### Permission regression checks
+
+On a **disposable local database only**, once the CLI and Docker are configured:
+
+```bash
+npx supabase start
+npx supabase db reset --local
+psql 'postgresql://postgres:postgres@127.0.0.1:54322/postgres' \
+  -v ON_ERROR_STOP=1 -f supabase/tests/data_api_permissions.sql
+```
+
+The SQL suite checks the full 20-table ACL matrix, RLS enablement, protected
+columns, sequence/RPC permissions, anonymous publication filtering and form
+RPCs, contributor restrictions, editor publication/review, super-admin
+deletion/profile updates, and the server-only application RPC. Test fixtures
+are rolled back. Do not run against production or use `db reset --linked`.
+Connection details/port above are local defaults; use your local stack's port.
+
+The source-only checks need no database or credentials:
+
+```bash
+node --test tests/database-permissions.test.mjs
+```
+
+Finally smoke-test the REST-backed website: published pages versus draft/future
+URLs; Contact and Join success/rate limiting; and admin create/edit/publish,
+review/delete, media operations and invitation/role changes using separate
+contributor, editor and super-admin sessions. SQL impersonation checks do not
+replace this deployed HTTP/session verification.
 
 ### Verify the migration
 

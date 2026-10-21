@@ -10,7 +10,8 @@ create table if not exists public.submission_rate_limits (
 );
 
 alter table public.submission_rate_limits enable row level security;
-revoke all on public.submission_rate_limits from anon, authenticated;
+-- Internal-only: SECURITY DEFINER RPCs access this as their owner. No API grant.
+revoke all on public.submission_rate_limits from public, anon, authenticated, service_role;
 
 drop policy if exists "contact_public_insert" on public.contact_submissions;
 drop policy if exists "join_public_insert" on public.join_submissions;

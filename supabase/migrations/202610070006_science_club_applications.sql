@@ -28,10 +28,10 @@ create table public.science_club_applications (
 create index science_club_applications_submitted_idx on public.science_club_applications (submitted_at desc, id);
 create index science_club_applications_status_idx on public.science_club_applications (status, submitted_at desc);
 alter table public.science_club_applications enable row level security;
-revoke all on public.science_club_applications from anon, authenticated;
+revoke all on public.science_club_applications from public, anon, authenticated, service_role;
 grant select on public.science_club_applications to authenticated;
 grant update (status, admin_notes) on public.science_club_applications to authenticated;
-grant all on public.science_club_applications to service_role;
+-- No direct service-role table grant: the server calls the owner-executed RPC below.
 create policy applications_reviewer_read on public.science_club_applications for select to authenticated
   using (public.current_admin_role() in ('super_admin','editor'));
 create policy applications_reviewer_update on public.science_club_applications for update to authenticated
